@@ -11,7 +11,6 @@
       --muted: #666;
       --border: #ddd;
       --primary: #0f62fe;
-      --primary-light: #e8f0ff;
     }
 
     html, body {
@@ -29,7 +28,7 @@
     }
 
     .topbar {
-      padding: 12px 16px;
+      padding: 10px 12px;
       border-bottom: 1px solid var(--border);
       background: #fff;
       position: sticky;
@@ -38,47 +37,43 @@
     }
 
     .topbar-inner {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
       max-width: 1400px;
       margin: 0 auto;
-    }
-
-    .date-list {
       display: flex;
-      flex-wrap: wrap;
+      flex-direction: column;
       gap: 8px;
     }
 
-    .date-btn,
-    .nav-btn {
+    .controls-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    select,
+    button {
       border: 1px solid var(--border);
       background: #fff;
       color: var(--text);
       border-radius: 8px;
-      padding: 8px 12px;
-      cursor: pointer;
+      padding: 10px 12px;
       font-size: 14px;
     }
 
-    .date-btn.active {
-      background: var(--primary-light);
-      border-color: var(--primary);
-      color: var(--primary);
-      font-weight: 600;
+    select {
+      min-width: 190px;
+      max-width: 100%;
     }
 
-    .controls {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
+    button {
+      cursor: pointer;
     }
 
     .status {
       color: var(--muted);
       font-size: 14px;
+      line-height: 1.4;
     }
 
     .viewer {
@@ -86,24 +81,24 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 16px;
+      padding: 12px;
       position: relative;
     }
 
     .viewer img {
       max-width: 100%;
-      max-height: calc(100vh - 180px);
+      max-height: calc(100vh - 130px);
       object-fit: contain;
       display: block;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
       background: #fff;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
     }
 
     .msg {
       max-width: 760px;
       text-align: center;
       color: var(--text);
-      font-size: 22px;
+      font-size: 20px;
       line-height: 1.6;
       padding: 24px;
     }
@@ -111,17 +106,45 @@
     .msg .sub {
       display: block;
       color: var(--muted);
-      font-size: 16px;
+      font-size: 15px;
       margin-top: 10px;
     }
 
     @media (max-width: 768px) {
+      .topbar {
+        padding: 8px 10px;
+      }
+
+      .controls-row {
+        gap: 6px;
+      }
+
+      select,
+      button {
+        font-size: 14px;
+        padding: 9px 10px;
+      }
+
+      select {
+        flex: 1 1 100%;
+        min-width: 0;
+      }
+
+      .status {
+        font-size: 13px;
+      }
+
+      .viewer {
+        padding: 8px;
+      }
+
       .viewer img {
-        max-height: calc(100vh - 220px);
+        max-height: calc(100vh - 145px);
       }
 
       .msg {
         font-size: 18px;
+        padding: 20px;
       }
     }
   </style>
@@ -129,17 +152,16 @@
 <body>
   <div class="topbar">
     <div class="topbar-inner">
-      <div class="date-list" id="dateList"></div>
-
-      <div class="controls">
-        <button class="nav-btn" id="prevBtn">◀ Previous</button>
-        <button class="nav-btn" id="nextBtn">Next ▶</button>
-        <span class="status" id="statusText">Loading...</span>
+      <div class="controls-row">
+        <select id="dateSelect"></select>
+        <button id="prevBtn">◀ Previous</button>
+        <button id="nextBtn">Next ▶</button>
       </div>
+      <div class="status" id="statusText">Loading...</div>
     </div>
   </div>
 
-  <div class="viewer" id="viewer">
+  <div class="viewer">
     <img id="slide" alt="Menu" style="display:none;" />
     <div class="msg" id="msg">Loading menu...</div>
   </div>
@@ -165,7 +187,7 @@
     const slideEl = document.getElementById("slide");
     const msgEl = document.getElementById("msg");
     const statusEl = document.getElementById("statusText");
-    const dateListEl = document.getElementById("dateList");
+    const dateSelectEl = document.getElementById("dateSelect");
     const prevBtn = document.getElementById("prevBtn");
     const nextBtn = document.getElementById("nextBtn");
 
@@ -228,7 +250,7 @@
 
     function updateStatus() {
       if (!currentMenus.length) {
-        statusEl.textContent = `No menu available for ${formatDateLabel(currentDate)}`;
+        statusEl.textContent = `Menu for ${formatDateLabel(currentDate)} is not available yet.`;
         return;
       }
       const item = currentMenus[currentIndex];
@@ -241,7 +263,7 @@
         msgEl.style.display = "block";
         msgEl.innerHTML = `
           Menu for <b>${formatDateLabel(currentDate)}</b> is not available yet.
-          <span class="sub">Please select another date.</span>
+          <span class="sub">Please select another available date.</span>
         `;
         updateStatus();
         return;
@@ -254,9 +276,7 @@
     }
 
     function restartAutoPlay() {
-      if (autoTimer) {
-        clearInterval(autoTimer);
-      }
+      if (autoTimer) clearInterval(autoTimer);
       if (currentMenus.length > 1) {
         autoTimer = setInterval(() => {
           currentIndex = (currentIndex + 1) % currentMenus.length;
@@ -269,12 +289,9 @@
       currentDate = folder;
       currentIndex = 0;
       currentMenus = await loadMenusForDate(folder);
+      dateSelectEl.value = folder;
       showCurrentMenu();
       restartAutoPlay();
-
-      document.querySelectorAll(".date-btn").forEach(btn => {
-        btn.classList.toggle("active", btn.dataset.folder === folder);
-      });
     }
 
     function goPrev() {
@@ -302,19 +319,19 @@
         statusEl.textContent = "No upcoming menu";
         prevBtn.disabled = true;
         nextBtn.disabled = true;
+        dateSelectEl.disabled = true;
         return;
       }
 
-      dateListEl.innerHTML = "";
+      dateSelectEl.innerHTML = "";
       for (const folder of dateOptions) {
-        const btn = document.createElement("button");
-        btn.className = "date-btn";
-        btn.textContent = formatDateLabel(folder);
-        btn.dataset.folder = folder;
-        btn.addEventListener("click", () => selectDate(folder));
-        dateListEl.appendChild(btn);
+        const option = document.createElement("option");
+        option.value = folder;
+        option.textContent = formatDateLabel(folder);
+        dateSelectEl.appendChild(option);
       }
 
+      dateSelectEl.addEventListener("change", e => selectDate(e.target.value));
       prevBtn.addEventListener("click", goPrev);
       nextBtn.addEventListener("click", goNext);
 
