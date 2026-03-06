@@ -92,13 +92,13 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 8px;
+      padding: 6px;
       position: relative;
     }
 
     .viewer img {
       max-width: 100%;
-      max-height: calc(100vh - 130px);
+      max-height: calc(100vh - 120px);
       object-fit: contain;
       display: block;
       background: #fff;
@@ -122,22 +122,6 @@
     }
 
     @media (max-width: 768px) {
-      .topbar {
-        padding: 8px 10px;
-      }
-
-      .topbar-inner {
-        gap: 8px;
-      }
-
-      .row1 {
-        gap: 8px;
-      }
-
-      .row2 {
-        gap: 8px;
-      }
-
       select,
       button {
         font-size: 14px;
@@ -155,12 +139,8 @@
         font-size: 13px;
       }
 
-      .viewer {
-        padding: 6px;
-      }
-
       .viewer img {
-        max-height: calc(100vh - 120px);
+        max-height: calc(100vh - 118px);
       }
 
       .msg {
@@ -183,10 +163,6 @@
 
       button {
         padding: 8px 10px;
-      }
-
-      .viewer img {
-        max-height: calc(100vh - 118px);
       }
     }
   </style>
@@ -212,16 +188,6 @@
   </div>
 
   <script>
-    const availableDates = [
-      "20260306",
-      "20260307",
-      "20260308",
-      "20260309",
-      "20260310",
-      "20260311",
-      "20260312"
-    ];
-
     const menuFiles = [
       { file: "breakfast.png", label: "Breakfast" },
       { file: "lunch.png", label: "Lunch" },
@@ -257,22 +223,6 @@
       return `${d}/${m}/${y} ${weekday}`;
     }
 
-    function getNext7DaysAvailable() {
-      const result = [];
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-
-      for (let i = 0; i < 7; i++) {
-        const dt = new Date(today);
-        dt.setDate(today.getDate() + i);
-        const folder = formatDateForFolder(dt);
-        if (availableDates.includes(folder)) {
-          result.push(folder);
-        }
-      }
-      return result;
-    }
-
     function checkImage(url) {
       return new Promise(resolve => {
         const img = new Image();
@@ -291,6 +241,29 @@
         })
       );
       return checks.filter(Boolean);
+    }
+
+    async function buildDateOptions() {
+      const result = [];
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      for (let i = 0; i < 7; i++) {
+        const dt = new Date(today);
+        dt.setDate(today.getDate() + i);
+        const folder = formatDateForFolder(dt);
+        const menus = await loadMenusForDate(folder);
+
+        // 今天必须显示；未来日期只有存在至少1张图才显示
+        if (i === 0 || menus.length > 0) {
+          result.push({
+            folder,
+            hasMenu: menus.length > 0
+          });
+        }
+      }
+
+      return result;
     }
 
     function updateStatus() {
@@ -335,7 +308,7 @@
       currentMenus = await loadMenusForDate(folder);
 
       if (currentMenus.length > 1) {
-        currentIndex = 1;
+        currentIndex = 1; // 默认显示 Lunch
       } else {
         currentIndex = 0;
       }
@@ -360,12 +333,12 @@
     }
 
     async function init() {
-      const dateOptions = getNext7DaysAvailable();
+      const dateOptions = await buildDateOptions();
 
       if (!dateOptions.length) {
         msgEl.innerHTML = `
           No upcoming menu is available.
-          <span class="sub">Please upload menu images for the next 7 days.</span>
+          <span class="sub">Please upload menu images for today or the next 7 days.</span>
         `;
         statusEl.textContent = "No upcoming menu";
         prevBtn.disabled = true;
@@ -375,10 +348,10 @@
       }
 
       dateSelectEl.innerHTML = "";
-      for (const folder of dateOptions) {
+      for (const item of dateOptions) {
         const option = document.createElement("option");
-        option.value = folder;
-        option.textContent = formatDateLabel(folder);
+        option.value = item.folder;
+        option.textContent = formatDateLabel(item.folder);
         dateSelectEl.appendChild(option);
       }
 
@@ -386,7 +359,7 @@
       prevBtn.addEventListener("click", goPrev);
       nextBtn.addEventListener("click", goNext);
 
-      await selectDate(dateOptions[0]);
+      await selectDate(dateOptions[0].folder);
     }
 
     init();
