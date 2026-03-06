@@ -10,6 +10,9 @@
       --text: #222;
       --muted: #666;
       --border: #ddd;
+      --arrow-bg: rgba(0, 0, 0, 0.18);
+      --arrow-bg-hover: rgba(0, 0, 0, 0.32);
+      --arrow-color: #ffffff;
     }
 
     html, body {
@@ -32,49 +35,29 @@
       background: #fff;
       position: sticky;
       top: 0;
-      z-index: 10;
+      z-index: 20;
     }
 
     .topbar-inner {
       max-width: 1400px;
       margin: 0 auto;
       display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .row1 {
-      display: flex;
       align-items: center;
       gap: 10px;
       min-width: 0;
     }
 
-    .row2 {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    select,
-    button {
+    select {
       border: 1px solid var(--border);
       background: #fff;
       color: var(--text);
       border-radius: 8px;
       padding: 10px 12px;
       font-size: 14px;
-    }
-
-    select {
       width: 170px;
       min-width: 170px;
       max-width: 170px;
       flex: 0 0 170px;
-    }
-
-    button {
-      cursor: pointer;
     }
 
     .status {
@@ -94,15 +77,19 @@
       justify-content: center;
       padding: 6px;
       position: relative;
+      overflow: hidden;
+      touch-action: pan-y;
     }
 
     .viewer img {
       max-width: 100%;
-      max-height: calc(100vh - 120px);
+      max-height: calc(100vh - 70px);
       object-fit: contain;
       display: block;
       background: #fff;
       box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      user-select: none;
+      -webkit-user-drag: none;
     }
 
     .msg {
@@ -121,14 +108,47 @@
       margin-top: 10px;
     }
 
+    .nav-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 52px;
+      height: 72px;
+      border: none;
+      border-radius: 14px;
+      background: var(--arrow-bg);
+      color: var(--arrow-color);
+      font-size: 34px;
+      line-height: 1;
+      cursor: pointer;
+      z-index: 15;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s ease, opacity 0.2s ease;
+      user-select: none;
+    }
+
+    .nav-arrow:hover {
+      background: var(--arrow-bg-hover);
+    }
+
+    .nav-arrow.left {
+      left: 10px;
+    }
+
+    .nav-arrow.right {
+      right: 10px;
+    }
+
+    .nav-arrow.hidden {
+      display: none;
+    }
+
     @media (max-width: 768px) {
-      select,
-      button {
+      select {
         font-size: 14px;
         padding: 9px 10px;
-      }
-
-      select {
         width: 160px;
         min-width: 160px;
         max-width: 160px;
@@ -140,12 +160,18 @@
       }
 
       .viewer img {
-        max-height: calc(100vh - 118px);
+        max-height: calc(100vh - 66px);
       }
 
       .msg {
         font-size: 18px;
         padding: 20px;
+      }
+
+      .nav-arrow {
+        width: 44px;
+        height: 64px;
+        font-size: 30px;
       }
     }
 
@@ -161,8 +187,10 @@
         font-size: 12px;
       }
 
-      button {
-        padding: 8px 10px;
+      .nav-arrow {
+        width: 40px;
+        height: 58px;
+        font-size: 28px;
       }
     }
   </style>
@@ -170,21 +198,16 @@
 <body>
   <div class="topbar">
     <div class="topbar-inner">
-      <div class="row1">
-        <select id="dateSelect"></select>
-        <span class="status" id="statusText">Loading...</span>
-      </div>
-
-      <div class="row2">
-        <button id="prevBtn">◀ Previous</button>
-        <button id="nextBtn">Next ▶</button>
-      </div>
+      <select id="dateSelect"></select>
+      <span class="status" id="statusText">Loading...</span>
     </div>
   </div>
 
-  <div class="viewer">
+  <div class="viewer" id="viewer">
+    <button class="nav-arrow left" id="prevArrow" aria-label="Previous">&#8249;</button>
     <img id="slide" alt="Menu" style="display:none;" />
     <div class="msg" id="msg">Loading menu...</div>
+    <button class="nav-arrow right" id="nextArrow" aria-label="Next">&#8250;</button>
   </div>
 
   <script>
@@ -201,13 +224,16 @@
     const msgEl = document.getElementById("msg");
     const statusEl = document.getElementById("statusText");
     const dateSelectEl = document.getElementById("dateSelect");
-    const prevBtn = document.getElementById("prevBtn");
-    const nextBtn = document.getElementById("nextBtn");
+    const viewerEl = document.getElementById("viewer");
+    const prevArrow = document.getElementById("prevArrow");
+    const nextArrow = document.getElementById("nextArrow");
 
     let currentDate = null;
     let currentMenus = [];
     let currentIndex = 0;
     let autoTimer = null;
+    let touchStartX = 0;
+    let touchEndX = 0;
 
     function formatDateForFolder(date) {
       const y = date.getFullYear();
@@ -335,8 +361,7 @@
       const targetPos = slotOrder.indexOf(targetSlot);
 
       for (let i = 0; i < menus.length; i++) {
-        const slot = menus[i].slot;
-        const pos = slotOrder.indexOf(slot);
+        const pos = slotOrder.indexOf(menus[i].slot);
         if (pos === -1) continue;
 
         const clockwise = (pos - targetPos + 4) % 4;
@@ -397,6 +422,12 @@
       statusEl.textContent = `${item.label} · ${currentIndex + 1} / ${currentMenus.length}`;
     }
 
+    function updateArrowVisibility() {
+      const hasMenus = currentMenus.length > 0;
+      prevArrow.classList.toggle("hidden", !hasMenus);
+      nextArrow.classList.toggle("hidden", !hasMenus);
+    }
+
     function showCurrentMenu() {
       if (!currentMenus.length) {
         slideEl.style.display = "none";
@@ -406,6 +437,7 @@
           <span class="sub">Please select another available date.</span>
         `;
         updateStatus();
+        updateArrowVisibility();
         return;
       }
 
@@ -413,6 +445,7 @@
       slideEl.style.display = "block";
       slideEl.src = currentMenus[currentIndex].url;
       updateStatus();
+      updateArrowVisibility();
     }
 
     function restartAutoPlay() {
@@ -449,6 +482,36 @@
       restartAutoPlay();
     }
 
+    function bindSwipe() {
+      viewerEl.addEventListener("touchstart", (e) => {
+        if (!e.changedTouches || !e.changedTouches.length) return;
+        touchStartX = e.changedTouches[0].clientX;
+      }, { passive: true });
+
+      viewerEl.addEventListener("touchend", (e) => {
+        if (!e.changedTouches || !e.changedTouches.length) return;
+        touchEndX = e.changedTouches[0].clientX;
+
+        const deltaX = touchEndX - touchStartX;
+        const threshold = 40;
+
+        if (Math.abs(deltaX) < threshold) return;
+
+        if (deltaX < 0) {
+          goNext();
+        } else {
+          goPrev();
+        }
+      }, { passive: true });
+    }
+
+    function bindKeyboard() {
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowLeft") goPrev();
+        if (e.key === "ArrowRight") goNext();
+      });
+    }
+
     async function init() {
       const dateOptions = await buildDateOptions();
 
@@ -458,9 +521,9 @@
           <span class="sub">Please upload menu images for today or the next 7 days.</span>
         `;
         statusEl.textContent = "No upcoming menu";
-        prevBtn.disabled = true;
-        nextBtn.disabled = true;
         dateSelectEl.disabled = true;
+        prevArrow.classList.add("hidden");
+        nextArrow.classList.add("hidden");
         return;
       }
 
@@ -473,8 +536,11 @@
       }
 
       dateSelectEl.addEventListener("change", e => selectDate(e.target.value));
-      prevBtn.addEventListener("click", goPrev);
-      nextBtn.addEventListener("click", goNext);
+      prevArrow.addEventListener("click", goPrev);
+      nextArrow.addEventListener("click", goNext);
+
+      bindSwipe();
+      bindKeyboard();
 
       await selectDate(dateOptions[0].folder);
     }
