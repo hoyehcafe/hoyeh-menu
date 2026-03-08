@@ -9,8 +9,22 @@
   :root{
     --arrow-bg: rgba(0,0,0,0.12);
     --arrow-active: rgba(0,0,0,0.32);
+
     --design-w: 2160;
     --design-h: 3840;
+
+    /* ===== layout tuning ===== */
+    --title-top: 450px;
+    --date-top: 660px;
+
+    --breakfast-top: 1100px;
+
+    --home-top: 980px;
+    --daily-top: 2050px;
+    --noodle-top: 3120px;
+
+    --content-left: 200px;
+    --content-width: 1760px;
   }
 
   html, body {
@@ -120,13 +134,11 @@
     box-sizing: border-box;
   }
 
-  /* ========= Shared Title & Date ========= */
-
   .menu-title {
     position: absolute;
     left: 0;
     width: 100%;
-    top: 385px;
+    top: var(--title-top);
     font-family: Georgia, "Times New Roman", serif;
     font-size: 110px;
     letter-spacing: 0.12em;
@@ -138,7 +150,7 @@
     position: absolute;
     left: 0;
     width: 100%;
-    top: 575px;
+    top: var(--date-top);
     font-family: Georgia, "Times New Roman", serif;
     font-size: 84px;
     letter-spacing: 0.08em;
@@ -146,11 +158,9 @@
     font-weight: 500;
   }
 
-  /* ========= Breakfast Layout ========= */
-
   .breakfast-lines {
     position: absolute;
-    top: 1005px;
+    top: var(--breakfast-top);
     left: 250px;
     width: 1660px;
     display: flex;
@@ -162,8 +172,6 @@
     color: #3a3a3a;
     white-space: pre-wrap;
   }
-
-  /* ========= Main Meal Layout ========= */
 
   .section-title {
     font-size: 78px;
@@ -188,26 +196,24 @@
 
   .home-taste-block {
     position: absolute;
-    top: 880px;
-    left: 200px;
-    width: 1760px;
+    top: var(--home-top);
+    left: var(--content-left);
+    width: var(--content-width);
   }
 
   .daily-special-block {
     position: absolute;
-    top: 1900px;
-    left: 200px;
-    width: 1760px;
+    top: var(--daily-top);
+    left: var(--content-left);
+    width: var(--content-width);
   }
 
   .noodle-special-block {
     position: absolute;
-    top: 2930px;
-    left: 200px;
-    width: 1760px;
+    top: var(--noodle-top);
+    left: var(--content-left);
+    width: var(--content-width);
   }
-
-  /* ========= Message ========= */
 
   .msg {
     position: absolute;
@@ -231,8 +237,6 @@
     font-size: 22px;
     margin-top: 10px;
   }
-
-  /* ========= Navigation Arrows ========= */
 
   .nav-arrow {
     position: absolute;
@@ -258,8 +262,6 @@
 
   .nav-arrow.left { left: 10px; }
   .nav-arrow.right { right: 10px; }
-
-  /* ========= Small Screens ========= */
 
   @media (max-width: 768px) {
     select {
