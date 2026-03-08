@@ -9,6 +9,8 @@
   :root{
     --arrow-bg: rgba(0,0,0,0.12);
     --arrow-active: rgba(0,0,0,0.32);
+    --design-w: 2160;
+    --design-h: 3840;
   }
 
   html, body {
@@ -64,9 +66,173 @@
     justify-content: center;
     position: relative;
     overflow: hidden;
-    background: #fff;
+    background: #f5f5f5;
     touch-action: pan-y;
   }
+
+  body.kiosk .topbar {
+    display: none;
+  }
+
+  .canvas-wrap {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .design-canvas {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: calc(var(--design-w) * 1px);
+    height: calc(var(--design-h) * 1px);
+    transform: translate(-50%, -50%) scale(1);
+    transform-origin: center center;
+  }
+
+  .menu-page {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity .28s ease;
+  }
+
+  .menu-page.visible {
+    opacity: 1;
+  }
+
+  .menu-bg {
+    position: absolute;
+    inset: 0;
+    width: 2160px;
+    height: 3840px;
+    object-fit: fill;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .content-layer {
+    position: absolute;
+    inset: 0;
+    color: #333;
+    text-align: center;
+    box-sizing: border-box;
+  }
+
+  /* ========= Shared Title & Date ========= */
+
+  .menu-title {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    top: 385px;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 110px;
+    letter-spacing: 0.12em;
+    color: #383838;
+    font-weight: 500;
+  }
+
+  .menu-date {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    top: 575px;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 84px;
+    letter-spacing: 0.08em;
+    color: #3d3d3d;
+    font-weight: 500;
+  }
+
+  /* ========= Breakfast Layout ========= */
+
+  .breakfast-lines {
+    position: absolute;
+    top: 1005px;
+    left: 250px;
+    width: 1660px;
+    display: flex;
+    flex-direction: column;
+    gap: 68px;
+    font-size: 72px;
+    font-weight: 700;
+    line-height: 1.26;
+    color: #3a3a3a;
+    white-space: pre-wrap;
+  }
+
+  /* ========= Main Meal Layout ========= */
+
+  .section-title {
+    font-size: 78px;
+    font-style: italic;
+    font-weight: 700;
+    color: #383838;
+    letter-spacing: 0.02em;
+    line-height: 1.15;
+  }
+
+  .section-list {
+    margin-top: 46px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    font-size: 61px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #3a3a3a;
+    white-space: pre-wrap;
+  }
+
+  .home-taste-block {
+    position: absolute;
+    top: 880px;
+    left: 200px;
+    width: 1760px;
+  }
+
+  .daily-special-block {
+    position: absolute;
+    top: 1900px;
+    left: 200px;
+    width: 1760px;
+  }
+
+  .noodle-special-block {
+    position: absolute;
+    top: 2930px;
+    left: 200px;
+    width: 1760px;
+  }
+
+  /* ========= Message ========= */
+
+  .msg {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 900px;
+    text-align: center;
+    color: #222;
+    font-size: 34px;
+    line-height: 1.6;
+    padding: 28px 32px;
+    background: rgba(255,255,255,0.9);
+    border-radius: 14px;
+    z-index: 5;
+  }
+
+  .msg .sub {
+    display: block;
+    color: #666;
+    font-size: 22px;
+    margin-top: 10px;
+  }
+
+  /* ========= Navigation Arrows ========= */
 
   .nav-arrow {
     position: absolute;
@@ -93,155 +259,7 @@
   .nav-arrow.left { left: 10px; }
   .nav-arrow.right { right: 10px; }
 
-  body.kiosk .topbar {
-    display: none;
-  }
-
-  .canvas-wrap {
-    position: relative;
-    width: min(100vw, calc(100vh * 2160 / 3840));
-    height: min(100vh, calc(100vw * 3840 / 2160));
-    aspect-ratio: 2160 / 3840;
-    overflow: hidden;
-    background: #f7f2e9;
-  }
-
-  body:not(.kiosk) .canvas-wrap {
-    width: min(100vw, calc((100vh - 60px) * 2160 / 3840));
-    height: min(calc(100vh - 60px), calc(100vw * 3840 / 2160));
-  }
-
-  .menu-page {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    transition: opacity .35s ease;
-  }
-
-  .menu-page.visible {
-    opacity: 1;
-  }
-
-  .menu-bg {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: fill;
-    pointer-events: none;
-    user-select: none;
-  }
-
-  .content-layer {
-    position: absolute;
-    inset: 0;
-    color: #333;
-    text-align: center;
-    box-sizing: border-box;
-  }
-
-  .presented-by {
-    position: absolute;
-    top: 3.2%;
-    left: 0;
-    width: 100%;
-    font-size: 1.1%;
-    color: #444;
-    letter-spacing: 0.02em;
-  }
-
-  .menu-title {
-    position: absolute;
-    top: 10.2%;
-    left: 0;
-    width: 100%;
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: 2.7%;
-    letter-spacing: 0.12em;
-    color: #333;
-  }
-
-  .menu-date {
-    position: absolute;
-    top: 14.3%;
-    left: 0;
-    width: 100%;
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: 1.8%;
-    letter-spacing: 0.08em;
-    color: #333;
-  }
-
-  .breakfast-lines {
-    position: absolute;
-    top: 27%;
-    left: 14%;
-    width: 72%;
-    display: flex;
-    flex-direction: column;
-    gap: 2.4%;
-    font-size: 1.9%;
-    font-weight: 700;
-    line-height: 1.35;
-    white-space: pre-wrap;
-  }
-
-  .section-title {
-    font-size: 2.2%;
-    font-style: italic;
-    font-weight: 700;
-    color: #333;
-    letter-spacing: 0.02em;
-  }
-
-  .section-list {
-    margin-top: 1.4%;
-    display: flex;
-    flex-direction: column;
-    gap: 0.9%;
-    font-size: 1.7%;
-    font-weight: 700;
-    line-height: 1.28;
-    white-space: pre-wrap;
-  }
-
-  .home-taste-block {
-    position: absolute;
-    top: 25.2%;
-    left: 10%;
-    width: 80%;
-  }
-
-  .daily-special-block {
-    position: absolute;
-    top: 54.2%;
-    left: 10%;
-    width: 80%;
-  }
-
-  .noodle-special-block {
-    position: absolute;
-    top: 82.2%;
-    left: 10%;
-    width: 80%;
-  }
-
-  .msg {
-    max-width: 760px;
-    text-align: center;
-    color: #222;
-    font-size: 20px;
-    line-height: 1.6;
-    padding: 24px;
-  }
-
-  .msg .sub {
-    display: block;
-    color: #666;
-    font-size: 15px;
-    margin-top: 10px;
-  }
+  /* ========= Small Screens ========= */
 
   @media (max-width: 768px) {
     select {
@@ -253,11 +271,6 @@
 
     .status {
       font-size: 13px;
-    }
-
-    .msg {
-      font-size: 18px;
-      padding: 20px;
     }
 
     .nav-arrow {
@@ -298,8 +311,10 @@
     <button class="nav-arrow left" id="prevArrow" aria-label="Previous">&#8249;</button>
 
     <div class="canvas-wrap">
-      <div id="pageA" class="menu-page"></div>
-      <div id="pageB" class="menu-page"></div>
+      <div id="designCanvas" class="design-canvas">
+        <div id="pageA" class="menu-page"></div>
+        <div id="pageB" class="menu-page"></div>
+      </div>
       <div class="msg" id="msg">Loading menu...</div>
     </div>
 
@@ -317,6 +332,7 @@
   const msg = document.getElementById("msg");
   const pageA = document.getElementById("pageA");
   const pageB = document.getElementById("pageB");
+  const designCanvas = document.getElementById("designCanvas");
 
   let menuData = {};
   let availableDates = [];
@@ -329,6 +345,7 @@
   let lastAutoKey = "";
   let activePage = pageA;
   let standbyPage = pageB;
+  let firstRenderDone = false;
 
   function getQuery(name) {
     return new URLSearchParams(window.location.search).get(name);
@@ -347,6 +364,23 @@
   if (isKioskMode()) {
     document.body.classList.add("kiosk");
   }
+
+  function resizeCanvas() {
+    const designW = 2160;
+    const designH = 3840;
+
+    const topbarHeight = document.body.classList.contains("kiosk")
+      ? 0
+      : document.querySelector(".topbar").offsetHeight;
+
+    const availW = window.innerWidth;
+    const availH = window.innerHeight - topbarHeight;
+
+    const scale = Math.min(availW / designW, availH / designH);
+    designCanvas.style.transform = `translate(-50%, -50%) scale(${scale})`;
+  }
+
+  window.addEventListener("resize", resizeCanvas);
 
   function formatFolder(date) {
     const y = date.getFullYear();
@@ -449,7 +483,6 @@
     return `
       <img class="menu-bg" src="templates/breakfast-bg.png" alt="">
       <div class="content-layer">
-        <div class="presented-by">Presented by JR</div>
         <div class="menu-title">${escapeHtml(menu.title)}</div>
         <div class="menu-date">${escapeHtml(menu.date_text)}</div>
         <div class="breakfast-lines">
@@ -463,7 +496,6 @@
     return `
       <img class="menu-bg" src="templates/mainmeal-bg.png" alt="">
       <div class="content-layer">
-        <div class="presented-by">Presented by JR</div>
         <div class="menu-title">${escapeHtml(menu.title)}</div>
         <div class="menu-date">${escapeHtml(menu.date_text)}</div>
 
@@ -493,77 +525,10 @@
     }
   }
 
-  function swapPages(menuItem) {
-    renderMenuPage(menuItem, standbyPage);
-    standbyPage.classList.add("visible");
-    activePage.classList.remove("visible");
-
-    const temp = activePage;
-    activePage = standbyPage;
-    standbyPage = temp;
-  }
-
-  function buildMenusForDate(folder) {
-    const dayData = menuData[folder];
-    if (!dayData) return [];
-
-    const result = [];
-
-    if (dayData.breakfast) {
-      result.push({
-        slot: "breakfast",
-        label: "Breakfast",
-        data: dayData.breakfast,
-        isYesterdaySupper: false
-      });
-    }
-
-    if (dayData.lunch) {
-      result.push({
-        slot: "lunch",
-        label: "Lunch",
-        data: dayData.lunch,
-        isYesterdaySupper: false
-      });
-    }
-
-    if (dayData.dinner) {
-      result.push({
-        slot: "dinner",
-        label: "Dinner",
-        data: dayData.dinner,
-        isYesterdaySupper: false
-      });
-    }
-
-    if (dayData.supper) {
-      result.push({
-        slot: "supper",
-        label: "Supper",
-        data: dayData.supper,
-        isYesterdaySupper: false
-      });
-    }
-
-    return result;
-  }
-
-  function buildYesterdaySupper(folder) {
-    const dayData = menuData[folder];
-    if (!dayData || !dayData.supper) return null;
-
-    return {
-      slot: "supper",
-      label: "Yesterday Supper",
-      data: dayData.supper,
-      isYesterdaySupper: true
-    };
-  }
-
   function showMenu() {
     if (!currentMenus.length) {
-      activePage.classList.remove("visible");
-      standbyPage.classList.remove("visible");
+      pageA.classList.remove("visible");
+      pageB.classList.remove("visible");
       msg.style.display = "block";
       msg.innerHTML = `No menu available<span class="sub">Please select another available date.</span>`;
       statusText.textContent = "No menu available";
@@ -572,7 +537,21 @@
 
     const item = currentMenus[currentIndex];
     msg.style.display = "none";
-    swapPages(item);
+
+    if (!firstRenderDone) {
+      renderMenuPage(item, activePage);
+      activePage.classList.add("visible");
+      firstRenderDone = true;
+    } else {
+      renderMenuPage(item, standbyPage);
+      standbyPage.classList.add("visible");
+      activePage.classList.remove("visible");
+
+      const temp = activePage;
+      activePage = standbyPage;
+      standbyPage = temp;
+    }
+
     statusText.textContent = `${item.label} · ${currentIndex + 1} / ${currentMenus.length}`;
   }
 
@@ -645,6 +624,63 @@
     return result;
   }
 
+  function buildMenusForDate(folder) {
+    const dayData = menuData[folder];
+    if (!dayData) return [];
+
+    const result = [];
+
+    if (dayData.breakfast) {
+      result.push({
+        slot: "breakfast",
+        label: "Breakfast",
+        data: dayData.breakfast,
+        isYesterdaySupper: false
+      });
+    }
+
+    if (dayData.lunch) {
+      result.push({
+        slot: "lunch",
+        label: "Lunch",
+        data: dayData.lunch,
+        isYesterdaySupper: false
+      });
+    }
+
+    if (dayData.dinner) {
+      result.push({
+        slot: "dinner",
+        label: "Dinner",
+        data: dayData.dinner,
+        isYesterdaySupper: false
+      });
+    }
+
+    if (dayData.supper) {
+      result.push({
+        slot: "supper",
+        label: "Supper",
+        data: dayData.supper,
+        isYesterdaySupper: false
+      });
+    }
+
+    return result;
+  }
+
+  function buildYesterdaySupper(folder) {
+    const dayData = menuData[folder];
+    if (!dayData || !dayData.supper) return null;
+
+    return {
+      slot: "supper",
+      label: "Yesterday Supper",
+      data: dayData.supper,
+      isYesterdaySupper: true
+    };
+  }
+
   async function selectDate(folder) {
     currentDate = folder;
 
@@ -693,6 +729,7 @@
 
       dateSelect.onchange = () => selectDate(dateSelect.value);
 
+      resizeCanvas();
       await selectDate(availableDates[0]);
 
       const now = getNowInfo();
