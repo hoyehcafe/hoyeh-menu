@@ -1,0 +1,90 @@
+{
+  "20260308": {
+    "breakfast": {
+      "date_text": "8/3/2026",
+      "title": "BREAKFAST MENU",
+      "lines": [
+        "White / Wholemeal Bread with Assorted Spreads",
+        "Assorted Cereals with Milk",
+        "Loh Mai Kai",
+        "Yam Cake",
+        "Char Siew Pau"
+      ]
+    },
+    "lunch": {
+      "date_text": "8/3/2026",
+      "title": "LUNCH MENU",
+      "homeTasteTitle": "HOMETASTE DAILY SELECTION",
+      "homeTaste": [
+        "Fried Chicken Wings",
+        "Ginger Onion Sliced Beef",
+        "Sweet & Sour Veg Prawns",
+        "Stew Potato and Black Pepper",
+        "Fried Potato Cake",
+        "Seafood Tofu"
+      ],
+      "dailySpecialTitle": "DAILY SPECIAL",
+      "dailySpecial": [
+        "Mala Xiang Guo",
+        "Assorted Salads",
+        "(4 selections with Italian Salad Dressing & Vinaigrette)",
+        "Xian Cai Veg Soup",
+        "Assorted Fruits"
+      ],
+      "noodleSpecialTitle": "NOODLE SPECIAL",
+      "noodleSpecial": [
+        "Prawn Mee"
+      ]
+    },
+    "dinner": {
+      "date_text": "8/3/2026",
+      "title": "DINNER MENU",
+      "homeTasteTitle": "HOMETASTE DAILY SELECTION",
+      "homeTaste": [
+        "Black Pepper Chicken",
+        "Curry Fish Fillet",
+        "Veg Chicken Drumstick",
+        "Stir Fry Long Cabbage",
+        "Oyster Chye Sim",
+        "Potato Samosa"
+      ],
+      "dailySpecialTitle": "DAILY SPECIAL",
+      "dailySpecial": [
+        "Seafood Mee Goreng",
+        "Assorted Salads",
+        "(4 selections with Italian Salad Dressing & Vinaigrette)",
+        "Szechuan Vegetable Soup",
+        "Barley Beancurd"
+      ],
+      "noodleSpecialTitle": "NOODLE SPECIAL",
+      "noodleSpecial": [
+        "Kuey Chap"
+      ]
+    },
+    "supper": {
+      "date_text": "8/3/2026",
+      "title": "SUPPER MENU",
+      "homeTasteTitle": "HOMETASTE DAILY SELECTION",
+      "homeTaste": [
+        "Fried Chicken Wings",
+        "Ginger Onion Sliced Beef",
+        "Sweet & Sour Veg Prawns",
+        "Lady Finger with Sambal Sauce",
+        "Stew Potato and Black Pepper",
+        "Seafood Tofu"
+      ],
+      "dailySpecialTitle": "DAILY SPECIAL",
+      "dailySpecial": [
+        "Mala Xiang Guo",
+        "Assorted Salads",
+        "(4 selections with Italian Salad Dressing & Vinaigrette)",
+        "Szechuan Vegetable Soup",
+        "Barley Beancurd"
+      ],
+      "noodleSpecialTitle": "NOODLE SPECIAL",
+      "noodleSpecial": [
+        "Prawn Mee"
+      ]
+    }
+  }
+}
