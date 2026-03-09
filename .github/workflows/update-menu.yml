@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'source/**'
+      - 'source/*.xlsx'
       - 'scripts/excel_to_json.py'
       - '.github/workflows/update-menu.yml'
   workflow_dispatch:
