@@ -1,96 +1,4 @@
 {
-  "20260308": {
-    "breakfast": {
-      "date_text": "08/03/2026",
-      "lines": [
-        "White/ Wholemeal Bread w Assorted Spreads",
-        "Assorted Cereal w Milk",
-        "Fried Laksa Bee Hoon",
-        "Hash Brown",
-        "Chicken Nugget"
-      ],
-      "title": "BREAKFAST MENU"
-    },
-    "lunch": {
-      "dailySpecial": [
-        "Thai Green Curry Chicke Rice",
-        "4 x Salads (Thousand Island and Vinaigrette)",
-        "Seaweed Soup",
-        "Assorted Fruits"
-      ],
-      "dailySpecialTitle": "DAILY SPECIAL",
-      "date_text": "08/03/2026",
-      "homeTaste": [
-        "Sambal Chicken",
-        "Sweet & Sour Fish",
-        "Tofu Stew w Oyster Sauce",
-        "Sauteed Cauliflower",
-        "Stir Fry Beijing Cabbage",
-        "Fried Onion Egg"
-      ],
-      "homeTasteTitle": "HOMETASTE DAILY SELECTION",
-      "noodleSpecial": [
-        "Mee Siam"
-      ],
-      "noodleSpecialTitle": "NOODLE SPECIAL",
-      "title": "LUNCH MENU"
-    },
-    "dinner": {
-      "dailySpecial": [
-        "Nasi Kunyit W Rendang Chicken Drumstick",
-        "4 x Salads (Thousand Island and Vinaigrette)",
-        "Seaweed Soup",
-        "Assorted Fruits"
-      ],
-      "dailySpecialTitle": "DAILY SPECIAL",
-      "date_text": "08/03/2026",
-      "homeTaste": [
-        "Yakitori Chicken",
-        "Garlic Steamed Fish",
-        "Thai Style Tofu",
-        "Oyster Garlic Eggplant",
-        "Chicken Ngoh Hiang",
-        "Beancurd Roll"
-      ],
-      "homeTasteTitle": "HOMETASTE DAILY SELECTION",
-      "noodleSpecial": [
-        "Wanton Noodle"
-      ],
-      "noodleSpecialTitle": "NOODLE SPECIAL",
-      "title": "DINNER MENU"
-    },
-    "supper": {
-      "dailySpecial": [
-        "Thai Green Curry Chicke Rice",
-        "4 x Salads (Thousand Island and Vinaigrette)",
-        "Seaweed Soup"
-      ],
-      "dailySpecialTitle": "DAILY SPECIAL",
-      "date_text": "08/03/2026",
-      "homeTaste": [
-        "Sambal Chicken",
-        "Sweet & Sour Fish",
-        "Tofu Stew w Oyster Sauce",
-        "Sauteed Cauliflower",
-        "Stir Fry Beijing Cabbage",
-        "Fried Onion Egg"
-      ],
-      "homeTasteTitle": "HOMETASTE DAILY SELECTION",
-      "noodleSpecial": [
-        "Chicken Bolognese"
-      ],
-      "noodleSpecialTitle": "NOODLE SPECIAL",
-      "title": "SUPPER MENU"
-    },
-    "vegetarian": {
-      "date_text": "08/03/2026",
-      "title": "VEGETARIAN MENU",
-      "lines": [
-        "Assorted Fruits"
-      ],
-      "raw_text": "Assorted Fruits"
-    }
-  },
   "20260309": {
     "breakfast": {
       "date_text": "09/03/2026",
@@ -201,7 +109,7 @@
     "lunch": {
       "dailySpecial": [
         "Pouched Chicken w Szechuan Sauce w Rice",
-        "4 x Salads (Caesar and Vinaigrette )",
+        "4 x Salads (Caesar and Vinaigrette)",
         "Cabbage Soup",
         "Assorted Fruits"
       ],
@@ -225,7 +133,7 @@
     "dinner": {
       "dailySpecial": [
         "Szechuan Spicy Fish with Rice",
-        "4 x Salads (Caesar and Vinaigrette )",
+        "4 x Salads (Caesar and Vinaigrette)",
         "Cabbage Soup",
         "Assorted Fruits"
       ],
@@ -260,7 +168,7 @@
         "Eggplant in Garlic Sauce",
         "Stir Fry Beijing Cabbage",
         "Fried Fish Balls",
-        "4 x Salads (Caesar and Vinaigrette )"
+        "4 x Salads (Caesar and Vinaigrette)"
       ],
       "homeTasteTitle": "HOMETASTE DAILY SELECTION",
       "noodleSpecial": [
