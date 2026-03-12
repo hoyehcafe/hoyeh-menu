@@ -488,7 +488,7 @@
 
   function buildBreakfastPage(menu) {
     return `
-      <img class="menu-bg" src="templates/breakfast-bg.jpg" alt="">
+      <img class="menu-bg" src="templates/breakfast-bg.png" alt="">
       <div class="content-layer">
         <div class="menu-title">${escapeHtml(menu.title || "")}</div>
         <div class="menu-date">${escapeHtml(menu.date_text || "")}</div>
@@ -501,7 +501,7 @@
 
   function buildMainMealPage(menu) {
     return `
-      <img class="menu-bg" src="templates/mainmeal-bg.jpg" alt="">
+      <img class="menu-bg" src="templates/mainmeal-bg.png" alt="">
       <div class="content-layer">
         <div class="menu-title">${escapeHtml(menu.title || "")}</div>
         <div class="menu-date">${escapeHtml(menu.date_text || "")}</div>
@@ -616,8 +616,8 @@
 
   async function preloadTemplateImages() {
     const results = await Promise.all([
-      preloadImage("templates/breakfast-bg.jpg"),
-      preloadImage("templates/mainmeal-bg.jpg")
+      preloadImage("templates/breakfast-bg.png"),
+      preloadImage("templates/mainmeal-bg.png")
     ]);
     return results.every(Boolean);
   }
