@@ -9,22 +9,26 @@
   :root{
     --arrow-bg: rgba(0,0,0,0.12);
     --arrow-active: rgba(0,0,0,0.32);
-  
+
     --design-w: 2160;
     --design-h: 3840;
-  
+
     /* ===== layout tuning ===== */
     --title-top: 450px;
     --date-top: 660px;
-  
+
     --breakfast-top: 1100px;
-  
+
     --home-top: 930px;
     --daily-top: 1960px;
     --noodle-top: 2815px;
-  
+
     --content-left: 235px;
     --content-width: 1720px;
+
+    --qr-caption-top: 3450px;
+    --qr-caption-left: 0px;
+    --qr-caption-width: 2160px;
   }
 
   html, body {
@@ -218,6 +222,19 @@
     top: var(--noodle-top);
     left: var(--content-left);
     width: var(--content-width);
+  }
+
+  .qr-caption {
+    position: absolute;
+    top: var(--qr-caption-top);
+    left: var(--qr-caption-left);
+    width: var(--qr-caption-width);
+    text-align: center;
+    font-size: 42px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    line-height: 1.1;
+    color: #2f2f2f;
   }
 
   .msg {
@@ -520,6 +537,8 @@
           <div class="section-title">${escapeHtml(menu.noodleSpecialTitle || "")}</div>
           <div class="section-list">${createListHtml(menu.noodleSpecial)}</div>
         </div>
+
+        <div class="qr-caption">SCAN HERE TO VIEW OUR WEEKLY MENU</div>
       </div>
     `;
   }
