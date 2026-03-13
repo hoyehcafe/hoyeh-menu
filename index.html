@@ -26,9 +26,15 @@
     --content-left: 235px;
     --content-width: 1720px;
 
-    --qr-caption-top: 3540px;
+    --qr-top: 3145px;
+    --qr-size: 430px;
+
+    --qr-caption-top: 3625px;
     --qr-caption-left: 0px;
     --qr-caption-width: 2160px;
+
+    --footer-top: 3728px;
+    --footer-height: 90px;
   }
 
   html, body {
@@ -224,6 +230,22 @@
     width: var(--content-width);
   }
 
+  .qr-box {
+    position: absolute;
+    left: 50%;
+    top: var(--qr-top);
+    width: var(--qr-size);
+    height: var(--qr-size);
+    transform: translateX(-50%);
+  }
+
+  .qr-box img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
   .qr-caption {
     position: absolute;
     top: var(--qr-caption-top);
@@ -235,6 +257,29 @@
     letter-spacing: 0.01em;
     line-height: 1.05;
     color: #2f2f2f;
+  }
+
+  .menu-footer {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    top: var(--footer-top);
+    height: var(--footer-height);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 34px;
+    font-weight: 700;
+    line-height: 1.25;
+    color: #2f2f2f;
+    letter-spacing: 0.01em;
+    padding: 0 140px;
+    box-sizing: border-box;
+  }
+
+  body:not(.kiosk) .tv-only {
+    display: none;
   }
 
   .msg {
@@ -505,20 +550,21 @@
 
   function buildBreakfastPage(menu) {
     return `
-      <img class="menu-bg" src="templates/breakfast-bg.png?v=2" alt="">
+      <img class="menu-bg" src="breakfast-bg.png?v=3" alt="">
       <div class="content-layer">
         <div class="menu-title">${escapeHtml(menu.title || "")}</div>
         <div class="menu-date">${escapeHtml(menu.date_text || "")}</div>
         <div class="breakfast-lines">
           ${createListHtml(menu.lines)}
         </div>
+        <div class="menu-footer">*All Lunch, Dinner &amp; Supper: White Rice included<br>24/7 Beverages: Assorted Beverages</div>
       </div>
     `;
   }
 
   function buildMainMealPage(menu) {
     return `
-      <img class="menu-bg" src="templates/mainmeal-bg.png?v=2" alt="">
+      <img class="menu-bg" src="mainmeal-bg.png?v=3" alt="">
       <div class="content-layer">
         <div class="menu-title">${escapeHtml(menu.title || "")}</div>
         <div class="menu-date">${escapeHtml(menu.date_text || "")}</div>
@@ -538,7 +584,11 @@
           <div class="section-list">${createListHtml(menu.noodleSpecial)}</div>
         </div>
 
-        <div class="qr-caption">SCAN HERE TO VIEW OUR WEEKLY MENU</div>
+        <div class="qr-box tv-only">
+          <img src="Hoyehmenu-QR.png?v=1" alt="Hoyeh Menu QR Code">
+        </div>
+        <div class="qr-caption tv-only">SCAN HERE TO VIEW OUR MENU</div>
+        <div class="menu-footer">*All Lunch, Dinner &amp; Supper: White Rice included<br>24/7 Beverages: Assorted Beverages</div>
       </div>
     `;
   }
@@ -635,8 +685,9 @@
 
   async function preloadTemplateImages() {
     const results = await Promise.all([
-      preloadImage("templates/breakfast-bg.png?v=2"),
-      preloadImage("templates/mainmeal-bg.png?v=2")
+      preloadImage("breakfast-bg.png?v=3"),
+      preloadImage("mainmeal-bg.png?v=3"),
+      preloadImage("Hoyehmenu-QR.png?v=1")
     ]);
     return results.every(Boolean);
   }
