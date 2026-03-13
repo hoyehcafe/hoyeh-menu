@@ -13,7 +13,7 @@
     --design-w: 2160;
     --design-h: 3840;
 
-    /* ===== layout tuning ===== */
+    /* ===== layout tuning for 2160x3840 portrait TV ===== */
     --title-top: 450px;
     --date-top: 660px;
 
@@ -26,10 +26,11 @@
     --content-left: 235px;
     --content-width: 1720px;
 
-    --qr-top: 3145px;
-    --qr-size: 430px;
+    /* ===== QR / footer tuned ===== */
+    --qr-top: 3050px;
+    --qr-size: 360px;
 
-    --qr-caption-top: 3625px;
+    --qr-caption-top: 3450px;
     --qr-caption-left: 0px;
     --qr-caption-width: 2160px;
 
@@ -252,9 +253,9 @@
     left: var(--qr-caption-left);
     width: var(--qr-caption-width);
     text-align: center;
-    font-size: 58px;
+    font-size: 64px;
     font-weight: 700;
-    letter-spacing: 0.01em;
+    letter-spacing: 0.02em;
     line-height: 1.05;
     color: #2f2f2f;
   }
@@ -550,7 +551,7 @@
 
   function buildBreakfastPage(menu) {
     return `
-      <img class="menu-bg" src="templates/breakfast-bg.png?v=3" alt="">
+      <img class="menu-bg" src="${window.BREAKFAST_BG_SRC}" alt="">
       <div class="content-layer">
         <div class="menu-title">${escapeHtml(menu.title || "")}</div>
         <div class="menu-date">${escapeHtml(menu.date_text || "")}</div>
@@ -564,7 +565,7 @@
 
   function buildMainMealPage(menu) {
     return `
-      <img class="menu-bg" src="templates/mainmeal-bg.png?v=3" alt="">
+      <img class="menu-bg" src="${window.MAINMEAL_BG_SRC}" alt="">
       <div class="content-layer">
         <div class="menu-title">${escapeHtml(menu.title || "")}</div>
         <div class="menu-date">${escapeHtml(menu.date_text || "")}</div>
@@ -585,7 +586,7 @@
         </div>
 
         <div class="qr-box tv-only">
-          <img src="templates/Hoyehmenu-QR.png?v=1" alt="Hoyeh Menu QR Code">
+          <img src="${window.QR_SRC}" alt="Hoyeh Menu QR Code">
         </div>
         <div class="qr-caption tv-only">SCAN HERE TO VIEW OUR MENU</div>
         <div class="menu-footer">*All Lunch, Dinner &amp; Supper: White Rice included<br>24/7 Beverages: Assorted Beverages</div>
@@ -683,13 +684,45 @@
     });
   }
 
+  window.BREAKFAST_BG_SRC = "";
+  window.MAINMEAL_BG_SRC = "";
+  window.QR_SRC = "";
+
+  async function resolveImageSource(candidates) {
+    for (const src of candidates) {
+      if (await preloadImage(src)) return src;
+    }
+    return null;
+  }
+
   async function preloadTemplateImages() {
-    const results = await Promise.all([
-      preloadImage("templates/breakfast-bg.png?v=3"),
-      preloadImage("templates/mainmeal-bg.png?v=3"),
-      preloadImage("templates/Hoyehmenu-QR.png?v=1")
+    const breakfastSrc = await resolveImageSource([
+      "templates/breakfast-bg.png?v=6",
+      "templates/breakfast-bg.jpg?v=6",
+      "breakfast-bg.png?v=6",
+      "breakfast-bg.jpg?v=6"
     ]);
-    return results.every(Boolean);
+
+    const mainmealSrc = await resolveImageSource([
+      "templates/mainmeal-bg.png?v=6",
+      "templates/mainmeal-bg.jpg?v=6",
+      "mainmeal-bg.png?v=6",
+      "mainmeal-bg.jpg?v=6"
+    ]);
+
+    const qrSrc = await resolveImageSource([
+      "Hoyehmenu-QR.png?v=6",
+      "templates/Hoyehmenu-QR.png?v=6"
+    ]);
+
+    if (!breakfastSrc || !mainmealSrc || !qrSrc) {
+      return false;
+    }
+
+    window.BREAKFAST_BG_SRC = breakfastSrc;
+    window.MAINMEAL_BG_SRC = mainmealSrc;
+    window.QR_SRC = qrSrc;
+    return true;
   }
 
   async function loadJsonData() {
@@ -814,7 +847,7 @@
 
       const templateReady = await preloadTemplateImages();
       if (!templateReady) {
-        throw new Error("Failed to load template background images");
+        throw new Error("Failed to load template background images or QR image");
       }
 
       await loadJsonData();
