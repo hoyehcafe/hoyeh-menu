@@ -550,7 +550,7 @@
 
   function buildBreakfastPage(menu) {
     return `
-      <img class="menu-bg" src="breakfast-bg.png?v=3" alt="">
+      <img class="menu-bg" src="templates/breakfast-bg.png?v=3" alt="">
       <div class="content-layer">
         <div class="menu-title">${escapeHtml(menu.title || "")}</div>
         <div class="menu-date">${escapeHtml(menu.date_text || "")}</div>
@@ -564,7 +564,7 @@
 
   function buildMainMealPage(menu) {
     return `
-      <img class="menu-bg" src="mainmeal-bg.png?v=3" alt="">
+      <img class="menu-bg" src="templates/mainmeal-bg.png?v=3" alt="">
       <div class="content-layer">
         <div class="menu-title">${escapeHtml(menu.title || "")}</div>
         <div class="menu-date">${escapeHtml(menu.date_text || "")}</div>
@@ -585,7 +585,7 @@
         </div>
 
         <div class="qr-box tv-only">
-          <img src="Hoyehmenu-QR.png?v=1" alt="Hoyeh Menu QR Code">
+          <img src="templates/Hoyehmenu-QR.png?v=1" alt="Hoyeh Menu QR Code">
         </div>
         <div class="qr-caption tv-only">SCAN HERE TO VIEW OUR MENU</div>
         <div class="menu-footer">*All Lunch, Dinner &amp; Supper: White Rice included<br>24/7 Beverages: Assorted Beverages</div>
@@ -685,9 +685,9 @@
 
   async function preloadTemplateImages() {
     const results = await Promise.all([
-      preloadImage("breakfast-bg.png?v=3"),
-      preloadImage("mainmeal-bg.png?v=3"),
-      preloadImage("Hoyehmenu-QR.png?v=1")
+      preloadImage("templates/breakfast-bg.png?v=3"),
+      preloadImage("templates/mainmeal-bg.png?v=3"),
+      preloadImage("templates/Hoyehmenu-QR.png?v=1")
     ]);
     return results.every(Boolean);
   }
