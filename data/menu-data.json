@@ -1,99 +1,4 @@
 {
-  "20260530": {
-    "breakfast": {
-      "date_text": "30/05/2026",
-      "lines": [
-        "White/ Wholemeal Bread w Assorted Spreads",
-        "Assorted Cereal w Milk",
-        "Chwee Kueh",
-        "Cai Poh",
-        "Mini Sesame Ball"
-      ],
-      "title": "BREAKFAST MENU"
-    },
-    "lunch": {
-      "dailySpecial": [
-        "Bak Kut Teh with Rice",
-        "4 x Salads (Roasted Sesame and Vinaigrette)",
-        "Egg Drop Soup",
-        "Green Bean Soup"
-      ],
-      "dailySpecialTitle": "DAILY SPECIAL",
-      "date_text": "30/05/2026",
-      "homeTaste": [
-        "Szechuan Kungbo Chicken",
-        "Braised Fish Fillet",
-        "Braised Mushroom with Tofu",
-        "Lady Finger with Sambal",
-        "Egg Plant with Black Bean Sauce",
-        "Seafood Ring"
-      ],
-      "homeTasteTitle": "HOMETASTE DAILY SELECTION",
-      "noodleSpecial": [
-        "Ban Mee"
-      ],
-      "noodleSpecialTitle": "NOODLE SPECIAL",
-      "title": "LUNCH MENU"
-    },
-    "dinner": {
-      "dailySpecial": [
-        "Maggi Goreng with Chicken Wing",
-        "4 x Salads (Roasted Sesame and Vinaigrette)",
-        "Egg Drop Soup",
-        "Green Bean Soup"
-      ],
-      "dailySpecialTitle": "DAILY SPECIAL",
-      "date_text": "30/05/2026",
-      "homeTaste": [
-        "Salted Egg Chicken",
-        "Breaded Fish",
-        "Sambal Tofu",
-        "Lady Finger with Dried Chilli",
-        "Stew Potato and Black Fungus",
-        "Steamed Egg"
-      ],
-      "homeTasteTitle": "HOMETASTE DAILY SELECTION",
-      "noodleSpecial": [
-        "Lor Mee"
-      ],
-      "noodleSpecialTitle": "NOODLE SPECIAL",
-      "title": "DINNER MENU"
-    },
-    "supper": {
-      "dailySpecial": [
-        "Bak Kut Teh with Rice",
-        "Egg Drop Soup",
-        "Green Bean Soup"
-      ],
-      "dailySpecialTitle": "DAILY SPECIAL",
-      "date_text": "30/05/2026",
-      "homeTaste": [
-        "Szechuan Kungbo Chicken",
-        "Braised Fish Fillet",
-        "Lady Finger with Sambal",
-        "Egg Plant with Black Bean Sauce",
-        "Seafood Ring",
-        "4 x Salads (Roasted Sesame and Vinaigrette)"
-      ],
-      "homeTasteTitle": "HOMETASTE DAILY SELECTION",
-      "noodleSpecial": [
-        "Ban Mee"
-      ],
-      "noodleSpecialTitle": "NOODLE SPECIAL",
-      "title": "SUPPER MENU"
-    },
-    "vegetarian": {
-      "date_text": "30/05/2026",
-      "title": "VEGETARIAN MENU",
-      "lines": [
-        "Jasmine Rice",
-        "Stir-Fry Tofu with Soy",
-        "Stir-Fry Ginger Cabbage",
-        "Mock Fried Spring Rolls"
-      ],
-      "raw_text": "1.Jasmine Rice\n2.Stir-Fry Tofu with Soy\n3. Stir-Fry Ginger Cabbage\n4.Mock Fried Spring Rolls"
-    }
-  },
   "20260531": {
     "breakfast": {
       "date_text": "31/05/2026",
@@ -393,7 +298,7 @@
     },
     "lunch": {
       "dailySpecial": [
-        "Soya Chicken Rice",
+        "Fish Burger W/fries",
         "4 x Salads (Creamy Garlic Dressingand Vinaigrette )",
         "White Radish Soup",
         "Assorted Fruits"
@@ -441,7 +346,7 @@
     },
     "supper": {
       "dailySpecial": [
-        "Soya Chicken Rice",
+        "Fish Burger W/fries",
         "White Radish Soup",
         "Assorted Fruits"
       ],
