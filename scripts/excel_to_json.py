@@ -213,6 +213,138 @@ def format_date_key(dt: date) -> str:
     return dt.strftime("%Y%m%d")
 
 
+def normalize_repo_path(path_text: str) -> str:
+    normalized = path_text.replace("\\", "/").strip()
+    while normalized.startswith("./"):
+        normalized = normalized[2:]
+    return normalized
+
+
+def is_source_excel_path(path_text: str) -> bool:
+    normalized = normalize_repo_path(path_text)
+    filename = Path(normalized).name
+    return (
+        normalized.startswith("source/")
+        and normalized.lower().endswith(".xlsx")
+        and not filename.startswith("~$")
+    )
+
+
+def existing_source_excel_path(path_text: str) -> Path | None:
+    if not is_source_excel_path(path_text):
+        return None
+
+    path = Path(normalize_repo_path(path_text))
+    if path.exists() and path.is_file():
+        return path
+
+    return None
+
+
+def find_excel_file_from_github_event() -> str | None:
+    """
+    In GitHub Actions, checkout file mtimes are unreliable. Prefer the workbook
+    that actually appeared in the push event so a newly uploaded menu wins.
+    """
+    event_path = os.environ.get("GITHUB_EVENT_PATH", "").strip()
+    if not event_path:
+        return None
+
+    try:
+        with open(event_path, "r", encoding="utf-8") as f:
+            event = json.load(f)
+    except Exception as e:
+        log_warning(f"Unable to read GitHub event payload '{event_path}': {e}")
+        return None
+
+    added_candidates = []
+    modified_candidates = []
+
+    commits = event.get("commits") or []
+    if not commits and isinstance(event.get("head_commit"), dict):
+        commits = [event["head_commit"]]
+
+    for commit in commits:
+        if not isinstance(commit, dict):
+            continue
+
+        for path_text in commit.get("added", []) or []:
+            if is_source_excel_path(path_text):
+                added_candidates.append(path_text)
+
+        for path_text in commit.get("modified", []) or []:
+            if is_source_excel_path(path_text):
+                modified_candidates.append(path_text)
+
+    changed_candidates = added_candidates or modified_candidates
+    for path_text in reversed(changed_candidates):
+        path = existing_source_excel_path(path_text)
+        if path is not None:
+            log_info(f"Using Excel file from GitHub push event: {path}")
+            return str(path)
+
+    if changed_candidates:
+        names = ", ".join(normalize_repo_path(p) for p in changed_candidates)
+        log_warning(f"GitHub event referenced Excel file(s) not found after checkout: {names}")
+
+    return None
+
+
+def read_workbook_date_span(excel_path: Path) -> tuple[date, date] | None:
+    try:
+        wb = load_workbook(excel_path, data_only=True, read_only=True)
+    except Exception as e:
+        log_warning(f"Unable to inspect dates in '{excel_path}': {e}")
+        return None
+
+    try:
+        dates = []
+        week_sheets = [name for name in wb.sheetnames if name.strip().lower().startswith("week")]
+        for sheet_name in week_sheets:
+            ws = wb[sheet_name]
+            for col in range(START_COL, END_COL + 1):
+                cell_ref = f"{excel_col_letter(col)}{DATE_HEADER_ROW}"
+                value = ws.cell(DATE_HEADER_ROW, col).value
+                if value is None:
+                    continue
+                try:
+                    dates.append(parse_excel_date(value, sheet_name, cell_ref))
+                except ValidationError:
+                    continue
+
+        if not dates:
+            return None
+
+        return min(dates), max(dates)
+    finally:
+        wb.close()
+
+
+def find_latest_source_excel_file(source_candidates: list[Path]) -> str:
+    dated_candidates = []
+
+    for path in source_candidates:
+        span = read_workbook_date_span(path)
+        if span is not None:
+            first_date, last_date = span
+            dated_candidates.append((last_date, first_date, path.name.lower(), path))
+
+    if dated_candidates:
+        last_date, _, _, latest_file = max(dated_candidates)
+        log_info(
+            f"Using Excel file from source/ with latest menu date "
+            f"{format_date_text(last_date)}: {latest_file}"
+        )
+        return str(latest_file)
+
+    latest_file = max(source_candidates, key=lambda p: p.stat().st_mtime)
+    log_warning(
+        "Could not read menu dates from source/ workbooks; "
+        f"falling back to filesystem modified time: {latest_file}"
+    )
+    return str(latest_file)
+
+
 def validate_sheet_structure(ws):
     # Required labels
     for cell_ref, expected in REQUIRED_LABELS.items():
@@ -367,9 +499,10 @@ def find_excel_file() -> str:
     """
     Priority:
     1. MENU_EXCEL_FILE env var
-    2. latest .xlsx file in source/
-    3. menu.xlsx in repo root
-    4. single .xlsx in repo root
+    2. .xlsx file uploaded/modified in the current GitHub push event
+    3. source/ .xlsx file with the latest menu dates
+    4. menu.xlsx in repo root
+    5. single .xlsx in repo root
     """
     # Priority 1: env var
     env_path = os.environ.get("MENU_EXCEL_FILE", "").strip()
@@ -378,7 +511,12 @@ def find_excel_file() -> str:
             return env_path
         raise ValidationError(f"MENU_EXCEL_FILE is set but file not found: {env_path}")
 
-    # Priority 2: latest .xlsx in source/
+    # Priority 2: workbook from the current GitHub push event
+    github_event_file = find_excel_file_from_github_event()
+    if github_event_file:
+        return github_event_file
+
+    # Priority 3: source/ workbook with the latest menu date
     source_dir = Path("source")
     if source_dir.exists() and source_dir.is_dir():
         source_candidates = [
@@ -386,16 +524,14 @@ def find_excel_file() -> str:
             if not p.name.startswith("~$")
         ]
         if source_candidates:
-            latest_file = max(source_candidates, key=lambda p: p.stat().st_mtime)
-            log_info(f"Using latest Excel file from source/: {latest_file}")
-            return str(latest_file)
+            return find_latest_source_excel_file(source_candidates)
 
-    # Priority 3: menu.xlsx in repo root
+    # Priority 4: menu.xlsx in repo root
     preferred = Path("menu.xlsx")
     if preferred.exists():
         return str(preferred)
 
-    # Priority 4: single .xlsx file in repo root
+    # Priority 5: single .xlsx file in repo root
     root_candidates = [
         p for p in Path(".").glob("*.xlsx")
         if not p.name.startswith("~$")
