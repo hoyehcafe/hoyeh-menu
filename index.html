@@ -393,6 +393,7 @@
 
 <script>
   const SLOT_ORDER = ["breakfast", "lunch", "dinner", "supper"];
+  const DATE_KEY_RE = /^\d{8}$/;
 
   const dateSelect = document.getElementById("dateSelect");
   const statusText = document.getElementById("statusText");
@@ -588,7 +589,7 @@
         <div class="qr-box tv-only">
           <img src="${window.QR_SRC}" alt="Hoyeh Menu QR Code">
         </div>
-        <div class="qr-caption tv-only">SCAN HERE TO VIEW OUR WEEKLY MENU</div>
+        <div class="qr-caption tv-only">SCAN HERE TO VIEW OUR MONTHLY MENU</div>
         <div class="menu-footer">*All Lunch, Dinner &amp; Supper: White Rice & Brown Rice included<br>24/7 Beverages: Assorted Beverages</div>
       </div>
     `;
@@ -732,20 +733,19 @@
   }
 
   function buildAvailableDates() {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    return Object.keys(menuData)
+      .filter(folder => DATE_KEY_RE.test(folder) && menuData[folder])
+      .sort();
+  }
 
-    const result = [];
-    for (let i = 0; i < 7; i++) {
-      const d = new Date(today);
-      d.setDate(today.getDate() + i);
-      const folder = formatFolder(d);
+  function chooseInitialDate() {
+    const now = getNowInfo();
+    if (availableDates.includes(now.todayFolder)) return now.todayFolder;
 
-      if (i === 0 || menuData[folder]) {
-        result.push(folder);
-      }
-    }
-    return result;
+    const nextDate = availableDates.find(folder => folder > now.todayFolder);
+    if (nextDate) return nextDate;
+
+    return availableDates[availableDates.length - 1] || null;
   }
 
   function buildMenusForDate(folder) {
@@ -867,7 +867,14 @@
       });
 
       designCanvas.classList.add("ready");
-      await selectDate(availableDates[0]);
+
+      const initialDate = chooseInitialDate();
+      if (!initialDate) {
+        throw new Error("No dates found in menu-data.json");
+      }
+
+      dateSelect.value = initialDate;
+      await selectDate(initialDate);
 
       const now = getNowInfo();
       lastAutoKey = preferredSlot(now.seconds) + (now.early ? "y" : "");
