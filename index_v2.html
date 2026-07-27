@@ -430,10 +430,293 @@
       font-size: 28px;
     }
   }
+
+  .config-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    overflow: auto;
+    background: #f4f6f8;
+    color: #222;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .config-shell {
+    width: min(920px, calc(100% - 32px));
+    margin: 32px auto;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.12);
+    padding: 28px;
+    box-sizing: border-box;
+  }
+
+  .config-title {
+    margin: 0;
+    font-size: 30px;
+    line-height: 1.2;
+  }
+
+  .config-subtitle {
+    margin: 8px 0 24px;
+    color: #666;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .config-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .config-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .config-field.full {
+    grid-column: 1 / -1;
+  }
+
+  .config-field label {
+    font-size: 14px;
+    font-weight: 700;
+    color: #333;
+  }
+
+  .config-field select,
+  .config-field input {
+    width: 100%;
+    min-width: 0;
+    border: 1px solid #ccd2d8;
+    border-radius: 10px;
+    padding: 12px 13px;
+    font-size: 15px;
+    background: #fff;
+    box-sizing: border-box;
+  }
+
+  .config-check-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 44px;
+  }
+
+  .config-check-row input {
+    width: 20px;
+    height: 20px;
+    margin: 0;
+  }
+
+  .config-url-box {
+    width: 100%;
+    min-height: 92px;
+    resize: vertical;
+    border: 1px solid #ccd2d8;
+    border-radius: 10px;
+    padding: 12px 13px;
+    font-size: 14px;
+    line-height: 1.5;
+    box-sizing: border-box;
+    background: #f9fafb;
+  }
+
+  .config-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 22px;
+  }
+
+  .config-button {
+    border: 0;
+    border-radius: 10px;
+    padding: 12px 18px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .config-button.primary {
+    background: #9c7424;
+    color: #fff;
+  }
+
+  .config-button.secondary {
+    background: #e9edf1;
+    color: #222;
+  }
+
+  .config-button.linklike {
+    background: #fff;
+    border: 1px solid #ccd2d8;
+    color: #333;
+  }
+
+  .config-status {
+    margin-top: 14px;
+    min-height: 22px;
+    font-size: 14px;
+    color: #4f6b2b;
+  }
+
+  .config-help {
+    margin-top: 28px;
+    border-top: 1px solid #e3e6e8;
+    padding-top: 22px;
+  }
+
+  .config-help h2 {
+    font-size: 20px;
+    margin: 0 0 12px;
+  }
+
+  .config-help table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  .config-help th,
+  .config-help td {
+    border-bottom: 1px solid #e8ebee;
+    padding: 10px 8px;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .config-help code {
+    background: #f2f4f6;
+    padding: 2px 5px;
+    border-radius: 5px;
+  }
+
+  @media (max-width: 700px) {
+    .config-shell {
+      width: min(100% - 20px, 920px);
+      margin: 10px auto;
+      padding: 20px;
+      border-radius: 14px;
+    }
+
+    .config-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .config-field.full {
+      grid-column: auto;
+    }
+
+    .config-actions {
+      flex-direction: column;
+    }
+
+    .config-button {
+      width: 100%;
+    }
+
+    .config-help {
+      overflow-x: auto;
+    }
+  }
+
 </style>
 </head>
 
 <body>
+
+  <div id="configScreen" class="config-screen" hidden>
+    <div class="config-shell">
+      <h1 class="config-title">Hoyeh Menu Configuration</h1>
+      <p class="config-subtitle">
+        Choose the settings below, then open or copy the generated menu URL.
+      </p>
+
+      <div class="config-grid">
+        <div class="config-field">
+          <label for="cfgMode">Display mode</label>
+          <select id="cfgMode">
+            <option value="">Auto</option>
+            <option value="1">TV / Kiosk</option>
+            <option value="0">Mobile / Desktop</option>
+          </select>
+        </div>
+
+        <div class="config-field">
+          <label for="cfgSlot">Meal</label>
+          <select id="cfgSlot">
+            <option value="">Auto</option>
+            <option value="breakfast">Breakfast</option>
+            <option value="lunch">Lunch</option>
+            <option value="dinner">Dinner</option>
+            <option value="supper">Supper</option>
+          </select>
+        </div>
+
+        <div class="config-field">
+          <label for="cfgMonth">Month</label>
+          <select id="cfgMonth">
+            <option value="">Current rolling menu</option>
+          </select>
+        </div>
+
+        <div class="config-field">
+          <label for="cfgDate">Date</label>
+          <select id="cfgDate">
+            <option value="">Auto</option>
+          </select>
+        </div>
+
+        <div class="config-field">
+          <label>Feedback</label>
+          <div class="config-check-row">
+            <input type="checkbox" id="cfgFeedback">
+            <span>Force feedback enabled</span>
+          </div>
+        </div>
+
+        <div class="config-field">
+          <label for="cfgFeedbackStart">Feedback start date</label>
+          <input id="cfgFeedbackStart" type="date">
+        </div>
+
+        <div class="config-field full">
+          <label for="cfgUrl">Generated URL</label>
+          <textarea id="cfgUrl" class="config-url-box" readonly></textarea>
+        </div>
+      </div>
+
+      <div class="config-actions">
+        <button id="cfgOpen" class="config-button primary" type="button">Open Menu</button>
+        <button id="cfgCopy" class="config-button secondary" type="button">Copy URL</button>
+        <button id="cfgReset" class="config-button linklike" type="button">Reset</button>
+      </div>
+
+      <div id="cfgStatus" class="config-status"></div>
+
+      <div class="config-help">
+        <h2>Parameter Reference</h2>
+        <table>
+          <thead>
+            <tr><th>Parameter</th><th>Example</th><th>Purpose</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>config=1</code></td><td><code>?config=1</code></td><td>Open this configuration page.</td></tr>
+            <tr><td><code>kiosk</code></td><td><code>?kiosk=1</code></td><td>Force TV/kiosk mode. Use <code>0</code> for mobile/desktop.</td></tr>
+            <tr><td><code>month</code></td><td><code>?month=202604</code></td><td>Show only dates from a selected month.</td></tr>
+            <tr><td><code>date</code></td><td><code>?date=20260415</code></td><td>Open a specific date.</td></tr>
+            <tr><td><code>slot</code></td><td><code>?slot=lunch</code></td><td>Open breakfast, lunch, dinner, or supper.</td></tr>
+            <tr><td><code>feedback</code></td><td><code>?feedback=1</code></td><td>Force feedback on. Use <code>0</code> to force it off.</td></tr>
+            <tr><td><code>feedbackStart</code></td><td><code>?feedbackStart=20260801</code></td><td>Override the feedback activation date.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
   <div class="topbar">
     <div class="topbar-inner">
       <select id="dateSelect"></select>
@@ -498,6 +781,8 @@
   const requestedSlot = getQuery("slot");
   const feedbackOverride = getQuery("feedback");
   const feedbackStartOverride = getQuery("feedbackStart");
+
+  const configMode = getQuery("config") === "1" || getQuery("help") === "1";
 
   function isValidDateKey(value) {
     if (!DATE_KEY_RE.test(value || "")) return false;
@@ -1033,6 +1318,175 @@
     await selectDate(currentDate);
   }
 
+
+  function yyyymmddToInput(value) {
+    if (!isValidDateKey(value)) return "";
+    return `${value.slice(0, 4)}-${value.slice(4, 6)}-${value.slice(6, 8)}`;
+  }
+
+  function inputToYyyymmdd(value) {
+    return String(value || "").replaceAll("-", "");
+  }
+
+  function monthLabel(monthKey) {
+    const y = monthKey.slice(0, 4);
+    const m = monthKey.slice(4, 6);
+    const dt = new Date(`${y}-${m}-01T00:00:00`);
+    return dt.toLocaleDateString("en-GB", { month: "long", year: "numeric" });
+  }
+
+  function buildConfiguredUrl() {
+    const url = new URL(window.location.href);
+    url.search = "";
+
+    const mode = document.getElementById("cfgMode").value;
+    const slot = document.getElementById("cfgSlot").value;
+    const month = document.getElementById("cfgMonth").value;
+    const date = document.getElementById("cfgDate").value;
+    const feedback = document.getElementById("cfgFeedback").checked;
+    const feedbackStart = inputToYyyymmdd(
+      document.getElementById("cfgFeedbackStart").value
+    );
+
+    if (mode) url.searchParams.set("kiosk", mode);
+    if (month) url.searchParams.set("month", month);
+    if (date) url.searchParams.set("date", date);
+    if (slot) url.searchParams.set("slot", slot);
+    if (feedback) url.searchParams.set("feedback", "1");
+    if (feedbackStart) url.searchParams.set("feedbackStart", feedbackStart);
+
+    return url.toString();
+  }
+
+  function updateConfigUrl() {
+    const url = buildConfiguredUrl();
+    document.getElementById("cfgUrl").value = url;
+    return url;
+  }
+
+  function updateConfigDates() {
+    const selectedMonth = document.getElementById("cfgMonth").value;
+    const dateSelectEl = document.getElementById("cfgDate");
+    const previous = dateSelectEl.value;
+
+    dateSelectEl.innerHTML = '<option value="">Auto</option>';
+
+    const filteredDates = selectedMonth
+      ? availableDates.filter(d => d.startsWith(selectedMonth))
+      : availableDates;
+
+    filteredDates.forEach(d => {
+      const option = document.createElement("option");
+      option.value = d;
+      option.textContent = formatLabel(d);
+      dateSelectEl.appendChild(option);
+    });
+
+    if (filteredDates.includes(previous)) {
+      dateSelectEl.value = previous;
+    }
+
+    updateConfigUrl();
+  }
+
+  async function initConfigMode() {
+    document.getElementById("configScreen").hidden = false;
+    document.querySelector(".topbar").style.display = "none";
+    document.getElementById("viewer").style.display = "none";
+    document.body.style.display = "block";
+    document.body.style.overflow = "auto";
+
+    try {
+      const res = await fetch(`data/menu-data-full.json?v=${Date.now()}`);
+      if (!res.ok) throw new Error("Failed to load menu-data-full.json");
+
+      const fullData = await res.json();
+      menuData = fullData;
+      availableDates = Object.keys(fullData)
+        .filter(d => DATE_KEY_RE.test(d) && fullData[d])
+        .sort();
+
+      const months = [...new Set(availableDates.map(d => d.slice(0, 6)))].sort().reverse();
+      const monthSelect = document.getElementById("cfgMonth");
+
+      months.forEach(m => {
+        const option = document.createElement("option");
+        option.value = m;
+        option.textContent = monthLabel(m);
+        monthSelect.appendChild(option);
+      });
+
+      document.getElementById("cfgMode").value = getQuery("kiosk") || "";
+      document.getElementById("cfgSlot").value = getQuery("slot") || "";
+      document.getElementById("cfgMonth").value = getQuery("month") || "";
+      document.getElementById("cfgFeedback").checked = getQuery("feedback") === "1";
+      document.getElementById("cfgFeedbackStart").value = yyyymmddToInput(
+        getQuery("feedbackStart") || CONFIG.feedbackStartDate
+      );
+
+      updateConfigDates();
+
+      const requestedConfigDate = getQuery("date");
+      if (requestedConfigDate && availableDates.includes(requestedConfigDate)) {
+        document.getElementById("cfgDate").value = requestedConfigDate;
+      }
+
+      updateConfigUrl();
+
+      const watchedIds = [
+        "cfgMode",
+        "cfgSlot",
+        "cfgMonth",
+        "cfgDate",
+        "cfgFeedback",
+        "cfgFeedbackStart"
+      ];
+
+      watchedIds.forEach(id => {
+        const el = document.getElementById(id);
+        el.addEventListener("change", () => {
+          if (id === "cfgMonth") updateConfigDates();
+          else updateConfigUrl();
+        });
+        el.addEventListener("input", updateConfigUrl);
+      });
+
+      document.getElementById("cfgOpen").addEventListener("click", () => {
+        window.open(updateConfigUrl(), "_blank", "noopener");
+      });
+
+      document.getElementById("cfgCopy").addEventListener("click", async () => {
+        const url = updateConfigUrl();
+        const status = document.getElementById("cfgStatus");
+        try {
+          await navigator.clipboard.writeText(url);
+          status.textContent = "URL copied.";
+        } catch {
+          document.getElementById("cfgUrl").select();
+          document.execCommand("copy");
+          status.textContent = "URL copied.";
+        }
+      });
+
+      document.getElementById("cfgReset").addEventListener("click", () => {
+        document.getElementById("cfgMode").value = "";
+        document.getElementById("cfgSlot").value = "";
+        document.getElementById("cfgMonth").value = "";
+        document.getElementById("cfgDate").value = "";
+        document.getElementById("cfgFeedback").checked = false;
+        document.getElementById("cfgFeedbackStart").value =
+          yyyymmddToInput(CONFIG.feedbackStartDate);
+        updateConfigDates();
+        document.getElementById("cfgStatus").textContent = "";
+      });
+
+    } catch (err) {
+      document.getElementById("cfgStatus").textContent =
+        `Unable to load configuration data: ${err.message}`;
+      console.error(err);
+    }
+  }
+
   async function init() {
     try {
       msg.style.display = "block";
@@ -1084,7 +1538,11 @@
     }
   }
 
-  init();
+  if (configMode) {
+    initConfigMode();
+  } else {
+    init();
+  }
 </script>
 </body>
 </html>
