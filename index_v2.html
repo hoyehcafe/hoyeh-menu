@@ -273,6 +273,57 @@
     gap: 0;
   }
 
+  .mobile-feedback {
+    position: absolute;
+    left: 50%;
+    top: 3180px;
+    width: 1320px;
+    transform: translateX(-50%);
+    text-align: center;
+  }
+
+  .mobile-feedback-title {
+    font-size: 72px;
+    font-weight: 700;
+    line-height: 1.15;
+    color: #2f2f2f;
+  }
+
+  .mobile-feedback-text {
+    margin-top: 24px;
+    font-size: 46px;
+    font-weight: 600;
+    line-height: 1.25;
+    color: #555;
+  }
+
+  .mobile-feedback-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 720px;
+    min-height: 130px;
+    margin-top: 42px;
+    padding: 18px 70px;
+    border-radius: 28px;
+    background: #9c7424;
+    color: #fff;
+    text-decoration: none;
+    font-size: 54px;
+    font-weight: 700;
+    line-height: 1.1;
+    box-sizing: border-box;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.18);
+  }
+
+  .mobile-feedback-button:active {
+    transform: translateY(3px);
+  }
+
+  body.kiosk .mobile-only {
+    display: none;
+  }
+
   .menu-footer {
     position: absolute;
     left: 0;
@@ -407,7 +458,8 @@
 <script>
   const CONFIG = {
     feedbackStartDate: "20260801",
-    feedbackQrFile: "Hoyehfeedback-QR.png"
+    feedbackQrFile: "Hoyehfeedback-QR.png",
+    feedbackUrl: "https://hoyehfeedback.jrgroup.com.sg/"
   };
 
   const SLOT_ORDER = ["breakfast", "lunch", "dinner", "supper"];
@@ -606,23 +658,11 @@
     return (items || []).map(x => `<div>${escapeHtml(x)}</div>`).join("");
   }
 
-  function buildBreakfastPage(menu) {
-    return `
-      <img class="menu-bg" src="${window.BREAKFAST_BG_SRC}" alt="">
-      <div class="content-layer">
-        <div class="menu-title">${escapeHtml(menu.title || "")}</div>
-        <div class="menu-date">${escapeHtml(menu.date_text || "")}</div>
-        <div class="breakfast-lines">
-          ${createListHtml(menu.lines)}
-        </div>
-        <div class="menu-footer">*All Lunch, Dinner &amp; Supper: White Rice & Brown Rice included<br>24/7 Beverages: Assorted Beverages</div>
-      </div>
-    `;
-  }
+  function buildEngagementSection() {
+    const showFeedback = feedbackEnabled();
+    const showFeedbackQr = showFeedback && Boolean(window.FEEDBACK_QR_SRC);
 
-  function buildMainMealPage(menu) {
-    const showFeedback = feedbackEnabled() && window.FEEDBACK_QR_SRC;
-    const feedbackQrHtml = showFeedback
+    const feedbackQrHtml = showFeedbackQr
       ? `
         <div class="qr-item">
           <div class="qr-box">
@@ -633,6 +673,51 @@
       `
       : "";
 
+    const mobileFeedbackHtml = showFeedback
+      ? `
+        <div class="mobile-feedback mobile-only">
+          <div class="mobile-feedback-title">GIVE US FEEDBACK</div>
+          <div class="mobile-feedback-text">Help us improve our menu and service.</div>
+          <a
+            class="mobile-feedback-button"
+            href="${CONFIG.feedbackUrl}"
+            target="_blank"
+            rel="noopener noreferrer"
+          >SUBMIT FEEDBACK</a>
+        </div>
+      `
+      : "";
+
+    return `
+      <div class="qr-row tv-only ${showFeedbackQr ? "" : "single"}">
+        <div class="qr-item">
+          <div class="qr-box">
+            <img src="${window.QR_SRC}" alt="Hoyeh Menu QR Code">
+          </div>
+          <div class="qr-caption">VIEW MONTHLY MENU</div>
+        </div>
+        ${feedbackQrHtml}
+      </div>
+      ${mobileFeedbackHtml}
+    `;
+  }
+
+  function buildBreakfastPage(menu) {
+    return `
+      <img class="menu-bg" src="${window.BREAKFAST_BG_SRC}" alt="">
+      <div class="content-layer">
+        <div class="menu-title">${escapeHtml(menu.title || "")}</div>
+        <div class="menu-date">${escapeHtml(menu.date_text || "")}</div>
+        <div class="breakfast-lines">
+          ${createListHtml(menu.lines)}
+        </div>
+        ${buildEngagementSection()}
+        <div class="menu-footer">*All Lunch, Dinner &amp; Supper: White Rice & Brown Rice included<br>24/7 Beverages: Assorted Beverages</div>
+      </div>
+    `;
+  }
+
+  function buildMainMealPage(menu) {
     return `
       <img class="menu-bg" src="${window.MAINMEAL_BG_SRC}" alt="">
       <div class="content-layer">
@@ -654,16 +739,7 @@
           <div class="section-list">${createListHtml(menu.noodleSpecial)}</div>
         </div>
 
-        <div class="qr-row tv-only ${showFeedback ? "" : "single"}">
-          <div class="qr-item">
-            <div class="qr-box">
-              <img src="${window.QR_SRC}" alt="Hoyeh Menu QR Code">
-            </div>
-            <div class="qr-caption">VIEW MONTHLY MENU</div>
-          </div>
-          ${feedbackQrHtml}
-        </div>
-
+        ${buildEngagementSection()}
         <div class="menu-footer">*All Lunch, Dinner &amp; Supper: White Rice & Brown Rice included<br>24/7 Beverages: Assorted Beverages</div>
       </div>
     `;
@@ -773,29 +849,29 @@
 
   async function preloadTemplateImages() {
     const breakfastSrc = await resolveImageSource([
-      "templates/breakfast-bg.png?v=6",
-      "templates/breakfast-bg.jpg?v=6",
-      "breakfast-bg.png?v=6",
-      "breakfast-bg.jpg?v=6"
+      "templates/breakfast-bg.png?v=8",
+      "templates/breakfast-bg.jpg?v=8",
+      "breakfast-bg.png?v=8",
+      "breakfast-bg.jpg?v=8"
     ]);
 
     const mainmealSrc = await resolveImageSource([
-      "templates/mainmeal-bg.png?v=6",
-      "templates/mainmeal-bg.jpg?v=6",
-      "mainmeal-bg.png?v=6",
-      "mainmeal-bg.jpg?v=6"
+      "templates/mainmeal-bg.png?v=8",
+      "templates/mainmeal-bg.jpg?v=8",
+      "mainmeal-bg.png?v=8",
+      "mainmeal-bg.jpg?v=8"
     ]);
 
     const qrSrc = await resolveImageSource([
-      "Hoyehmenu-QR.png?v=7",
-      "templates/Hoyehmenu-QR.png?v=7"
+      "Hoyehmenu-QR.png?v=8",
+      "templates/Hoyehmenu-QR.png?v=8"
     ]);
 
     let feedbackQrSrc = null;
     if (feedbackEnabled()) {
       feedbackQrSrc = await resolveImageSource([
-        `${CONFIG.feedbackQrFile}?v=7`,
-        `templates/${CONFIG.feedbackQrFile}?v=7`
+        `${CONFIG.feedbackQrFile}?v=8`,
+        `templates/${CONFIG.feedbackQrFile}?v=8`
       ]);
     }
 
@@ -804,7 +880,10 @@
     }
 
     if (feedbackEnabled() && !feedbackQrSrc) {
-      throw new Error(`Failed to load ${CONFIG.feedbackQrFile}`);
+      console.warn(
+        `Feedback QR image not found: ${CONFIG.feedbackQrFile}. ` +
+        "The menu will continue loading; kiosk mode will show only the menu QR."
+      );
     }
 
     window.BREAKFAST_BG_SRC = breakfastSrc;
