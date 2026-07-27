@@ -276,12 +276,38 @@ def find_excel_file_from_github_event() -> str | None:
             if is_source_excel_path(path_text):
                 modified_candidates.append(path_text)
 
-    changed_candidates = added_candidates or modified_candidates
-    for path_text in reversed(changed_candidates):
+    # Combine added and modified Excel files. Do not use `or` here: if both
+    # lists contain files, `or` would ignore every modified file.
+    changed_candidates = added_candidates + modified_candidates
+
+    # Resolve existing paths and de-duplicate while preserving event order.
+    existing_candidates = []
+    seen_paths = set()
+
+    for path_text in changed_candidates:
         path = existing_source_excel_path(path_text)
-        if path is not None:
-            log_info(f"Using Excel file from GitHub push event: {path}")
-            return str(path)
+        if path is None:
+            continue
+
+        normalized = normalize_repo_path(str(path))
+        if normalized in seen_paths:
+            continue
+
+        seen_paths.add(normalized)
+        existing_candidates.append(path)
+
+    if existing_candidates:
+        # If several workbooks changed in the same push, choose the one whose
+        # menu contents contain the latest date. This is deterministic and is
+        # more meaningful than relying on event ordering or checkout mtimes.
+        if len(existing_candidates) == 1:
+            selected = existing_candidates[0]
+            log_info(f"Using Excel file from GitHub push event: {selected}")
+            return str(selected)
+
+        selected = find_latest_source_excel_file(existing_candidates)
+        log_info(f"Using Excel file selected from GitHub push event candidates: {selected}")
+        return selected
 
     if changed_candidates:
         names = ", ".join(normalize_repo_path(p) for p in changed_candidates)
@@ -337,12 +363,12 @@ def find_latest_source_excel_file(source_candidates: list[Path]) -> str:
         )
         return str(latest_file)
 
-    latest_file = max(source_candidates, key=lambda p: p.stat().st_mtime)
-    log_warning(
-        "Could not read menu dates from source/ workbooks; "
-        f"falling back to filesystem modified time: {latest_file}"
+    names = ", ".join(sorted(p.name for p in source_candidates))
+    raise ValidationError(
+        "Could not determine menu dates from any source/ workbook. "
+        "Refusing to select by filesystem modified time because GitHub Actions "
+        f"checkout mtimes are unreliable. Candidate files: {names}"
     )
-    return str(latest_file)
 
 
 def validate_sheet_structure(ws):
@@ -664,5 +690,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-
 
