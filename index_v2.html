@@ -486,6 +486,12 @@
     color: #333;
   }
 
+  .config-field small {
+    color: #6a7178;
+    font-size: 12px;
+    line-height: 1.35;
+  }
+
   .config-field select,
   .config-field input {
     width: 100%;
@@ -664,6 +670,12 @@
         </div>
 
         <div class="config-field">
+          <label for="cfgDays">Visible days</label>
+          <input id="cfgDays" type="number" min="1" max="60" step="1" value="7">
+          <small id="cfgDaysHint">Used when no month or specific date is selected.</small>
+        </div>
+
+        <div class="config-field">
           <label for="cfgDate">Date</label>
           <select id="cfgDate">
             <option value="">Auto</option>
@@ -706,8 +718,9 @@
           <tbody>
             <tr><td><code>config=1</code></td><td><code>?config=1</code></td><td>Open this configuration page.</td></tr>
             <tr><td><code>kiosk</code></td><td><code>?kiosk=1</code></td><td>Force TV/kiosk mode. Use <code>0</code> for mobile/desktop.</td></tr>
-            <tr><td><code>month</code></td><td><code>?month=202604</code></td><td>Show only dates from a selected month.</td></tr>
-            <tr><td><code>date</code></td><td><code>?date=20260415</code></td><td>Open a specific date.</td></tr>
+            <tr><td><code>month</code></td><td><code>?month=202604</code></td><td>Show all available dates from a selected month. This overrides <code>days</code>.</td></tr>
+            <tr><td><code>days</code></td><td><code>?days=14</code></td><td>Limit the rolling menu to 1–60 available dates. The default is 7.</td></tr>
+            <tr><td><code>date</code></td><td><code>?date=20260415</code></td><td>Open a specific date. This overrides the rolling day limit.</td></tr>
             <tr><td><code>slot</code></td><td><code>?slot=lunch</code></td><td>Open breakfast, lunch, dinner, or supper.</td></tr>
             <tr><td><code>feedback</code></td><td><code>?feedback=1</code></td><td>Force feedback on. Use <code>0</code> to force it off.</td></tr>
             <tr><td><code>feedbackStart</code></td><td><code>?feedbackStart=20260801</code></td><td>Override the feedback activation date.</td></tr>
@@ -740,6 +753,8 @@
 
 <script>
   const CONFIG = {
+    defaultVisibleDays: 7,
+    maxVisibleDays: 60,
     feedbackStartDate: "20260801",
     feedbackQrFile: "Hoyehfeedback-QR.png",
     feedbackUrl: "https://hoyehfeedback.jrgroup.com.sg/"
@@ -779,6 +794,7 @@
   const requestedMonth = getQuery("month");
   const requestedDate = getQuery("date");
   const requestedSlot = getQuery("slot");
+  const requestedDaysRaw = getQuery("days");
   const feedbackOverride = getQuery("feedback");
   const feedbackStartOverride = getQuery("feedbackStart");
 
@@ -797,6 +813,21 @@
     if (!MONTH_KEY_RE.test(value || "")) return false;
     const m = Number(value.slice(4, 6));
     return m >= 1 && m <= 12;
+  }
+
+  function getVisibleDays() {
+    if (requestedDaysRaw === null || requestedDaysRaw === "") {
+      return CONFIG.defaultVisibleDays;
+    }
+
+    const value = Number(requestedDaysRaw);
+    if (!Number.isInteger(value) || value < 1 || value > CONFIG.maxVisibleDays) {
+      throw new Error(
+        `Invalid days parameter. Use a whole number from 1 to ${CONFIG.maxVisibleDays}.`
+      );
+    }
+
+    return value;
   }
 
   function todayKey() {
@@ -1191,7 +1222,15 @@
       throw new Error("Invalid slot parameter. Use breakfast, lunch, dinner, or supper.");
     }
 
-    const useFullData = Boolean(requestedMonth || requestedDate);
+    // Validate days even when it will be ignored by month/date mode.
+    getVisibleDays();
+
+    const customDaysRequested =
+      requestedDaysRaw !== null &&
+      requestedDaysRaw !== "" &&
+      Number(requestedDaysRaw) !== CONFIG.defaultVisibleDays;
+
+    const useFullData = Boolean(requestedMonth || requestedDate || customDaysRequested);
     const jsonFile = useFullData ? "menu-data-full.json" : "menu-data.json";
     const res = await fetch(`data/${jsonFile}?v=${Date.now()}`);
 
@@ -1200,13 +1239,29 @@
   }
 
   function buildAvailableDates() {
-    return Object.keys(menuData)
+    const allDates = Object.keys(menuData)
       .filter(folder => {
         if (!DATE_KEY_RE.test(folder) || !menuData[folder]) return false;
         if (requestedMonth && !folder.startsWith(requestedMonth)) return false;
         return true;
       })
       .sort();
+
+    // A specific month or date takes priority over the rolling day limit.
+    if (requestedMonth || requestedDate) {
+      return allDates;
+    }
+
+    const visibleDays = getVisibleDays();
+    const today = todayKey();
+    const currentAndFuture = allDates.filter(folder => folder >= today);
+
+    if (currentAndFuture.length > 0) {
+      return currentAndFuture.slice(0, visibleDays);
+    }
+
+    // If the data contains only past menus, show the latest available dates.
+    return allDates.slice(-visibleDays);
   }
 
   function chooseInitialDate() {
@@ -1343,13 +1398,26 @@
     const slot = document.getElementById("cfgSlot").value;
     const month = document.getElementById("cfgMonth").value;
     const date = document.getElementById("cfgDate").value;
+    const days = Number(document.getElementById("cfgDays").value);
     const feedback = document.getElementById("cfgFeedback").checked;
     const feedbackStart = inputToYyyymmdd(
       document.getElementById("cfgFeedbackStart").value
     );
 
+    const safeDays = Number.isInteger(days)
+      ? Math.min(CONFIG.maxVisibleDays, Math.max(1, days))
+      : CONFIG.defaultVisibleDays;
+
+    if (document.getElementById("cfgDays").value !== String(safeDays)) {
+      document.getElementById("cfgDays").value = String(safeDays);
+    }
+
     if (mode) url.searchParams.set("kiosk", mode);
-    if (month) url.searchParams.set("month", month);
+    if (month) {
+      url.searchParams.set("month", month);
+    } else if (!date && Number.isInteger(days) && safeDays !== CONFIG.defaultVisibleDays) {
+      url.searchParams.set("days", String(safeDays));
+    }
     if (date) url.searchParams.set("date", date);
     if (slot) url.searchParams.set("slot", slot);
     if (feedback) url.searchParams.set("feedback", "1");
@@ -1362,6 +1430,20 @@
     const url = buildConfiguredUrl();
     document.getElementById("cfgUrl").value = url;
     return url;
+  }
+
+  function updateDaysControlState() {
+    const monthSelected = Boolean(document.getElementById("cfgMonth").value);
+    const dateSelected = Boolean(document.getElementById("cfgDate").value);
+    const daysInput = document.getElementById("cfgDays");
+    const hint = document.getElementById("cfgDaysHint");
+
+    daysInput.disabled = monthSelected || dateSelected;
+    hint.textContent = monthSelected
+      ? "Ignored because a month is selected."
+      : dateSelected
+        ? "Ignored because a specific date is selected."
+        : `Used for the rolling menu. Default: ${CONFIG.defaultVisibleDays} days.`;
   }
 
   function updateConfigDates() {
@@ -1386,6 +1468,7 @@
       dateSelectEl.value = previous;
     }
 
+    updateDaysControlState();
     updateConfigUrl();
   }
 
@@ -1419,6 +1502,8 @@
       document.getElementById("cfgMode").value = getQuery("kiosk") || "";
       document.getElementById("cfgSlot").value = getQuery("slot") || "";
       document.getElementById("cfgMonth").value = getQuery("month") || "";
+      document.getElementById("cfgDays").value =
+        getQuery("days") || String(CONFIG.defaultVisibleDays);
       document.getElementById("cfgFeedback").checked = getQuery("feedback") === "1";
       document.getElementById("cfgFeedbackStart").value = yyyymmddToInput(
         getQuery("feedbackStart") || CONFIG.feedbackStartDate
@@ -1437,6 +1522,7 @@
         "cfgMode",
         "cfgSlot",
         "cfgMonth",
+        "cfgDays",
         "cfgDate",
         "cfgFeedback",
         "cfgFeedbackStart"
@@ -1445,8 +1531,12 @@
       watchedIds.forEach(id => {
         const el = document.getElementById(id);
         el.addEventListener("change", () => {
-          if (id === "cfgMonth") updateConfigDates();
-          else updateConfigUrl();
+          if (id === "cfgMonth") {
+            updateConfigDates();
+          } else {
+            if (id === "cfgDate") updateDaysControlState();
+            updateConfigUrl();
+          }
         });
         el.addEventListener("input", updateConfigUrl);
       });
@@ -1472,6 +1562,7 @@
         document.getElementById("cfgMode").value = "";
         document.getElementById("cfgSlot").value = "";
         document.getElementById("cfgMonth").value = "";
+        document.getElementById("cfgDays").value = String(CONFIG.defaultVisibleDays);
         document.getElementById("cfgDate").value = "";
         document.getElementById("cfgFeedback").checked = false;
         document.getElementById("cfgFeedbackStart").value =
