@@ -27,12 +27,10 @@
     --content-width: 1720px;
 
     /* ===== QR / footer tuned ===== */
-    --qr-top: 3125px;
-    --qr-size: 360px;
-
-    --qr-caption-top: 3535px;
-    --qr-caption-left: 0px;
-    --qr-caption-width: 2160px;
+    --qr-top: 3110px;
+    --qr-size: 300px;
+    --qr-gap: 250px;
+    --qr-row-width: 1500px;
 
     --footer-top: 3680px;
     --footer-height: 90px;
@@ -231,13 +229,27 @@
     width: var(--content-width);
   }
 
-  .qr-box {
+  .qr-row {
     position: absolute;
-    left: 50%;
     top: var(--qr-top);
+    left: 50%;
+    width: var(--qr-row-width);
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: var(--qr-gap);
+  }
+
+  .qr-item {
+    width: 430px;
+    text-align: center;
+  }
+
+  .qr-box {
     width: var(--qr-size);
     height: var(--qr-size);
-    transform: translateX(-50%);
+    margin: 0 auto;
   }
 
   .qr-box img {
@@ -248,16 +260,68 @@
   }
 
   .qr-caption {
-    position: absolute;
-    top: var(--qr-caption-top);
-    left: var(--qr-caption-left);
-    width: var(--qr-caption-width);
+    margin-top: 30px;
     text-align: center;
-    font-size: 64px;
+    font-size: 48px;
     font-weight: 700;
     letter-spacing: 0.02em;
-    line-height: 1.05;
+    line-height: 1.08;
     color: #2f2f2f;
+  }
+
+  .qr-row.single {
+    gap: 0;
+  }
+
+  .mobile-feedback {
+    position: absolute;
+    left: 50%;
+    top: 3180px;
+    width: 1320px;
+    transform: translateX(-50%);
+    text-align: center;
+  }
+
+  .mobile-feedback-title {
+    font-size: 72px;
+    font-weight: 700;
+    line-height: 1.15;
+    color: #2f2f2f;
+  }
+
+  .mobile-feedback-text {
+    margin-top: 24px;
+    font-size: 46px;
+    font-weight: 600;
+    line-height: 1.25;
+    color: #555;
+  }
+
+  .mobile-feedback-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 720px;
+    min-height: 130px;
+    margin-top: 42px;
+    padding: 18px 70px;
+    border-radius: 28px;
+    background: #9c7424;
+    color: #fff;
+    text-decoration: none;
+    font-size: 54px;
+    font-weight: 700;
+    line-height: 1.1;
+    box-sizing: border-box;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.18);
+  }
+
+  .mobile-feedback-button:active {
+    transform: translateY(3px);
+  }
+
+  body.kiosk .mobile-only {
+    display: none;
   }
 
   .menu-footer {
@@ -366,10 +430,306 @@
       font-size: 28px;
     }
   }
+
+  .config-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    overflow: auto;
+    background: #f4f6f8;
+    color: #222;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .config-shell {
+    width: min(920px, calc(100% - 32px));
+    margin: 32px auto;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.12);
+    padding: 28px;
+    box-sizing: border-box;
+  }
+
+  .config-title {
+    margin: 0;
+    font-size: 30px;
+    line-height: 1.2;
+  }
+
+  .config-subtitle {
+    margin: 8px 0 24px;
+    color: #666;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .config-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .config-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .config-field.full {
+    grid-column: 1 / -1;
+  }
+
+  .config-field label {
+    font-size: 14px;
+    font-weight: 700;
+    color: #333;
+  }
+
+  .config-field small {
+    color: #6a7178;
+    font-size: 12px;
+    line-height: 1.35;
+  }
+
+  .config-field select,
+  .config-field input {
+    width: 100%;
+    min-width: 0;
+    border: 1px solid #ccd2d8;
+    border-radius: 10px;
+    padding: 12px 13px;
+    font-size: 15px;
+    background: #fff;
+    box-sizing: border-box;
+  }
+
+  .config-check-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 44px;
+  }
+
+  .config-check-row input {
+    width: 20px;
+    height: 20px;
+    margin: 0;
+  }
+
+  .config-url-box {
+    width: 100%;
+    min-height: 92px;
+    resize: vertical;
+    border: 1px solid #ccd2d8;
+    border-radius: 10px;
+    padding: 12px 13px;
+    font-size: 14px;
+    line-height: 1.5;
+    box-sizing: border-box;
+    background: #f9fafb;
+  }
+
+  .config-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 22px;
+  }
+
+  .config-button {
+    border: 0;
+    border-radius: 10px;
+    padding: 12px 18px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .config-button.primary {
+    background: #9c7424;
+    color: #fff;
+  }
+
+  .config-button.secondary {
+    background: #e9edf1;
+    color: #222;
+  }
+
+  .config-button.linklike {
+    background: #fff;
+    border: 1px solid #ccd2d8;
+    color: #333;
+  }
+
+  .config-status {
+    margin-top: 14px;
+    min-height: 22px;
+    font-size: 14px;
+    color: #4f6b2b;
+  }
+
+  .config-help {
+    margin-top: 28px;
+    border-top: 1px solid #e3e6e8;
+    padding-top: 22px;
+  }
+
+  .config-help h2 {
+    font-size: 20px;
+    margin: 0 0 12px;
+  }
+
+  .config-help table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  .config-help th,
+  .config-help td {
+    border-bottom: 1px solid #e8ebee;
+    padding: 10px 8px;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .config-help code {
+    background: #f2f4f6;
+    padding: 2px 5px;
+    border-radius: 5px;
+  }
+
+  @media (max-width: 700px) {
+    .config-shell {
+      width: min(100% - 20px, 920px);
+      margin: 10px auto;
+      padding: 20px;
+      border-radius: 14px;
+    }
+
+    .config-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .config-field.full {
+      grid-column: auto;
+    }
+
+    .config-actions {
+      flex-direction: column;
+    }
+
+    .config-button {
+      width: 100%;
+    }
+
+    .config-help {
+      overflow-x: auto;
+    }
+  }
+
 </style>
 </head>
 
 <body>
+
+  <div id="configScreen" class="config-screen" hidden>
+    <div class="config-shell">
+      <h1 class="config-title">Hoyeh Menu Configuration</h1>
+      <p class="config-subtitle">
+        Choose the settings below, then open or copy the generated menu URL.
+      </p>
+
+      <div class="config-grid">
+        <div class="config-field">
+          <label for="cfgMode">Display mode</label>
+          <select id="cfgMode">
+            <option value="">Auto</option>
+            <option value="1">TV / Kiosk</option>
+            <option value="0">Mobile / Desktop</option>
+          </select>
+        </div>
+
+        <div class="config-field">
+          <label for="cfgSlot">Meal</label>
+          <select id="cfgSlot">
+            <option value="">Auto</option>
+            <option value="breakfast">Breakfast</option>
+            <option value="lunch">Lunch</option>
+            <option value="dinner">Dinner</option>
+            <option value="supper">Supper</option>
+          </select>
+        </div>
+
+        <div class="config-field">
+          <label for="cfgMonth">Month</label>
+          <select id="cfgMonth">
+            <option value="">Current rolling menu</option>
+          </select>
+        </div>
+
+        <div class="config-field">
+          <label for="cfgDays">Visible days</label>
+          <input id="cfgDays" type="number" min="1" max="60" step="1" value="7">
+          <small id="cfgDaysHint">Used when no month or specific date is selected.</small>
+        </div>
+
+        <div class="config-field">
+          <label for="cfgDate">Date</label>
+          <select id="cfgDate">
+            <option value="">Auto</option>
+          </select>
+        </div>
+
+        <div class="config-field">
+          <label>Feedback</label>
+          <div class="config-check-row">
+            <input type="checkbox" id="cfgFeedback">
+            <span>Force feedback enabled</span>
+          </div>
+        </div>
+
+        <div class="config-field">
+          <label for="cfgFeedbackStart">Feedback start date</label>
+          <input id="cfgFeedbackStart" type="date">
+        </div>
+
+        <div class="config-field full">
+          <label for="cfgUrl">Generated URL</label>
+          <textarea id="cfgUrl" class="config-url-box" readonly></textarea>
+        </div>
+      </div>
+
+      <div class="config-actions">
+        <button id="cfgOpen" class="config-button primary" type="button">Open Menu</button>
+        <button id="cfgCopy" class="config-button secondary" type="button">Copy URL</button>
+        <button id="cfgReset" class="config-button linklike" type="button">Reset</button>
+      </div>
+
+      <div id="cfgStatus" class="config-status"></div>
+
+      <div class="config-help">
+        <h2>Parameter Reference</h2>
+        <table>
+          <thead>
+            <tr><th>Parameter</th><th>Example</th><th>Purpose</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>config=1</code></td><td><code>?config=1</code></td><td>Open this configuration page.</td></tr>
+            <tr><td><code>kiosk</code></td><td><code>?kiosk=1</code></td><td>Force TV/kiosk mode. Use <code>0</code> for mobile/desktop.</td></tr>
+            <tr><td><code>month</code></td><td><code>?month=202604</code></td><td>Show all available dates from a selected month. This overrides <code>days</code>.</td></tr>
+            <tr><td><code>days</code></td><td><code>?days=14</code></td><td>Limit the rolling menu to 1–60 available dates. The default is 7.</td></tr>
+            <tr><td><code>date</code></td><td><code>?date=20260415</code></td><td>Open a specific date. This overrides the rolling day limit.</td></tr>
+            <tr><td><code>slot</code></td><td><code>?slot=lunch</code></td><td>Open breakfast, lunch, dinner, or supper.</td></tr>
+            <tr><td><code>feedback</code></td><td><code>?feedback=1</code></td><td>Force feedback on. Use <code>0</code> to force it off.</td></tr>
+            <tr><td><code>feedbackStart</code></td><td><code>?feedbackStart=20260801</code></td><td>Override the feedback activation date.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
   <div class="topbar">
     <div class="topbar-inner">
       <select id="dateSelect"></select>
@@ -392,8 +752,17 @@
   </div>
 
 <script>
+  const CONFIG = {
+    defaultVisibleDays: 7,
+    maxVisibleDays: 60,
+    feedbackStartDate: "20260801",
+    feedbackQrFile: "Hoyehfeedback-QR.png",
+    feedbackUrl: "https://hoyehfeedback.jrgroup.com.sg/"
+  };
+
   const SLOT_ORDER = ["breakfast", "lunch", "dinner", "supper"];
   const DATE_KEY_RE = /^\d{8}$/;
+  const MONTH_KEY_RE = /^\d{6}$/;
 
   const dateSelect = document.getElementById("dateSelect");
   const statusText = document.getElementById("statusText");
@@ -420,6 +789,61 @@
 
   function getQuery(name) {
     return new URLSearchParams(window.location.search).get(name);
+  }
+
+  const requestedMonth = getQuery("month");
+  const requestedDate = getQuery("date");
+  const requestedSlot = getQuery("slot");
+  const requestedDaysRaw = getQuery("days");
+  const feedbackOverride = getQuery("feedback");
+  const feedbackStartOverride = getQuery("feedbackStart");
+
+  const configMode = getQuery("config") === "1" || getQuery("help") === "1";
+
+  function isValidDateKey(value) {
+    if (!DATE_KEY_RE.test(value || "")) return false;
+    const y = Number(value.slice(0, 4));
+    const m = Number(value.slice(4, 6));
+    const d = Number(value.slice(6, 8));
+    const dt = new Date(y, m - 1, d);
+    return dt.getFullYear() === y && dt.getMonth() === m - 1 && dt.getDate() === d;
+  }
+
+  function isValidMonthKey(value) {
+    if (!MONTH_KEY_RE.test(value || "")) return false;
+    const m = Number(value.slice(4, 6));
+    return m >= 1 && m <= 12;
+  }
+
+  function getVisibleDays() {
+    if (requestedDaysRaw === null || requestedDaysRaw === "") {
+      return CONFIG.defaultVisibleDays;
+    }
+
+    const value = Number(requestedDaysRaw);
+    if (!Number.isInteger(value) || value < 1 || value > CONFIG.maxVisibleDays) {
+      throw new Error(
+        `Invalid days parameter. Use a whole number from 1 to ${CONFIG.maxVisibleDays}.`
+      );
+    }
+
+    return value;
+  }
+
+  function todayKey() {
+    const now = new Date();
+    return `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, "0")}${String(now.getDate()).padStart(2, "0")}`;
+  }
+
+  function feedbackEnabled() {
+    if (feedbackOverride === "1") return true;
+    if (feedbackOverride === "0") return false;
+
+    const startDate = isValidDateKey(feedbackStartOverride)
+      ? feedbackStartOverride
+      : CONFIG.feedbackStartDate;
+
+    return todayKey() >= startDate;
   }
 
   function isKioskMode() {
@@ -550,6 +974,50 @@
     return (items || []).map(x => `<div>${escapeHtml(x)}</div>`).join("");
   }
 
+  function buildEngagementSection() {
+    const showFeedback = feedbackEnabled();
+    const showFeedbackQr = showFeedback && Boolean(window.FEEDBACK_QR_SRC);
+
+    const feedbackQrHtml = showFeedbackQr
+      ? `
+        <div class="qr-item">
+          <div class="qr-box">
+            <img src="${window.FEEDBACK_QR_SRC}" alt="Hoyeh Feedback QR Code">
+          </div>
+          <div class="qr-caption">GIVE US FEEDBACK</div>
+        </div>
+      `
+      : "";
+
+    const mobileFeedbackHtml = showFeedback
+      ? `
+        <div class="mobile-feedback mobile-only">
+          <div class="mobile-feedback-title">GIVE US FEEDBACK</div>
+          <div class="mobile-feedback-text">Help us improve our menu and service.</div>
+          <a
+            class="mobile-feedback-button"
+            href="${CONFIG.feedbackUrl}"
+            target="_blank"
+            rel="noopener noreferrer"
+          >SUBMIT FEEDBACK</a>
+        </div>
+      `
+      : "";
+
+    return `
+      <div class="qr-row tv-only ${showFeedbackQr ? "" : "single"}">
+        <div class="qr-item">
+          <div class="qr-box">
+            <img src="${window.QR_SRC}" alt="Hoyeh Menu QR Code">
+          </div>
+          <div class="qr-caption">VIEW MONTHLY MENU</div>
+        </div>
+        ${feedbackQrHtml}
+      </div>
+      ${mobileFeedbackHtml}
+    `;
+  }
+
   function buildBreakfastPage(menu) {
     return `
       <img class="menu-bg" src="${window.BREAKFAST_BG_SRC}" alt="">
@@ -559,6 +1027,7 @@
         <div class="breakfast-lines">
           ${createListHtml(menu.lines)}
         </div>
+        ${buildEngagementSection()}
         <div class="menu-footer">*All Lunch, Dinner &amp; Supper: White Rice & Brown Rice included<br>24/7 Beverages: Assorted Beverages</div>
       </div>
     `;
@@ -586,10 +1055,7 @@
           <div class="section-list">${createListHtml(menu.noodleSpecial)}</div>
         </div>
 
-        <div class="qr-box tv-only">
-          <img src="${window.QR_SRC}" alt="Hoyeh Menu QR Code">
-        </div>
-        <div class="qr-caption tv-only">SCAN HERE TO VIEW OUR MONTHLY MENU</div>
+        ${buildEngagementSection()}
         <div class="menu-footer">*All Lunch, Dinner &amp; Supper: White Rice & Brown Rice included<br>24/7 Beverages: Assorted Beverages</div>
       </div>
     `;
@@ -688,6 +1154,7 @@
   window.BREAKFAST_BG_SRC = "";
   window.MAINMEAL_BG_SRC = "";
   window.QR_SRC = "";
+  window.FEEDBACK_QR_SRC = "";
 
   async function resolveImageSource(candidates) {
     for (const src of candidates) {
@@ -698,47 +1165,116 @@
 
   async function preloadTemplateImages() {
     const breakfastSrc = await resolveImageSource([
-      "templates/breakfast-bg.png?v=6",
-      "templates/breakfast-bg.jpg?v=6",
-      "breakfast-bg.png?v=6",
-      "breakfast-bg.jpg?v=6"
+      "templates/breakfast-bg.png?v=8",
+      "templates/breakfast-bg.jpg?v=8",
+      "breakfast-bg.png?v=8",
+      "breakfast-bg.jpg?v=8"
     ]);
 
     const mainmealSrc = await resolveImageSource([
-      "templates/mainmeal-bg.png?v=6",
-      "templates/mainmeal-bg.jpg?v=6",
-      "mainmeal-bg.png?v=6",
-      "mainmeal-bg.jpg?v=6"
+      "templates/mainmeal-bg.png?v=8",
+      "templates/mainmeal-bg.jpg?v=8",
+      "mainmeal-bg.png?v=8",
+      "mainmeal-bg.jpg?v=8"
     ]);
 
     const qrSrc = await resolveImageSource([
-      "Hoyehmenu-QR.png?v=6",
-      "templates/Hoyehmenu-QR.png?v=6"
+      "Hoyehmenu-QR.png?v=8",
+      "templates/Hoyehmenu-QR.png?v=8"
     ]);
+
+    let feedbackQrSrc = null;
+    if (feedbackEnabled()) {
+      feedbackQrSrc = await resolveImageSource([
+        `${CONFIG.feedbackQrFile}?v=8`,
+        `templates/${CONFIG.feedbackQrFile}?v=8`
+      ]);
+    }
 
     if (!breakfastSrc || !mainmealSrc || !qrSrc) {
       return false;
     }
 
+    if (feedbackEnabled() && !feedbackQrSrc) {
+      console.warn(
+        `Feedback QR image not found: ${CONFIG.feedbackQrFile}. ` +
+        "The menu will continue loading; kiosk mode will show only the menu QR."
+      );
+    }
+
     window.BREAKFAST_BG_SRC = breakfastSrc;
     window.MAINMEAL_BG_SRC = mainmealSrc;
     window.QR_SRC = qrSrc;
+    window.FEEDBACK_QR_SRC = feedbackQrSrc || "";
     return true;
   }
 
   async function loadJsonData() {
-    const res = await fetch(`data/menu-data.json?v=${Date.now()}`);
-    if (!res.ok) throw new Error("Failed to load menu-data.json");
+    if (requestedMonth && !isValidMonthKey(requestedMonth)) {
+      throw new Error("Invalid month parameter. Use YYYYMM, for example month=202604.");
+    }
+
+    if (requestedDate && !isValidDateKey(requestedDate)) {
+      throw new Error("Invalid date parameter. Use YYYYMMDD, for example date=20260415.");
+    }
+
+    if (requestedSlot && !SLOT_ORDER.includes(requestedSlot)) {
+      throw new Error("Invalid slot parameter. Use breakfast, lunch, dinner, or supper.");
+    }
+
+    // Validate days even when it will be ignored by month/date mode.
+    getVisibleDays();
+
+    const customDaysRequested =
+      requestedDaysRaw !== null &&
+      requestedDaysRaw !== "" &&
+      Number(requestedDaysRaw) !== CONFIG.defaultVisibleDays;
+
+    const useFullData = Boolean(requestedMonth || requestedDate || customDaysRequested);
+    const jsonFile = useFullData ? "menu-data-full.json" : "menu-data.json";
+    const res = await fetch(`data/${jsonFile}?v=${Date.now()}`);
+
+    if (!res.ok) throw new Error(`Failed to load ${jsonFile}`);
     menuData = await res.json();
   }
 
   function buildAvailableDates() {
-    return Object.keys(menuData)
-      .filter(folder => DATE_KEY_RE.test(folder) && menuData[folder])
+    const allDates = Object.keys(menuData)
+      .filter(folder => {
+        if (!DATE_KEY_RE.test(folder) || !menuData[folder]) return false;
+        if (requestedMonth && !folder.startsWith(requestedMonth)) return false;
+        return true;
+      })
       .sort();
+
+    // A specific month or date takes priority over the rolling day limit.
+    if (requestedMonth || requestedDate) {
+      return allDates;
+    }
+
+    const visibleDays = getVisibleDays();
+    const today = todayKey();
+    const currentAndFuture = allDates.filter(folder => folder >= today);
+
+    if (currentAndFuture.length > 0) {
+      return currentAndFuture.slice(0, visibleDays);
+    }
+
+    // If the data contains only past menus, show the latest available dates.
+    return allDates.slice(-visibleDays);
   }
 
   function chooseInitialDate() {
+    if (requestedDate) {
+      if (availableDates.includes(requestedDate)) return requestedDate;
+      throw new Error(`No menu found for date ${requestedDate}.`);
+    }
+
+    if (requestedMonth) {
+      if (availableDates.length) return availableDates[0];
+      throw new Error(`No menu dates found for month ${requestedMonth}.`);
+    }
+
     const now = getNowInfo();
     if (availableDates.includes(now.todayFolder)) return now.todayFolder;
 
@@ -818,7 +1354,7 @@
       currentMenus = todayMenus;
     }
 
-    const slot = preferredSlot(now.seconds);
+    const slot = requestedSlot || preferredSlot(now.seconds);
     currentIndex = nearestIndex(currentMenus, slot);
 
     showMenu();
@@ -837,6 +1373,211 @@
     await selectDate(currentDate);
   }
 
+
+  function yyyymmddToInput(value) {
+    if (!isValidDateKey(value)) return "";
+    return `${value.slice(0, 4)}-${value.slice(4, 6)}-${value.slice(6, 8)}`;
+  }
+
+  function inputToYyyymmdd(value) {
+    return String(value || "").replaceAll("-", "");
+  }
+
+  function monthLabel(monthKey) {
+    const y = monthKey.slice(0, 4);
+    const m = monthKey.slice(4, 6);
+    const dt = new Date(`${y}-${m}-01T00:00:00`);
+    return dt.toLocaleDateString("en-GB", { month: "long", year: "numeric" });
+  }
+
+  function buildConfiguredUrl() {
+    const url = new URL(window.location.href);
+    url.search = "";
+
+    const mode = document.getElementById("cfgMode").value;
+    const slot = document.getElementById("cfgSlot").value;
+    const month = document.getElementById("cfgMonth").value;
+    const date = document.getElementById("cfgDate").value;
+    const days = Number(document.getElementById("cfgDays").value);
+    const feedback = document.getElementById("cfgFeedback").checked;
+    const feedbackStart = inputToYyyymmdd(
+      document.getElementById("cfgFeedbackStart").value
+    );
+
+    const safeDays = Number.isInteger(days)
+      ? Math.min(CONFIG.maxVisibleDays, Math.max(1, days))
+      : CONFIG.defaultVisibleDays;
+
+    if (document.getElementById("cfgDays").value !== String(safeDays)) {
+      document.getElementById("cfgDays").value = String(safeDays);
+    }
+
+    if (mode) url.searchParams.set("kiosk", mode);
+    if (month) {
+      url.searchParams.set("month", month);
+    } else if (!date && Number.isInteger(days) && safeDays !== CONFIG.defaultVisibleDays) {
+      url.searchParams.set("days", String(safeDays));
+    }
+    if (date) url.searchParams.set("date", date);
+    if (slot) url.searchParams.set("slot", slot);
+    if (feedback) url.searchParams.set("feedback", "1");
+    if (feedbackStart) url.searchParams.set("feedbackStart", feedbackStart);
+
+    return url.toString();
+  }
+
+  function updateConfigUrl() {
+    const url = buildConfiguredUrl();
+    document.getElementById("cfgUrl").value = url;
+    return url;
+  }
+
+  function updateDaysControlState() {
+    const monthSelected = Boolean(document.getElementById("cfgMonth").value);
+    const dateSelected = Boolean(document.getElementById("cfgDate").value);
+    const daysInput = document.getElementById("cfgDays");
+    const hint = document.getElementById("cfgDaysHint");
+
+    daysInput.disabled = monthSelected || dateSelected;
+    hint.textContent = monthSelected
+      ? "Ignored because a month is selected."
+      : dateSelected
+        ? "Ignored because a specific date is selected."
+        : `Used for the rolling menu. Default: ${CONFIG.defaultVisibleDays} days.`;
+  }
+
+  function updateConfigDates() {
+    const selectedMonth = document.getElementById("cfgMonth").value;
+    const dateSelectEl = document.getElementById("cfgDate");
+    const previous = dateSelectEl.value;
+
+    dateSelectEl.innerHTML = '<option value="">Auto</option>';
+
+    const filteredDates = selectedMonth
+      ? availableDates.filter(d => d.startsWith(selectedMonth))
+      : availableDates;
+
+    filteredDates.forEach(d => {
+      const option = document.createElement("option");
+      option.value = d;
+      option.textContent = formatLabel(d);
+      dateSelectEl.appendChild(option);
+    });
+
+    if (filteredDates.includes(previous)) {
+      dateSelectEl.value = previous;
+    }
+
+    updateDaysControlState();
+    updateConfigUrl();
+  }
+
+  async function initConfigMode() {
+    document.getElementById("configScreen").hidden = false;
+    document.querySelector(".topbar").style.display = "none";
+    document.getElementById("viewer").style.display = "none";
+    document.body.style.display = "block";
+    document.body.style.overflow = "auto";
+
+    try {
+      const res = await fetch(`data/menu-data-full.json?v=${Date.now()}`);
+      if (!res.ok) throw new Error("Failed to load menu-data-full.json");
+
+      const fullData = await res.json();
+      menuData = fullData;
+      availableDates = Object.keys(fullData)
+        .filter(d => DATE_KEY_RE.test(d) && fullData[d])
+        .sort();
+
+      const months = [...new Set(availableDates.map(d => d.slice(0, 6)))].sort().reverse();
+      const monthSelect = document.getElementById("cfgMonth");
+
+      months.forEach(m => {
+        const option = document.createElement("option");
+        option.value = m;
+        option.textContent = monthLabel(m);
+        monthSelect.appendChild(option);
+      });
+
+      document.getElementById("cfgMode").value = getQuery("kiosk") || "";
+      document.getElementById("cfgSlot").value = getQuery("slot") || "";
+      document.getElementById("cfgMonth").value = getQuery("month") || "";
+      document.getElementById("cfgDays").value =
+        getQuery("days") || String(CONFIG.defaultVisibleDays);
+      document.getElementById("cfgFeedback").checked = getQuery("feedback") === "1";
+      document.getElementById("cfgFeedbackStart").value = yyyymmddToInput(
+        getQuery("feedbackStart") || CONFIG.feedbackStartDate
+      );
+
+      updateConfigDates();
+
+      const requestedConfigDate = getQuery("date");
+      if (requestedConfigDate && availableDates.includes(requestedConfigDate)) {
+        document.getElementById("cfgDate").value = requestedConfigDate;
+      }
+
+      updateConfigUrl();
+
+      const watchedIds = [
+        "cfgMode",
+        "cfgSlot",
+        "cfgMonth",
+        "cfgDays",
+        "cfgDate",
+        "cfgFeedback",
+        "cfgFeedbackStart"
+      ];
+
+      watchedIds.forEach(id => {
+        const el = document.getElementById(id);
+        el.addEventListener("change", () => {
+          if (id === "cfgMonth") {
+            updateConfigDates();
+          } else {
+            if (id === "cfgDate") updateDaysControlState();
+            updateConfigUrl();
+          }
+        });
+        el.addEventListener("input", updateConfigUrl);
+      });
+
+      document.getElementById("cfgOpen").addEventListener("click", () => {
+        window.open(updateConfigUrl(), "_blank", "noopener");
+      });
+
+      document.getElementById("cfgCopy").addEventListener("click", async () => {
+        const url = updateConfigUrl();
+        const status = document.getElementById("cfgStatus");
+        try {
+          await navigator.clipboard.writeText(url);
+          status.textContent = "URL copied.";
+        } catch {
+          document.getElementById("cfgUrl").select();
+          document.execCommand("copy");
+          status.textContent = "URL copied.";
+        }
+      });
+
+      document.getElementById("cfgReset").addEventListener("click", () => {
+        document.getElementById("cfgMode").value = "";
+        document.getElementById("cfgSlot").value = "";
+        document.getElementById("cfgMonth").value = "";
+        document.getElementById("cfgDays").value = String(CONFIG.defaultVisibleDays);
+        document.getElementById("cfgDate").value = "";
+        document.getElementById("cfgFeedback").checked = false;
+        document.getElementById("cfgFeedbackStart").value =
+          yyyymmddToInput(CONFIG.feedbackStartDate);
+        updateConfigDates();
+        document.getElementById("cfgStatus").textContent = "";
+      });
+
+    } catch (err) {
+      document.getElementById("cfgStatus").textContent =
+        `Unable to load configuration data: ${err.message}`;
+      console.error(err);
+    }
+  }
+
   async function init() {
     try {
       msg.style.display = "block";
@@ -847,7 +1588,7 @@
 
       const templateReady = await preloadTemplateImages();
       if (!templateReady) {
-        throw new Error("Failed to load template background images or QR image");
+        throw new Error("Failed to load template background images or menu QR image");
       }
 
       await loadJsonData();
@@ -888,7 +1629,11 @@
     }
   }
 
-  init();
+  if (configMode) {
+    initConfigMode();
+  } else {
+    init();
+  }
 </script>
 </body>
 </html>
