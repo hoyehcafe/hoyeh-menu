@@ -7,33 +7,15 @@ Outputs:
 1. menu-data-full.json  -> all known dates
 2. menu-data.json       -> rolling window (yesterday to +30 days)
 
-Expected Excel layout (per sheet Week 1 ~ Week N):
-- C2:I2  => Mon .. Sun
-- C3:I3  => dates
-- A4     => BREAKFAST
-- A9     => LUNCH
-- A20    => DINNER
-- A31    => SUPPER
-- A41    => Vegetarian
+Expected Excel structure (per sheet Week 1 ~ Week N):
+- C2:I2 => Mon .. Sun
+- C3:I3 => dates
+- Column A contains BREAKFAST, LUNCH, DINNER, and SUPPER section labels
+- Column B contains the row labels used to map each section
 
-Breakfast rows:
-- 4..8
-
-Lunch rows:
-- noodleSpecial: 9
-- dailySpecial: 10,17,18,19
-- homeTaste: 11..16
-
-Dinner rows:
-- noodleSpecial: 20
-- dailySpecial: 21,28,29,30
-- homeTaste: 22..27
-
-Supper rows:
-- noodleSpecial: 31
-- dailySpecial: 32,39,40
-- homeTaste: 33..38
-- vegetarian: 41   (stored separately, not mixed into supper)
+Meal row numbers are detected from the labels instead of being fixed. This
+supports menu templates where, for example, Rice & Spice contains five rows in
+one month and six rows in another month.
 """
 
 import json
@@ -63,13 +45,16 @@ WEEKDAY_HEADER_ROW = 2
 START_COL = 3   # C
 END_COL = 9     # I
 
-REQUIRED_LABELS = {
-    "A4": "BREAKFAST",
-    "A9": "LUNCH",
-    "A20": "DINNER",
-    "A31": "SUPPER",
-    "A41": "Vegetarian",
-}
+MEAL_LABELS = ("BREAKFAST", "LUNCH", "DINNER", "SUPPER")
+
+MAIN_MEAL_ROW_LABELS = (
+    "The Bowl",
+    "The Culinary Table",
+    "Rice & Spice",
+    "Green House",
+    "Soup",
+    "Dessert",
+)
 
 
 class ValidationError(Exception):
@@ -131,6 +116,11 @@ def normalize_text(value) -> str:
         if cleaned:
             lines.append(cleaned)
     return "\n".join(lines)
+
+
+def normalize_label(value) -> str:
+    """Normalize structural labels while keeping menu item text untouched."""
+    return " ".join(normalize_text(value).split()).casefold()
 
 
 def split_lines(value) -> list[str]:
@@ -241,24 +231,28 @@ def existing_source_excel_path(path_text: str) -> Path | None:
     return None
 
 
-def find_excel_file_from_github_event() -> str | None:
+def find_excel_files_from_github_event() -> list[str]:
     """
     In GitHub Actions, checkout file mtimes are unreliable. Prefer the workbook
-    that actually appeared in the push event so a newly uploaded menu wins.
+    files that actually appeared in the push event so newly uploaded or modified
+    menus win, including older-month corrections.
+
+    Every changed workbook is returned in event order. Processing only the file
+    with the latest menu date would silently skip an older-month correction when
+    several workbooks are uploaded in the same push.
     """
     event_path = os.environ.get("GITHUB_EVENT_PATH", "").strip()
     if not event_path:
-        return None
+        return []
 
     try:
         with open(event_path, "r", encoding="utf-8") as f:
             event = json.load(f)
     except Exception as e:
         log_warning(f"Unable to read GitHub event payload '{event_path}': {e}")
-        return None
+        return []
 
-    added_candidates = []
-    modified_candidates = []
+    changed_candidates = []
 
     commits = event.get("commits") or []
     if not commits and isinstance(event.get("head_commit"), dict):
@@ -268,21 +262,13 @@ def find_excel_file_from_github_event() -> str | None:
         if not isinstance(commit, dict):
             continue
 
-        for path_text in commit.get("added", []) or []:
-            if is_source_excel_path(path_text):
-                added_candidates.append(path_text)
-
-        for path_text in commit.get("modified", []) or []:
-            if is_source_excel_path(path_text):
-                modified_candidates.append(path_text)
-
-    # Combine added and modified Excel files. Do not use `or` here: if both
-    # lists contain files, `or` would ignore every modified file.
-    changed_candidates = added_candidates + modified_candidates
+        for change_type in ("added", "modified"):
+            for path_text in commit.get(change_type, []) or []:
+                if is_source_excel_path(path_text):
+                    changed_candidates.append(path_text)
 
     # Resolve existing paths and de-duplicate while preserving event order.
-    existing_candidates = []
-    seen_paths = set()
+    existing_candidates = {}
 
     for path_text in changed_candidates:
         path = existing_source_excel_path(path_text)
@@ -290,30 +276,25 @@ def find_excel_file_from_github_event() -> str | None:
             continue
 
         normalized = normalize_repo_path(str(path))
-        if normalized in seen_paths:
-            continue
-
-        seen_paths.add(normalized)
-        existing_candidates.append(path)
+        # If one path changed in several commits in the push, process only the
+        # final checked-out version and keep it at its latest event position.
+        if normalized in existing_candidates:
+            del existing_candidates[normalized]
+        existing_candidates[normalized] = path
 
     if existing_candidates:
-        # If several workbooks changed in the same push, choose the one whose
-        # menu contents contain the latest date. This is deterministic and is
-        # more meaningful than relying on event ordering or checkout mtimes.
-        if len(existing_candidates) == 1:
-            selected = existing_candidates[0]
-            log_info(f"Using Excel file from GitHub push event: {selected}")
-            return str(selected)
-
-        selected = find_latest_source_excel_file(existing_candidates)
-        log_info(f"Using Excel file selected from GitHub push event candidates: {selected}")
+        selected = [str(path) for path in existing_candidates.values()]
+        log_info(
+            "Using Excel file(s) from GitHub push event: "
+            + ", ".join(selected)
+        )
         return selected
 
     if changed_candidates:
         names = ", ".join(normalize_repo_path(p) for p in changed_candidates)
         log_warning(f"GitHub event referenced Excel file(s) not found after checkout: {names}")
 
-    return None
+    return []
 
 
 def read_workbook_date_span(excel_path: Path) -> tuple[date, date] | None:
@@ -371,14 +352,135 @@ def find_latest_source_excel_file(source_candidates: list[Path]) -> str:
     )
 
 
-def validate_sheet_structure(ws):
-    # Required labels
-    for cell_ref, expected in REQUIRED_LABELS.items():
-        actual = get_cell_text(ws, cell_ref)
-        if actual != expected:
+def find_unique_label_row(
+    ws,
+    col_num: int,
+    label: str,
+    row_start: int = 1,
+    row_end: int | None = None,
+) -> int:
+    """Find exactly one normalized label in a worksheet column and row range."""
+    row_end = row_end or ws.max_row
+    expected = normalize_label(label)
+    matches = [
+        row_num
+        for row_num in range(row_start, row_end + 1)
+        if normalize_label(ws.cell(row_num, col_num).value) == expected
+    ]
+
+    col_letter = excel_col_letter(col_num)
+    location = f"{col_letter}{row_start}:{col_letter}{row_end}"
+    if not matches:
+        raise ValidationError(
+            f"Sheet '{ws.title}' range {location}: required label '{label}' was not found."
+        )
+    if len(matches) > 1:
+        cells = ", ".join(f"{col_letter}{row_num}" for row_num in matches)
+        raise ValidationError(
+            f"Sheet '{ws.title}': label '{label}' must appear once in {location}; found at {cells}."
+        )
+
+    return matches[0]
+
+
+def detect_sheet_layout(ws) -> dict:
+    """
+    Detect meal boundaries from column A and row roles from column B.
+
+    Column A may contain merged cells, so only the first row of each meal block
+    carries a value. Column B is used to identify the variable-length rows inside
+    lunch, dinner, and supper. The Vegetarian row is intentionally found in
+    column B because some older workbooks also contain a stray Vegetarian value
+    in column A on the supper Dessert row.
+    """
+    meal_rows = {
+        label.lower(): find_unique_label_row(ws, 1, label)
+        for label in MEAL_LABELS
+    }
+
+    ordered_meal_rows = [meal_rows[label.lower()] for label in MEAL_LABELS]
+    if ordered_meal_rows != sorted(ordered_meal_rows) or len(set(ordered_meal_rows)) != len(ordered_meal_rows):
+        positions = ", ".join(
+            f"{label}=A{meal_rows[label.lower()]}" for label in MEAL_LABELS
+        )
+        raise ValidationError(
+            f"Sheet '{ws.title}': meal sections must appear in the order "
+            f"BREAKFAST, LUNCH, DINNER, SUPPER; found {positions}."
+        )
+
+    vegetarian_row = find_unique_label_row(
+        ws,
+        2,
+        "Vegetarian",
+        row_start=meal_rows["supper"] + 1,
+    )
+
+    raw_ranges = {
+        "breakfast": (meal_rows["breakfast"], meal_rows["lunch"] - 1),
+        "lunch": (meal_rows["lunch"], meal_rows["dinner"] - 1),
+        "dinner": (meal_rows["dinner"], meal_rows["supper"] - 1),
+        "supper": (meal_rows["supper"], vegetarian_row - 1),
+    }
+
+    for section, (start_row, end_row) in raw_ranges.items():
+        if start_row > end_row:
             raise ValidationError(
-                f"Sheet '{ws.title}' cell {cell_ref}: expected '{expected}', got '{actual or '[blank]'}'."
+                f"Sheet '{ws.title}': invalid {section.upper()} range {start_row}..{end_row}."
             )
+
+    layout = {
+        "breakfast": {
+            "start": raw_ranges["breakfast"][0],
+            "end": raw_ranges["breakfast"][1],
+        },
+        "vegetarian_row": vegetarian_row,
+    }
+
+    for section in ("lunch", "dinner", "supper"):
+        start_row, end_row = raw_ranges[section]
+        category_rows = {
+            label: find_unique_label_row(
+                ws,
+                2,
+                label,
+                row_start=start_row,
+                row_end=end_row,
+            )
+            for label in MAIN_MEAL_ROW_LABELS
+        }
+
+        ordered_category_rows = [category_rows[label] for label in MAIN_MEAL_ROW_LABELS]
+        if ordered_category_rows != sorted(ordered_category_rows):
+            positions = ", ".join(
+                f"{label}=B{category_rows[label]}" for label in MAIN_MEAL_ROW_LABELS
+            )
+            raise ValidationError(
+                f"Sheet '{ws.title}' {section.upper()}: row labels are out of order; {positions}."
+            )
+
+        if category_rows["The Bowl"] != start_row:
+            raise ValidationError(
+                f"Sheet '{ws.title}' {section.upper()}: expected 'The Bowl' at B{start_row}, "
+                f"found it at B{category_rows['The Bowl']}."
+            )
+
+        if category_rows["Dessert"] != end_row:
+            raise ValidationError(
+                f"Sheet '{ws.title}' {section.upper()}: expected 'Dessert' at the final row "
+                f"B{end_row}, found it at B{category_rows['Dessert']}."
+            )
+
+        layout[section] = {
+            "start": start_row,
+            "end": end_row,
+            "rows": category_rows,
+        }
+
+    return layout
+
+
+def validate_sheet_structure(ws) -> dict:
+    layout = detect_sheet_layout(ws)
 
     # Weekday headers
     for idx, expected in enumerate(EXPECTED_WEEKDAYS, start=START_COL):
@@ -405,10 +507,12 @@ def validate_sheet_structure(ws):
                 f"and {curr_ref} ({format_date_text(dates[i])})."
             )
 
+    return layout
 
-def build_breakfast(ws, col: int, dt: date, warnings: list[str]) -> dict:
+
+def build_breakfast(ws, col: int, dt: date, warnings: list[str], section: dict) -> dict:
     lines = get_vertical_block(
-        ws, 4, 8, col, warnings,
+        ws, section["start"], section["end"], col, warnings,
         context=f"BREAKFAST {format_date_text(dt)}"
     )
     if not lines:
@@ -421,14 +525,20 @@ def build_breakfast(ws, col: int, dt: date, warnings: list[str]) -> dict:
     }
 
 
-def build_lunch(ws, col: int, dt: date, warnings: list[str]) -> dict:
-    noodle = get_row_values(ws, 9, col, warnings, f"LUNCH noodleSpecial {format_date_text(dt)}")
+def build_lunch(ws, col: int, dt: date, warnings: list[str], section: dict) -> dict:
+    rows = section["rows"]
+    noodle = get_row_values(ws, rows["The Bowl"], col, warnings, f"LUNCH noodleSpecial {format_date_text(dt)}")
     daily = []
-    daily.extend(get_row_values(ws, 10, col, warnings, f"LUNCH dailySpecial {format_date_text(dt)}"))
-    daily.extend(get_row_values(ws, 17, col, warnings, f"LUNCH dailySpecial {format_date_text(dt)}"))
-    daily.extend(get_row_values(ws, 18, col, warnings, f"LUNCH dailySpecial {format_date_text(dt)}"))
-    daily.extend(get_row_values(ws, 19, col, warnings, f"LUNCH dailySpecial {format_date_text(dt)}"))
-    home = get_vertical_block(ws, 11, 16, col, warnings, f"LUNCH homeTaste {format_date_text(dt)}")
+    for label in ("The Culinary Table", "Green House", "Soup", "Dessert"):
+        daily.extend(get_row_values(ws, rows[label], col, warnings, f"LUNCH dailySpecial {format_date_text(dt)}"))
+    home = get_vertical_block(
+        ws,
+        rows["Rice & Spice"],
+        rows["Green House"] - 1,
+        col,
+        warnings,
+        f"LUNCH homeTaste {format_date_text(dt)}",
+    )
 
     return {
         "dailySpecial": daily,
@@ -442,14 +552,20 @@ def build_lunch(ws, col: int, dt: date, warnings: list[str]) -> dict:
     }
 
 
-def build_dinner(ws, col: int, dt: date, warnings: list[str]) -> dict:
-    noodle = get_row_values(ws, 20, col, warnings, f"DINNER noodleSpecial {format_date_text(dt)}")
+def build_dinner(ws, col: int, dt: date, warnings: list[str], section: dict) -> dict:
+    rows = section["rows"]
+    noodle = get_row_values(ws, rows["The Bowl"], col, warnings, f"DINNER noodleSpecial {format_date_text(dt)}")
     daily = []
-    daily.extend(get_row_values(ws, 21, col, warnings, f"DINNER dailySpecial {format_date_text(dt)}"))
-    daily.extend(get_row_values(ws, 28, col, warnings, f"DINNER dailySpecial {format_date_text(dt)}"))
-    daily.extend(get_row_values(ws, 29, col, warnings, f"DINNER dailySpecial {format_date_text(dt)}"))
-    daily.extend(get_row_values(ws, 30, col, warnings, f"DINNER dailySpecial {format_date_text(dt)}"))
-    home = get_vertical_block(ws, 22, 27, col, warnings, f"DINNER homeTaste {format_date_text(dt)}")
+    for label in ("The Culinary Table", "Green House", "Soup", "Dessert"):
+        daily.extend(get_row_values(ws, rows[label], col, warnings, f"DINNER dailySpecial {format_date_text(dt)}"))
+    home = get_vertical_block(
+        ws,
+        rows["Rice & Spice"],
+        rows["Green House"] - 1,
+        col,
+        warnings,
+        f"DINNER homeTaste {format_date_text(dt)}",
+    )
 
     return {
         "dailySpecial": daily,
@@ -463,13 +579,20 @@ def build_dinner(ws, col: int, dt: date, warnings: list[str]) -> dict:
     }
 
 
-def build_supper(ws, col: int, dt: date, warnings: list[str]) -> dict:
-    noodle = get_row_values(ws, 31, col, warnings, f"SUPPER noodleSpecial {format_date_text(dt)}")
+def build_supper(ws, col: int, dt: date, warnings: list[str], section: dict) -> dict:
+    rows = section["rows"]
+    noodle = get_row_values(ws, rows["The Bowl"], col, warnings, f"SUPPER noodleSpecial {format_date_text(dt)}")
     daily = []
-    daily.extend(get_row_values(ws, 32, col, warnings, f"SUPPER dailySpecial {format_date_text(dt)}"))
-    daily.extend(get_row_values(ws, 39, col, warnings, f"SUPPER dailySpecial {format_date_text(dt)}"))
-    daily.extend(get_row_values(ws, 40, col, warnings, f"SUPPER dailySpecial {format_date_text(dt)}"))
-    home = get_vertical_block(ws, 33, 38, col, warnings, f"SUPPER homeTaste {format_date_text(dt)}")
+    for label in ("The Culinary Table", "Soup", "Dessert"):
+        daily.extend(get_row_values(ws, rows[label], col, warnings, f"SUPPER dailySpecial {format_date_text(dt)}"))
+    home = get_vertical_block(
+        ws,
+        rows["Rice & Spice"],
+        rows["Green House"],
+        col,
+        warnings,
+        f"SUPPER homeTaste {format_date_text(dt)}",
+    )
 
     return {
         "dailySpecial": daily,
@@ -483,8 +606,8 @@ def build_supper(ws, col: int, dt: date, warnings: list[str]) -> dict:
     }
 
 
-def build_vegetarian(ws, col: int, dt: date, warnings: list[str]) -> dict:
-    cell_ref = f"{excel_col_letter(col)}41"
+def build_vegetarian(ws, col: int, dt: date, warnings: list[str], row_num: int) -> dict:
+    cell_ref = f"{excel_col_letter(col)}{row_num}"
     raw_text = normalize_text(ws[cell_ref].value)
     lines = split_lines(ws[cell_ref].value)
 
@@ -500,7 +623,15 @@ def build_vegetarian(ws, col: int, dt: date, warnings: list[str]) -> dict:
 
 
 def parse_sheet(ws, warnings: list[str]) -> dict:
-    validate_sheet_structure(ws)
+    layout = validate_sheet_structure(ws)
+    log_info(
+        f"Detected layout for sheet '{ws.title}': "
+        f"BREAKFAST {layout['breakfast']['start']}-{layout['breakfast']['end']}, "
+        f"LUNCH {layout['lunch']['start']}-{layout['lunch']['end']}, "
+        f"DINNER {layout['dinner']['start']}-{layout['dinner']['end']}, "
+        f"SUPPER {layout['supper']['start']}-{layout['supper']['end']}, "
+        f"Vegetarian {layout['vegetarian_row']}"
+    )
 
     parsed = {}
     for col in range(START_COL, END_COL + 1):
@@ -511,21 +642,21 @@ def parse_sheet(ws, warnings: list[str]) -> dict:
             raise ValidationError(f"Sheet '{ws.title}': duplicate date '{date_key}' within sheet.")
 
         parsed[date_key] = {
-            "breakfast": build_breakfast(ws, col, dt, warnings),
-            "lunch": build_lunch(ws, col, dt, warnings),
-            "dinner": build_dinner(ws, col, dt, warnings),
-            "supper": build_supper(ws, col, dt, warnings),
-            "vegetarian": build_vegetarian(ws, col, dt, warnings),
+            "breakfast": build_breakfast(ws, col, dt, warnings, layout["breakfast"]),
+            "lunch": build_lunch(ws, col, dt, warnings, layout["lunch"]),
+            "dinner": build_dinner(ws, col, dt, warnings, layout["dinner"]),
+            "supper": build_supper(ws, col, dt, warnings, layout["supper"]),
+            "vegetarian": build_vegetarian(ws, col, dt, warnings, layout["vegetarian_row"]),
         }
 
     return parsed
 
 
-def find_excel_file() -> str:
+def find_excel_files() -> list[str]:
     """
     Priority:
     1. MENU_EXCEL_FILE env var
-    2. .xlsx file uploaded/modified in the current GitHub push event
+    2. all .xlsx files uploaded/modified in the current GitHub push event
     3. source/ .xlsx file with the latest menu dates
     4. menu.xlsx in repo root
     5. single .xlsx in repo root
@@ -534,13 +665,13 @@ def find_excel_file() -> str:
     env_path = os.environ.get("MENU_EXCEL_FILE", "").strip()
     if env_path:
         if os.path.exists(env_path):
-            return env_path
+            return [env_path]
         raise ValidationError(f"MENU_EXCEL_FILE is set but file not found: {env_path}")
 
-    # Priority 2: workbook from the current GitHub push event
-    github_event_file = find_excel_file_from_github_event()
-    if github_event_file:
-        return github_event_file
+    # Priority 2: every workbook from the current GitHub push event
+    github_event_files = find_excel_files_from_github_event()
+    if github_event_files:
+        return github_event_files
 
     # Priority 3: source/ workbook with the latest menu date
     source_dir = Path("source")
@@ -550,12 +681,12 @@ def find_excel_file() -> str:
             if not p.name.startswith("~$")
         ]
         if source_candidates:
-            return find_latest_source_excel_file(source_candidates)
+            return [find_latest_source_excel_file(source_candidates)]
 
     # Priority 4: menu.xlsx in repo root
     preferred = Path("menu.xlsx")
     if preferred.exists():
-        return str(preferred)
+        return [str(preferred)]
 
     # Priority 5: single .xlsx file in repo root
     root_candidates = [
@@ -563,7 +694,7 @@ def find_excel_file() -> str:
         if not p.name.startswith("~$")
     ]
     if len(root_candidates) == 1:
-        return str(root_candidates[0])
+        return [str(root_candidates[0])]
 
     if len(root_candidates) == 0:
         raise ValidationError(
@@ -659,11 +790,18 @@ def validate_merged_payload(full_data: dict):
 def main():
     os.makedirs(DATA_DIR, exist_ok=True)
     try:
-        excel_path = find_excel_file()
+        excel_paths = find_excel_files()
         existing_full = read_json_file(FULL_JSON_FILE)
-        excel_data, warnings = load_excel_data(excel_path)
+        merged_full = existing_full
+        warnings = []
+        parsed_dates = set()
 
-        merged_full = merge_full_data(existing_full, excel_data)
+        for excel_path in excel_paths:
+            excel_data, file_warnings = load_excel_data(excel_path)
+            merged_full = merge_full_data(merged_full, excel_data)
+            warnings.extend(file_warnings)
+            parsed_dates.update(excel_data)
+
         validate_merged_payload(merged_full)
 
         rolling_data = build_rolling_data(merged_full)
@@ -674,7 +812,8 @@ def main():
         for w in warnings:
             log_warning(w)
 
-        log_info(f"Excel parsed dates: {len(excel_data)}")
+        log_info(f"Excel files processed: {len(excel_paths)}")
+        log_info(f"Excel parsed unique dates: {len(parsed_dates)}")
         log_info(f"Full dataset dates: {len(merged_full)}")
         log_info(f"Rolling dataset dates: {len(rolling_data)}")
         log_info(f"Warnings: {len(warnings)}")

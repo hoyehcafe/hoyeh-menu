@@ -10,6 +10,13 @@ on:
       - '.github/workflows/update-menu.yml'
   workflow_dispatch:
 
+permissions:
+  contents: write
+
+concurrency:
+  group: update-menu-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   update-menu:
     runs-on: ubuntu-latest
@@ -36,6 +43,9 @@ jobs:
 
       - name: Install dependencies
         run: pip install openpyxl
+
+      - name: Run converter tests
+        run: python -m unittest discover -s tests -v
 
       - name: Run Excel to JSON converter
         run: python scripts/excel_to_json.py
