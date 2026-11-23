@@ -1,655 +1,4 @@
 {
-  "20261115": {
-    "breakfast": {
-      "date_text": "15/11/2026",
-      "lines": [
-        "White/ Wholemeal Bread w Assorted Spreads",
-        "Assorted Cereal w Milk",
-        "Fried Kuey Teow",
-        "Spring Roll",
-        "Fried Beancurd"
-      ],
-      "title": "BREAKFAST MENU"
-    },
-    "lunch": {
-      "dailySpecial": [
-        "Thai Green Curry Chicken Rice",
-        "4 x Salads (Thousand Island and Vinaigrette)",
-        "Szechuan Soup",
-        "Assorted Fruits"
-      ],
-      "dailySpecialTitle": "DAILY SPECIAL",
-      "date_text": "15/11/2026",
-      "homeTaste": [
-        "Asian BBQ Chicken",
-        "Tom Yum Fish",
-        "Sauteed Cauliflower with Mushroom",
-        "Stir Fry Kai Lan",
-        "Samosa"
-      ],
-      "homeTasteTitle": "HOMETASTE DAILY SELECTION",
-      "noodleSpecial": [
-        "Char Siew Noodle"
-      ],
-      "noodleSpecialTitle": "NOODLE SPECIAL",
-      "title": "LUNCH MENU"
-    },
-    "dinner": {
-      "dailySpecial": [
-        "Korean Fried Chicken w Kimchi Fried Rice",
-        "4 x Salads (Thousand Island and Vinaigrette)",
-        "Szechuan Soup",
-        "Assorted Fruits"
-      ],
-      "dailySpecialTitle": "DAILY SPECIAL",
-      "date_text": "15/11/2026",
-      "homeTaste": [
-        "Braised Pork Belly",
-        "Baked Fish Fillet",
-        "Bitter Melon with Black Bean",
-        "Braised Assorted Vegetable",
-        "Sambal Fishball"
-      ],
-      "homeTasteTitle": "HOMETASTE DAILY SELECTION",
-      "noodleSpecial": [
-        "Beef Pho"
-      ],
-      "noodleSpecialTitle": "NOODLE SPECIAL",
-      "title": "DINNER MENU"
-    },
-    "supper": {
-      "dailySpecial": [
-        "Thai Green Curry Chicken Rice",
-        "Szechuan Soup",
-        "Assorted Fruits"
-      ],
-      "dailySpecialTitle": "DAILY SPECIAL",
-      "date_text": "15/11/2026",
-      "homeTaste": [
-        "Asian BBQ Chicken",
-        "Tom Yum Fish",
-        "Sauteed Cauliflower with Mushroom",
-        "Stir Fry Kai Lan",
-        "Samosa",
-        "4 x Salads (Thousand Island and Vinaigrette)"
-      ],
-      "homeTasteTitle": "HOMETASTE DAILY SELECTION",
-      "noodleSpecial": [
-        "Char Siew Noodle"
-      ],
-      "noodleSpecialTitle": "NOODLE SPECIAL",
-      "title": "SUPPER MENU"
-    },
-    "vegetarian": {
-      "date_text": "15/11/2026",
-      "title": "VEGETARIAN MENU",
-      "lines": [
-        "Udon Noodles",
-        "Thai Green Curry with Mock Chicken",
-        "Stir Fry Black Bean Eggplant",
-        "Mock Fried Dumpling"
-      ],
-      "raw_text": "1.Udon Noodles\n2.Thai Green Curry with Mock Chicken\n3.Stir Fry Black Bean Eggplant\n4.Mock Fried Dumpling"
-    }
-  },
-  "20261116": {
-    "breakfast": {
-      "date_text": "16/11/2026",
-      "lines": [
-        "White/ Wholemeal Bread w Assorted Spreads",
-        "Assorted Cereal w Milk",
-        "Fried Noodle",
-        "Fried Fish Cake",
-        "Sunny Side Egg"
-      ],
-      "title": "BREAKFAST MENU"
-    },
-    "lunch": {
-      "dailySpecial": [
-        "Chicken Sausage Bun w Fries",
-        "4 x Salads (Honey Mustard and Vinaigrette )",
-        "Old Cucumber",
-        "Assorted Fruits"
-      ],
-      "dailySpecialTitle": "DAILY SPECIAL",
-      "date_text": "16/11/2026",
-      "homeTaste": [
-        "Curry Sliced Pork",
-        "Salted Veg Steamed Dory Fish",
-        "Garlic Chye Sim",
-        "Stir-Fry Chinese Cabbage",
-        "Thai Style Bean Curd"
-      ],
-      "homeTasteTitle": "HOMETASTE DAILY SELECTION",
-      "noodleSpecial": [
-        "Chicken Laksa"
-      ],
-      "noodleSpecialTitle": "NOODLE SPECIAL",
-      "title": "LUNCH MENU"
-    },
-    "dinner": {
-      "dailySpecial": [
-        "Vinegar Pork Trotter w Rice",
-        "4 x Salads (Honey Mustard and Vinaigrette )",
-        "Old Cucumber",
-        "Assorted Fruits"
-      ],
-      "dailySpecialTitle": "DAILY SPECIAL",
-      "date_text": "16/11/2026",
-      "homeTaste": [
-        "Chinese Chicken Stew with Potato",
-        "Assam Fish",
-        "Cauliflower with Baby Carrot",
-        "Garlic Long Bean",
-        "Thai Fishcake"
-      ],
-      "homeTasteTitle": "HOMETASTE DAILY SELECTION",
-      "noodleSpecial": [
-        "Tom Yum Noodle"
-      ],
-      "noodleSpecialTitle": "NOODLE SPECIAL",
-      "title": "DINNER MENU"
-    },
-    "supper": {
-      "dailySpecial": [
-        "Chicken Sausage Bun w Fries",
-        "Old Cucumber",
-        "Assorted Fruits"
-      ],
-      "dailySpecialTitle": "DAILY SPECIAL",
-      "date_text": "16/11/2026",
-      "homeTaste": [
-        "Curry Sliced Pork",
-        "Salted Veg Steamed Dory Fish",
-        "Garlic Chye Sim",
-        "Stir-Fry Chinese Cabbage",
-        "Thai Style Bean Curd",
-        "4 x Salads (Honey Mustard and Vinaigrette )"
-      ],
-      "homeTasteTitle": "HOMETASTE DAILY SELECTION",
-      "noodleSpecial": [
-        "Chicken Laksa"
-      ],
-      "noodleSpecialTitle": "NOODLE SPECIAL",
-      "title": "SUPPER MENU"
-    },
-    "vegetarian": {
-      "date_text": "16/11/2026",
-      "title": "VEGETARIAN MENU",
-      "lines": [
-        "White Rice",
-        "Mock Satay",
-        "Stir Fry Spinach",
-        "Picked Vegetables"
-      ],
-      "raw_text": "1.White Rice\n2. Mock Satay\n3. Stir Fry Spinach\n4. Picked Vegetables"
-    }
-  },
-  "20261117": {
-    "breakfast": {
-      "date_text": "17/11/2026",
-      "lines": [
-        "White/ Wholemeal Bread w Assorted Spreads",
-        "Assorted Cereal w Milk",
-        "Mee Siam",
-        "Carrot Cake",
-        "Fried Nogh Hiang"
-      ],
-      "title": "BREAKFAST MENU"
-    },
-    "lunch": {
-      "dailySpecial": [
-        "Royal Nasi Lemak",
-        "4 x Salads (Caesar and Vinaigrette )",
-        "Cabbage Soup with carrots",
-        "Bubur Cha Cha"
-      ],
-      "dailySpecialTitle": "DAILY SPECIAL",
-      "date_text": "17/11/2026",
-      "homeTaste": [
-        "Herbal Chicken",
-        "Lemon Fish",
-        "Luo Han Vegetables",
-        "Fried Cauliflower with Mushrooms",
-        "Fried Fish Ball"
-      ],
-      "homeTasteTitle": "HOMETASTE DAILY SELECTION",
-      "noodleSpecial": [
-        "Lor Mee"
-      ],
-      "noodleSpecialTitle": "NOODLE SPECIAL",
-      "title": "LUNCH MENU"
-    },
-    "dinner": {
-      "dailySpecial": [
-        "Sambal Nasi Goreng with Chicken Wing",
-        "4 x Salads (Caesar and Vinaigrette )",
-        "Cabbage Soup with carrots",
-        "Bubur Cha Cha"
-      ],
-      "dailySpecialTitle": "DAILY SPECIAL",
-      "date_text": "17/11/2026",
-      "homeTaste": [
-        "Honey Soy Baked Chicken",
-        "Thai Style Fish",
-        "Broccoli with Sweet Peas",
-        "Garlic Pa Bo Chye",
-        "Luncheon Meat"
-      ],
-      "homeTasteTitle": "HOMETASTE DAILY SELECTION",
-      "noodleSpecial": [
-        "Sliced Fish Noodle"
-      ],
-      "noodleSpecialTitle": "NOODLE SPECIAL",
-      "title": "DINNER MENU"
-    },
-    "supper": {
-      "dailySpecial": [
-        "Royal Nasi Lemak",
-        "Cabbage Soup with carrots",
-        "Bubur Cha Cha"
-      ],
-      "dailySpecialTitle": "DAILY SPECIAL",
-      "date_text": "17/11/2026",
-      "homeTaste": [
-        "Herbal Chicken",
-        "Lemon Fish",
-        "Luo Han Vegetables",
-        "Fried Cauliflower with Mushrooms",
-        "Fried Fish Ball",
-        "4 x Salads (Caesar and Vinaigrette )"
-      ],
-      "homeTasteTitle": "HOMETASTE DAILY SELECTION",
-      "noodleSpecial": [
-        "Lor Mee"
-      ],
-      "noodleSpecialTitle": "NOODLE SPECIAL",
-      "title": "SUPPER MENU"
-    },
-    "vegetarian": {
-      "date_text": "17/11/2026",
-      "title": "VEGETARIAN MENU",
-      "lines": [
-        "Nasi Lemak",
-        "Mock Fried Chicken",
-        "Grilled Tofu",
-        "Sambal Tumis"
-      ],
-      "raw_text": "1.Nasi Lemak\n2. Mock Fried Chicken\n3.Grilled Tofu\n4. Sambal Tumis"
-    }
-  },
-  "20261118": {
-    "breakfast": {
-      "date_text": "18/11/2026",
-      "lines": [
-        "White/ Wholemeal Bread w Assorted Spreads",
-        "Assorted Cereal w Milk",
-        "Fried Instant Noodle",
-        "Steamed Siew Mai",
-        "Fried Fish Pattie"
-      ],
-      "title": "BREAKFAST MENU"
-    },
-    "lunch": {
-      "dailySpecial": [
-        "Fried Hokkien Mee",
-        "4 x Salads (Creamy Garlic Dressingand Vinaigrette )",
-        "White Radish Soup",
-        "Assorted Fruits"
-      ],
-      "dailySpecialTitle": "DAILY SPECIAL",
-      "date_text": "18/11/2026",
-      "homeTaste": [
-        "Braised Pork Belly",
-        "Steamed Fish with Chopped Chilli",
-        "Sambal Spinach",
-        "Bitter Gourd with Egg",
-        "Black Pepper Chicken Sausage"
-      ],
-      "homeTasteTitle": "HOMETASTE DAILY SELECTION",
-      "noodleSpecial": [
-        "Chicken La Mian"
-      ],
-      "noodleSpecialTitle": "NOODLE SPECIAL",
-      "title": "LUNCH MENU"
-    },
-    "dinner": {
-      "dailySpecial": [
-        "Grilled Black Pepper Fish with Mashed Potato",
-        "4 x Salads (Creamy Garlic Dressingand Vinaigrette )",
-        "White Radish Soup",
-        "Assorted Fruits"
-      ],
-      "dailySpecialTitle": "DAILY SPECIAL",
-      "date_text": "18/11/2026",
-      "homeTaste": [
-        "Sweet & Sour Pork",
-        "Ginger Onion Chicken Sliced",
-        "Kailan with Carrot",
-        "Hairy Gourd & Egg",
-        "Sambal Bean Curd"
-      ],
-      "homeTasteTitle": "HOMETASTE DAILY SELECTION",
-      "noodleSpecial": [
-        "Pork Trotter Noodle"
-      ],
-      "noodleSpecialTitle": "NOODLE SPECIAL",
-      "title": "DINNER MENU"
-    },
-    "supper": {
-      "dailySpecial": [
-        "Fried Hokkien Mee",
-        "White Radish Soup",
-        "Assorted Fruits"
-      ],
-      "dailySpecialTitle": "DAILY SPECIAL",
-      "date_text": "18/11/2026",
-      "homeTaste": [
-        "Braised Pork Belly",
-        "Steamed Fish with Chopped Chilli",
-        "Sambal Spinach",
-        "Bitter Gourd with Egg",
-        "Black Pepper Chicken Sausage",
-        "4 x Salads (Creamy Garlic Dressingand Vinaigrette )"
-      ],
-      "homeTasteTitle": "HOMETASTE DAILY SELECTION",
-      "noodleSpecial": [
-        "Chicken La Mian"
-      ],
-      "noodleSpecialTitle": "NOODLE SPECIAL",
-      "title": "SUPPER MENU"
-    },
-    "vegetarian": {
-      "date_text": "18/11/2026",
-      "title": "VEGETARIAN MENU",
-      "lines": [
-        "Pad Thai Noodles",
-        "Mock Shrimp",
-        "Vegetarian Spring Roll",
-        "Shredded Assorted Vegetables"
-      ],
-      "raw_text": "1. Pad Thai Noodles\n2. Mock Shrimp\n3. Vegetarian Spring Roll\n3. Shredded Assorted Vegetables"
-    }
-  },
-  "20261119": {
-    "breakfast": {
-      "date_text": "19/11/2026",
-      "lines": [
-        "White/ Wholemeal Bread w Assorted Spreads",
-        "Assorted Cereal w Milk",
-        "Fried Kuey Teow Mee",
-        "Steamed Soon Kuey",
-        "Chicken Sausage"
-      ],
-      "title": "BREAKFAST MENU"
-    },
-    "lunch": {
-      "dailySpecial": [
-        "Luncheon Egg Bo Lo Bun",
-        "4 x Salads (Thousand Island and Vinaigrette )",
-        "Herbal Chicken Soup",
-        "Red Bean Soup"
-      ],
-      "dailySpecialTitle": "DAILY SPECIAL",
-      "date_text": "19/11/2026",
-      "homeTaste": [
-        "Ayam Panggang",
-        "Teriyaki Fish Fillet",
-        "Roasted Eggplant",
-        "Stir-Fry Kailan",
-        "Sambal Fish Cake"
-      ],
-      "homeTasteTitle": "HOMETASTE DAILY SELECTION",
-      "noodleSpecial": [
-        "Wanton Noodle"
-      ],
-      "noodleSpecialTitle": "NOODLE SPECIAL",
-      "title": "LUNCH MENU"
-    },
-    "dinner": {
-      "dailySpecial": [
-        "BBQ Chicken Chop with Raisin Rice",
-        "4 x Salads (Thousand Island and Vinaigrette )",
-        "Herbal Chicken Soup",
-        "Red Bean Soup"
-      ],
-      "dailySpecialTitle": "DAILY SPECIAL",
-      "date_text": "19/11/2026",
-      "homeTaste": [
-        "Sesame Oil Chicken",
-        "Baked Fish with Pepper Sauce",
-        "Stir-Fry Beijing Cabbage",
-        "Oyster Sauce Broccoli",
-        "Sambal Fishball"
-      ],
-      "homeTasteTitle": "HOMETASTE DAILY SELECTION",
-      "noodleSpecial": [
-        "Mee Soto"
-      ],
-      "noodleSpecialTitle": "NOODLE SPECIAL",
-      "title": "DINNER MENU"
-    },
-    "supper": {
-      "dailySpecial": [
-        "Luncheon Egg Bo Lo Bun",
-        "Herbal Chicken Soup",
-        "Red Bean Soup"
-      ],
-      "dailySpecialTitle": "DAILY SPECIAL",
-      "date_text": "19/11/2026",
-      "homeTaste": [
-        "Ayam Panggang",
-        "Teriyaki Fish Fillet",
-        "Roasted Eggplant",
-        "Stir-Fry Kailan",
-        "Sambal Fish Cake",
-        "4 x Salads (Thousand Island and Vinaigrette )"
-      ],
-      "homeTasteTitle": "HOMETASTE DAILY SELECTION",
-      "noodleSpecial": [
-        "Wanton Noodle"
-      ],
-      "noodleSpecialTitle": "NOODLE SPECIAL",
-      "title": "SUPPER MENU"
-    },
-    "vegetarian": {
-      "date_text": "19/11/2026",
-      "title": "VEGETARIAN MENU",
-      "lines": [
-        "Tumeric Rice",
-        "Grilled Mock Fish",
-        "Green Beans",
-        "Spicy Cucumber Salad"
-      ],
-      "raw_text": "1.Tumeric Rice\n2. Grilled Mock Fish\n3. Green Beans\n4. Spicy Cucumber Salad"
-    }
-  },
-  "20261120": {
-    "breakfast": {
-      "date_text": "20/11/2026",
-      "lines": [
-        "White/ Wholemeal Bread w Assorted Spreads",
-        "Assorted Cereal w Milk",
-        "Nasi lemak",
-        "Fried Chicken Wing",
-        "Sambal Egg"
-      ],
-      "title": "BREAKFAST MENU"
-    },
-    "lunch": {
-      "dailySpecial": [
-        "Cơm Tấm\nVietnamese Roasted Chicken Rice",
-        "4 x Salads (Italian Salad Dressing and Vinaigrette)",
-        "ABC Soup",
-        "Ice Chendol"
-      ],
-      "dailySpecialTitle": "DAILY SPECIAL",
-      "date_text": "20/11/2026",
-      "homeTaste": [
-        "Oyster Chicken",
-        "Fried Fish",
-        "Long Bean with Garlic",
-        "Braised Cabbage",
-        "Braised Egg"
-      ],
-      "homeTasteTitle": "HOMETASTE DAILY SELECTION",
-      "noodleSpecial": [
-        "Penang Assam Laksa"
-      ],
-      "noodleSpecialTitle": "NOODLE SPECIAL",
-      "title": "LUNCH MENU"
-    },
-    "dinner": {
-      "dailySpecial": [
-        "Roasted Duck Rice",
-        "4 x Salads (Italian Salad Dressing and Vinaigrette)",
-        "ABC Soup",
-        "Assorted Fruits"
-      ],
-      "dailySpecialTitle": "DAILY SPECIAL",
-      "date_text": "20/11/2026",
-      "homeTaste": [
-        "Grilled Chicken w Sambal Belancan",
-        "Garlic Baked Fish Fillet",
-        "Curry Vegetables",
-        "Sambal Kangkong",
-        "Fried Pepper Potato"
-      ],
-      "homeTasteTitle": "HOMETASTE DAILY SELECTION",
-      "noodleSpecial": [
-        "Seafood Bee Hoon"
-      ],
-      "noodleSpecialTitle": "NOODLE SPECIAL",
-      "title": "DINNER MENU"
-    },
-    "supper": {
-      "dailySpecial": [
-        "Cơm Tấm\nVietnamese Roasted Chicken Rice",
-        "ABC Soup",
-        "Ice Chendol"
-      ],
-      "dailySpecialTitle": "DAILY SPECIAL",
-      "date_text": "20/11/2026",
-      "homeTaste": [
-        "Oyster Chicken",
-        "Fried Fish",
-        "Long Bean with Garlic",
-        "Braised Cabbage",
-        "Braised Egg",
-        "4 x Salads (Italian Salad Dressing and Vinaigrette)"
-      ],
-      "homeTasteTitle": "HOMETASTE DAILY SELECTION",
-      "noodleSpecial": [
-        "Penang Assam Laksa"
-      ],
-      "noodleSpecialTitle": "NOODLE SPECIAL",
-      "title": "SUPPER MENU"
-    },
-    "vegetarian": {
-      "date_text": "20/11/2026",
-      "title": "VEGETARIAN MENU",
-      "lines": [
-        "Soba",
-        "Mock Teriyaki Chicken",
-        "Steamed Spinach with Sesame Dressing",
-        "Miso Tofu"
-      ],
-      "raw_text": "1. Soba\n2. Mock Teriyaki Chicken\n3.Steamed Spinach with Sesame Dressing\n4.Miso Tofu"
-    }
-  },
-  "20261121": {
-    "breakfast": {
-      "date_text": "21/11/2026",
-      "lines": [
-        "White/ Wholemeal Bread w Assorted Spreads",
-        "Assorted Cereal w Milk",
-        "Lou Mai Gai",
-        "Yam Cake",
-        "Char siew Pau"
-      ],
-      "title": "BREAKFAST MENU"
-    },
-    "lunch": {
-      "dailySpecial": [
-        "Luncheon Olive Fried Rice",
-        "4 x Salads (Roasted Sesame and Vinaigrette)",
-        "Szechuan Vegetable Soup",
-        "Barley Beancurd"
-      ],
-      "dailySpecialTitle": "DAILY SPECIAL",
-      "date_text": "21/11/2026",
-      "homeTaste": [
-        "Fried Chicken Wings",
-        "Ginger Onion Sliced Beef",
-        "Lady Finger with Sambal Sauce",
-        "Garlic Spinach",
-        "Stew Potato and Black Pepper"
-      ],
-      "homeTasteTitle": "HOMETASTE DAILY SELECTION",
-      "noodleSpecial": [
-        "Prawn Mee"
-      ],
-      "noodleSpecialTitle": "NOODLE SPECIAL",
-      "title": "LUNCH MENU"
-    },
-    "dinner": {
-      "dailySpecial": [
-        "Fish Burger w Fries",
-        "4 x Salads (Roasted Sesame and Vinaigrette)",
-        "Szechuan Vegetable Soup",
-        "Barley Beancurd"
-      ],
-      "dailySpecialTitle": "DAILY SPECIAL",
-      "date_text": "21/11/2026",
-      "homeTaste": [
-        "Black Pepper Chicken",
-        "Curry Fish",
-        "Stir Fry Long Cabbage",
-        "Oyster Chye Sim",
-        "Hong Siew Tofu"
-      ],
-      "homeTasteTitle": "HOMETASTE DAILY SELECTION",
-      "noodleSpecial": [
-        "Kuey Chap"
-      ],
-      "noodleSpecialTitle": "NOODLE SPECIAL",
-      "title": "DINNER MENU"
-    },
-    "supper": {
-      "dailySpecial": [
-        "Luncheon Olive Fried Rice",
-        "Szechuan Vegetable Soup",
-        "Barley Beancurd"
-      ],
-      "dailySpecialTitle": "DAILY SPECIAL",
-      "date_text": "21/11/2026",
-      "homeTaste": [
-        "Fried Chicken Wings",
-        "Ginger Onion Sliced Beef",
-        "Lady Finger with Sambal Sauce",
-        "Garlic Spinach",
-        "Stew Potato and Black Pepper",
-        "4 x Salads (Roasted Sesame and Vinaigrette)"
-      ],
-      "homeTasteTitle": "HOMETASTE DAILY SELECTION",
-      "noodleSpecial": [
-        "Prawn Mee"
-      ],
-      "noodleSpecialTitle": "NOODLE SPECIAL",
-      "title": "SUPPER MENU"
-    },
-    "vegetarian": {
-      "date_text": "21/11/2026",
-      "title": "VEGETARIAN MENU",
-      "lines": [
-        "Lemongrass Rice",
-        "Grilled Mock Meat",
-        "Steamed Green Beans",
-        "Vegetarian Nugget"
-      ],
-      "raw_text": "1.Lemongrass Rice\n2.Grilled Mock Meat\n3.Steamed Green Beans\n4.Vegetarian Nugget"
-    }
-  },
   "20261122": {
     "breakfast": {
       "date_text": "22/11/2026",
@@ -2973,6 +2322,657 @@
         "Shredded Assorted Vegetables"
       ],
       "raw_text": "1. Pad Thai Noodles\n2. Mock Shrimp\n3. Vegetarian Spring Roll\n3. Shredded Assorted Vegetables"
+    }
+  },
+  "20261217": {
+    "breakfast": {
+      "date_text": "17/12/2026",
+      "lines": [
+        "White/ Wholemeal Bread w Assorted Spreads",
+        "Assorted Cereal w Milk",
+        "Fried Kuey Teow Mee",
+        "Steamed Soon Kuey",
+        "Chicken Sausage"
+      ],
+      "title": "BREAKFAST MENU"
+    },
+    "lunch": {
+      "dailySpecial": [
+        "Luncheon Olive Fried Rice",
+        "4 x Salads (Thousand Island and Vinaigrette )",
+        "Herbal Chicken Soup",
+        "Red Bean Soup"
+      ],
+      "dailySpecialTitle": "DAILY SPECIAL",
+      "date_text": "17/12/2026",
+      "homeTaste": [
+        "Chicken Satay",
+        "Teriyaki Fish Fillet",
+        "Roasted Eggplant",
+        "Stir-Fry Kailan",
+        "Sambal Fish Cake"
+      ],
+      "homeTasteTitle": "HOMETASTE DAILY SELECTION",
+      "noodleSpecial": [
+        "Penang Assam Laksa"
+      ],
+      "noodleSpecialTitle": "NOODLE SPECIAL",
+      "title": "LUNCH MENU"
+    },
+    "dinner": {
+      "dailySpecial": [
+        "BBQ Chicken Chop with Raisin Rice",
+        "4 x Salads (Thousand Island and Vinaigrette )",
+        "Herbal Chicken Soup",
+        "Red Bean Soup"
+      ],
+      "dailySpecialTitle": "DAILY SPECIAL",
+      "date_text": "17/12/2026",
+      "homeTaste": [
+        "Sesame Oil Chicken",
+        "Baked Fish with Pepper Sauce",
+        "Stir-Fry Beijing Cabbage",
+        "Oyster Sauce Broccoli",
+        "Sambal Fishball"
+      ],
+      "homeTasteTitle": "HOMETASTE DAILY SELECTION",
+      "noodleSpecial": [
+        "Mee Soto"
+      ],
+      "noodleSpecialTitle": "NOODLE SPECIAL",
+      "title": "DINNER MENU"
+    },
+    "supper": {
+      "dailySpecial": [
+        "Luncheon Olive Fried Rice",
+        "Herbal Chicken Soup",
+        "Red Bean Soup"
+      ],
+      "dailySpecialTitle": "DAILY SPECIAL",
+      "date_text": "17/12/2026",
+      "homeTaste": [
+        "Chicken Satay",
+        "Teriyaki Fish Fillet",
+        "Roasted Eggplant",
+        "Stir-Fry Kailan",
+        "Sambal Fish Cake",
+        "4 x Salads (Thousand Island and Vinaigrette )"
+      ],
+      "homeTasteTitle": "HOMETASTE DAILY SELECTION",
+      "noodleSpecial": [
+        "Penang Assam Laksa"
+      ],
+      "noodleSpecialTitle": "NOODLE SPECIAL",
+      "title": "SUPPER MENU"
+    },
+    "vegetarian": {
+      "date_text": "17/12/2026",
+      "title": "VEGETARIAN MENU",
+      "lines": [
+        "Tumeric Rice",
+        "Grilled Mock Fish",
+        "Green Beans",
+        "Spicy Cucumber Salad"
+      ],
+      "raw_text": "1.Tumeric Rice\n2. Grilled Mock Fish\n3. Green Beans\n4. Spicy Cucumber Salad"
+    }
+  },
+  "20261218": {
+    "breakfast": {
+      "date_text": "18/12/2026",
+      "lines": [
+        "White/ Wholemeal Bread w Assorted Spreads",
+        "Assorted Cereal w Milk",
+        "Nasi lemak",
+        "Fried Chicken Wing",
+        "Sambal Egg"
+      ],
+      "title": "BREAKFAST MENU"
+    },
+    "lunch": {
+      "dailySpecial": [
+        "Teo Chew Porridge\nMinced Chicken/ Picker/ Salted Egg",
+        "4 x Salads (Italian Salad Dressing and Vinaigrette)",
+        "ABC Soup",
+        "Ice Chendol"
+      ],
+      "dailySpecialTitle": "DAILY SPECIAL",
+      "date_text": "18/12/2026",
+      "homeTaste": [
+        "Ayam Panggang",
+        "Fried Fish",
+        "Long Bean with Garlic",
+        "Braised Cabbage",
+        "Braised Egg"
+      ],
+      "homeTasteTitle": "HOMETASTE DAILY SELECTION",
+      "noodleSpecial": [
+        "Wanton Noodle"
+      ],
+      "noodleSpecialTitle": "NOODLE SPECIAL",
+      "title": "LUNCH MENU"
+    },
+    "dinner": {
+      "dailySpecial": [
+        "Roasted Duck Rice",
+        "4 x Salads (Italian Salad Dressing and Vinaigrette)",
+        "ABC Soup",
+        "Assorted Fruits"
+      ],
+      "dailySpecialTitle": "DAILY SPECIAL",
+      "date_text": "18/12/2026",
+      "homeTaste": [
+        "Grilled Chicken w Sambal Belancan",
+        "Garlic Baked Fish Fillet",
+        "Curry Vegetables",
+        "Sambal Kangkong",
+        "Fried Pepper Potato"
+      ],
+      "homeTasteTitle": "HOMETASTE DAILY SELECTION",
+      "noodleSpecial": [
+        "Seafood Bee Hoon"
+      ],
+      "noodleSpecialTitle": "NOODLE SPECIAL",
+      "title": "DINNER MENU"
+    },
+    "supper": {
+      "dailySpecial": [
+        "Teo Chew Porridge\nMinced Chicken/ Picker/ Salted Egg",
+        "ABC Soup",
+        "Ice Chendol"
+      ],
+      "dailySpecialTitle": "DAILY SPECIAL",
+      "date_text": "18/12/2026",
+      "homeTaste": [
+        "Ayam Panggang",
+        "Fried Fish",
+        "Long Bean with Garlic",
+        "Braised Cabbage",
+        "Braised Egg",
+        "4 x Salads (Italian Salad Dressing and Vinaigrette)"
+      ],
+      "homeTasteTitle": "HOMETASTE DAILY SELECTION",
+      "noodleSpecial": [
+        "Wanton Noodle"
+      ],
+      "noodleSpecialTitle": "NOODLE SPECIAL",
+      "title": "SUPPER MENU"
+    },
+    "vegetarian": {
+      "date_text": "18/12/2026",
+      "title": "VEGETARIAN MENU",
+      "lines": [
+        "Soba",
+        "Mock Teriyaki Chicken",
+        "Steamed Spinach with Sesame Dressing",
+        "Miso Tofu"
+      ],
+      "raw_text": "1. Soba\n2. Mock Teriyaki Chicken\n3.Steamed Spinach with Sesame Dressing\n4.Miso Tofu"
+    }
+  },
+  "20261219": {
+    "breakfast": {
+      "date_text": "19/12/2026",
+      "lines": [
+        "White/ Wholemeal Bread w Assorted Spreads",
+        "Assorted Cereal w Milk",
+        "Lou Mai Gai",
+        "Yam Cake",
+        "Char siew Pau"
+      ],
+      "title": "BREAKFAST MENU"
+    },
+    "lunch": {
+      "dailySpecial": [
+        "Seafood Hong Kong Noodle",
+        "4 x Salads (Roasted Sesame and Vinaigrette)",
+        "Szechuan Vegetable Soup",
+        "Barley Beancurd"
+      ],
+      "dailySpecialTitle": "DAILY SPECIAL",
+      "date_text": "19/12/2026",
+      "homeTaste": [
+        "Fried Chicken Wings",
+        "Ginger Onion Sliced Beef",
+        "Lady Finger with Sambal Sauce",
+        "Garlic Spinach",
+        "Stew Potato and Black Pepper"
+      ],
+      "homeTasteTitle": "HOMETASTE DAILY SELECTION",
+      "noodleSpecial": [
+        "Prawn Mee"
+      ],
+      "noodleSpecialTitle": "NOODLE SPECIAL",
+      "title": "LUNCH MENU"
+    },
+    "dinner": {
+      "dailySpecial": [
+        "Soya Chicken Rice",
+        "4 x Salads (Roasted Sesame and Vinaigrette)",
+        "Szechuan Vegetable Soup",
+        "Barley Beancurd"
+      ],
+      "dailySpecialTitle": "DAILY SPECIAL",
+      "date_text": "19/12/2026",
+      "homeTaste": [
+        "Black Pepper Chicken",
+        "Curry Fish",
+        "Stir Fry Long Cabbage",
+        "Oyster Chye Sim",
+        "Hong Siew Tofu"
+      ],
+      "homeTasteTitle": "HOMETASTE DAILY SELECTION",
+      "noodleSpecial": [
+        "Kuey Chap"
+      ],
+      "noodleSpecialTitle": "NOODLE SPECIAL",
+      "title": "DINNER MENU"
+    },
+    "supper": {
+      "dailySpecial": [
+        "Seafood Hong Kong Noodle",
+        "Szechuan Vegetable Soup",
+        "Barley Beancurd"
+      ],
+      "dailySpecialTitle": "DAILY SPECIAL",
+      "date_text": "19/12/2026",
+      "homeTaste": [
+        "Fried Chicken Wings",
+        "Ginger Onion Sliced Beef",
+        "Lady Finger with Sambal Sauce",
+        "Garlic Spinach",
+        "Stew Potato and Black Pepper",
+        "4 x Salads (Roasted Sesame and Vinaigrette)"
+      ],
+      "homeTasteTitle": "HOMETASTE DAILY SELECTION",
+      "noodleSpecial": [
+        "Prawn Mee"
+      ],
+      "noodleSpecialTitle": "NOODLE SPECIAL",
+      "title": "SUPPER MENU"
+    },
+    "vegetarian": {
+      "date_text": "19/12/2026",
+      "title": "VEGETARIAN MENU",
+      "lines": [
+        "Lemongrass Rice",
+        "Grilled Mock Meat",
+        "Steamed Green Beans",
+        "Vegetarian Nugget"
+      ],
+      "raw_text": "1.Lemongrass Rice\n2.Grilled Mock Meat\n3.Steamed Green Beans\n4.Vegetarian Nugget"
+    }
+  },
+  "20261220": {
+    "breakfast": {
+      "date_text": "20/12/2026",
+      "lines": [
+        "White/ Wholemeal Bread w Assorted Spreads",
+        "Assorted Cereal w Milk",
+        "Fried Laksa Bee Hoon",
+        "Hash Brown",
+        "Chicken Nugget"
+      ],
+      "title": "BREAKFAST MENU"
+    },
+    "lunch": {
+      "dailySpecial": [
+        "Thai Style Pork Knuckle with Rice",
+        "4 x Salads (Thousand Island and Vinaigrette)",
+        "Seaweed Soup",
+        "Assorted Fruits"
+      ],
+      "dailySpecialTitle": "DAILY SPECIAL",
+      "date_text": "20/12/2026",
+      "homeTaste": [
+        "Sambal Chicken",
+        "Sweet & Sour Fish",
+        "Sauteed Cauliflower",
+        "Stir Fry Beijing Cabbage",
+        "Fried Onion Egg"
+      ],
+      "homeTasteTitle": "HOMETASTE DAILY SELECTION",
+      "noodleSpecial": [
+        "Mee Siam"
+      ],
+      "noodleSpecialTitle": "NOODLE SPECIAL",
+      "title": "LUNCH MENU"
+    },
+    "dinner": {
+      "dailySpecial": [
+        "Nasi Kunyit W Masala Beef",
+        "4 x Salads (Thousand Island and Vinaigrette)",
+        "Seaweed Soup",
+        "Assorted Fruits"
+      ],
+      "dailySpecialTitle": "DAILY SPECIAL",
+      "date_text": "20/12/2026",
+      "homeTaste": [
+        "Yakitori Chicken",
+        "Garlic Chilli Steamed Fish",
+        "Oyster Garlic Eggplant",
+        "Sio Pek Chye with Carrot",
+        "Beancurd Roll"
+      ],
+      "homeTasteTitle": "HOMETASTE DAILY SELECTION",
+      "noodleSpecial": [
+        "Pork Trotter Noodle"
+      ],
+      "noodleSpecialTitle": "NOODLE SPECIAL",
+      "title": "DINNER MENU"
+    },
+    "supper": {
+      "dailySpecial": [
+        "Thai Style Pork Knuckle with Rice",
+        "Seaweed Soup",
+        "Assorted Fruits"
+      ],
+      "dailySpecialTitle": "DAILY SPECIAL",
+      "date_text": "20/12/2026",
+      "homeTaste": [
+        "Sambal Chicken",
+        "Sweet & Sour Fish",
+        "Sauteed Cauliflower",
+        "Stir Fry Beijing Cabbage",
+        "Fried Onion Egg",
+        "4 x Salads (Thousand Island and Vinaigrette)"
+      ],
+      "homeTasteTitle": "HOMETASTE DAILY SELECTION",
+      "noodleSpecial": [
+        "Mee Siam"
+      ],
+      "noodleSpecialTitle": "NOODLE SPECIAL",
+      "title": "SUPPER MENU"
+    },
+    "vegetarian": {
+      "date_text": "20/12/2026",
+      "title": "VEGETARIAN MENU",
+      "lines": [
+        "White Rice",
+        "Grilled Tofu with Teriyaki Sauce",
+        "Stry Fry Vegetables",
+        "Edamame with Sea Salt"
+      ],
+      "raw_text": "1. White Rice\n2. Grilled Tofu with Teriyaki Sauce\n3.Stry Fry Vegetables\n4. Edamame with Sea Salt"
+    }
+  },
+  "20261221": {
+    "breakfast": {
+      "date_text": "21/12/2026",
+      "lines": [
+        "White/ Wholemeal Bread w Assorted Spreads",
+        "Assorted Cereal w Milk",
+        "Fried Egg Noodle",
+        "Tea Leaf Egg",
+        "Curry Bun"
+      ],
+      "title": "BREAKFAST MENU"
+    },
+    "lunch": {
+      "dailySpecial": [
+        "Century Egg Pork Porridge w You Tiao",
+        "4 x Salads (Honey Mustard and Vinaigrette )",
+        "Sweet Corn Soup",
+        "Red Bean Longan Soup"
+      ],
+      "dailySpecialTitle": "DAILY SPECIAL",
+      "date_text": "21/12/2026",
+      "homeTaste": [
+        "Braised Pork Belly",
+        "Steamed Soy Fish",
+        "Kai Lan with Oyster Sauce",
+        "Garlic Stir Fried Cai Sim",
+        "Fried Thai StyleTofu"
+      ],
+      "homeTasteTitle": "HOMETASTE DAILY SELECTION",
+      "noodleSpecial": [
+        "Ipoh Hor Fun"
+      ],
+      "noodleSpecialTitle": "NOODLE SPECIAL",
+      "title": "LUNCH MENU"
+    },
+    "dinner": {
+      "dailySpecial": [
+        "Teriyaki Salmon Head with Mashed Potato",
+        "4 x Salads (Honey Mustard and Vinaigrette )",
+        "Sweet Corn Soup",
+        "Red Bean Longan Soup"
+      ],
+      "dailySpecialTitle": "DAILY SPECIAL",
+      "date_text": "21/12/2026",
+      "homeTaste": [
+        "Baked Chicken with Dang gui",
+        "Lemon Pepper Fish",
+        "Braised Cabbage with Mushrooms",
+        "Stir Fry Long Bean with Chilli",
+        "Oyster Sauce Steamed Beancurd"
+      ],
+      "homeTasteTitle": "HOMETASTE DAILY SELECTION",
+      "noodleSpecial": [
+        "Fishball Kuey Teow"
+      ],
+      "noodleSpecialTitle": "NOODLE SPECIAL",
+      "title": "DINNER MENU"
+    },
+    "supper": {
+      "dailySpecial": [
+        "Century Egg Pork Porridge w You Tiao",
+        "Sweet Corn Soup",
+        "Red Bean Longan Soup"
+      ],
+      "dailySpecialTitle": "DAILY SPECIAL",
+      "date_text": "21/12/2026",
+      "homeTaste": [
+        "Braised Pork Belly",
+        "Steamed Soy Fish",
+        "Kai Lan with Oyster Sauce",
+        "Garlic Stir Fried Cai Sim",
+        "Fried Thai StyleTofu",
+        "4 x Salads (Honey Mustard and Vinaigrette )"
+      ],
+      "homeTasteTitle": "HOMETASTE DAILY SELECTION",
+      "noodleSpecial": [
+        "Ipoh Hor Fun"
+      ],
+      "noodleSpecialTitle": "NOODLE SPECIAL",
+      "title": "SUPPER MENU"
+    },
+    "vegetarian": {
+      "date_text": "21/12/2026",
+      "title": "VEGETARIAN MENU",
+      "lines": [
+        "Brown Rice",
+        "Spicy Mapo Tofu",
+        "Steamd Bok Choy with Garlic Sauce",
+        "Japanese Pickled Vegetables"
+      ],
+      "raw_text": "1. Brown Rice\n2. Spicy Mapo Tofu\n3. Steamd Bok Choy with Garlic Sauce\n4. Japanese Pickled Vegetables"
+    }
+  },
+  "20261222": {
+    "breakfast": {
+      "date_text": "22/12/2026",
+      "lines": [
+        "White/ Wholemeal Bread w Assorted Spreads",
+        "Assorted Cereal w Milk",
+        "Chee Chong Fan",
+        "Fried Nogh Hiang",
+        "Carrot Cake"
+      ],
+      "title": "BREAKFAST MENU"
+    },
+    "lunch": {
+      "dailySpecial": [
+        "Cơm Tấm\nVietnamese Grilled Pork Chop Rice",
+        "4 x Salads (Caesar and Vinaigrette )",
+        "Cabbage Soup",
+        "Dong Zhi\nDumpling"
+      ],
+      "dailySpecialTitle": "DAILY SPECIAL",
+      "date_text": "22/12/2026",
+      "homeTaste": [
+        "Black Bean Sliced Pork",
+        "Breaded Fish Cutlet",
+        "Eggplant in Garlic Sauce",
+        "Stir Fry Beijing Cabbage",
+        "Braised Mushroom"
+      ],
+      "homeTasteTitle": "HOMETASTE DAILY SELECTION",
+      "noodleSpecial": [
+        "Mee Soto"
+      ],
+      "noodleSpecialTitle": "NOODLE SPECIAL",
+      "title": "LUNCH MENU"
+    },
+    "dinner": {
+      "dailySpecial": [
+        "Hainanese Chicken Rice",
+        "4 x Salads (Caesar and Vinaigrette )",
+        "Cabbage Soup",
+        "Dong Zhi\nDumpling"
+      ],
+      "dailySpecialTitle": "DAILY SPECIAL",
+      "date_text": "22/12/2026",
+      "homeTaste": [
+        "Chicken Stew",
+        "Fish Curry",
+        "Sambal Lady Finger",
+        "Stir Fry Sio Peh Chye with Carrot",
+        "Braised Egg"
+      ],
+      "homeTasteTitle": "HOMETASTE DAILY SELECTION",
+      "noodleSpecial": [
+        "Braised Chicken Feet Noodle"
+      ],
+      "noodleSpecialTitle": "NOODLE SPECIAL",
+      "title": "DINNER MENU"
+    },
+    "supper": {
+      "dailySpecial": [
+        "Cơm Tấm\nVietnamese Grilled Pork Chop Rice",
+        "Cabbage Soup",
+        "Dong Zhi\nDumpling"
+      ],
+      "dailySpecialTitle": "DAILY SPECIAL",
+      "date_text": "22/12/2026",
+      "homeTaste": [
+        "Black Bean Sliced Pork",
+        "Breaded Fish Cutlet",
+        "Eggplant in Garlic Sauce",
+        "Stir Fry Beijing Cabbage",
+        "Braised Mushroom",
+        "4 x Salads (Caesar and Vinaigrette )"
+      ],
+      "homeTasteTitle": "HOMETASTE DAILY SELECTION",
+      "noodleSpecial": [
+        "Mee Soto"
+      ],
+      "noodleSpecialTitle": "NOODLE SPECIAL",
+      "title": "SUPPER MENU"
+    },
+    "vegetarian": {
+      "date_text": "22/12/2026",
+      "title": "VEGETARIAN MENU",
+      "lines": [
+        "Fried Udon Noodles",
+        "Stir Fry Mushroom Noodles",
+        "Bean Sprout",
+        "Sesame Tofu"
+      ],
+      "raw_text": "1.Fried Udon Noodles\n2. Stir Fry Mushroom Noodles\n3.Bean Sprout\n4.Sesame Tofu"
+    }
+  },
+  "20261223": {
+    "breakfast": {
+      "date_text": "23/12/2026",
+      "lines": [
+        "White/ Wholemeal Bread w Assorted Spreads",
+        "Assorted Cereal w Milk",
+        "Hot Cake",
+        "Chicken Pattie",
+        "Scambled Egg / Hash Brown"
+      ],
+      "title": "BREAKFAST MENU"
+    },
+    "lunch": {
+      "dailySpecial": [
+        "Vegetarian Bee Hoon",
+        "4 x Salads (Creamy Garlic Dressingand Vinaigrette )",
+        "Szechuan Soup",
+        "Green Bean Soup"
+      ],
+      "dailySpecialTitle": "DAILY SPECIAL",
+      "date_text": "23/12/2026",
+      "homeTaste": [
+        "Honey Garlic Chicken",
+        "Curry Fish Fillet",
+        "Cabbage with Mushroom",
+        "Mustard Green with Carrot",
+        "Steamed Egg with Light Sauce"
+      ],
+      "homeTasteTitle": "HOMETASTE DAILY SELECTION",
+      "noodleSpecial": [
+        "Braised Duck Tang Hoon"
+      ],
+      "noodleSpecialTitle": "NOODLE SPECIAL",
+      "title": "LUNCH MENU"
+    },
+    "dinner": {
+      "dailySpecial": [
+        "Vegetarian Bee Hoon",
+        "4 x Salads (Creamy Garlic Dressingand Vinaigrette )",
+        "Szechuan Soup",
+        "Green Bean Soup"
+      ],
+      "dailySpecialTitle": "DAILY SPECIAL",
+      "date_text": "23/12/2026",
+      "homeTaste": [
+        "Gong Poh Pork",
+        "Hainan Style Herbal Chicken",
+        "Kai Lan with Garlic in Oyster Sauce",
+        "Braised Chinese Cabbage with Mushrooms",
+        "Prawn Paste You Tiao"
+      ],
+      "homeTasteTitle": "HOMETASTE DAILY SELECTION",
+      "noodleSpecial": [
+        "Laksa"
+      ],
+      "noodleSpecialTitle": "NOODLE SPECIAL",
+      "title": "DINNER MENU"
+    },
+    "supper": {
+      "dailySpecial": [
+        "Vegetarian Bee Hoon",
+        "Szechuan Soup",
+        "Green Bean Soup"
+      ],
+      "dailySpecialTitle": "DAILY SPECIAL",
+      "date_text": "23/12/2026",
+      "homeTaste": [
+        "Honey Garlic Chicken",
+        "Curry Fish Fillet",
+        "Cabbage with Mushroom",
+        "Mustard Green with Carrot",
+        "Steamed Egg with Light Sauce",
+        "4 x Salads (Creamy Garlic Dressingand Vinaigrette )"
+      ],
+      "homeTasteTitle": "HOMETASTE DAILY SELECTION",
+      "noodleSpecial": [
+        "Braised Duck Tang Hoon"
+      ],
+      "noodleSpecialTitle": "NOODLE SPECIAL",
+      "title": "SUPPER MENU"
+    },
+    "vegetarian": {
+      "date_text": "23/12/2026",
+      "title": "VEGETARIAN MENU",
+      "lines": [
+        "White Rice",
+        "Roasted Sweet Potatoes with Soy",
+        "Grilled Zucchini with Miso",
+        "Kimchi"
+      ],
+      "raw_text": "1.White Rice\n2. Roasted Sweet Potatoes with Soy\n3. Grilled Zucchini with Miso\n4. Kimchi"
     }
   }
 }
