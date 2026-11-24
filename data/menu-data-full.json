@@ -24590,7 +24590,7 @@
         "Lemon Fish",
         "Luo Han Vegetables",
         "Fried Cauliflower with Mushrooms",
-        "Fried Fish Ball"
+        "Oyster Potato"
       ],
       "homeTasteTitle": "HOMETASTE DAILY SELECTION",
       "noodleSpecial": [
@@ -24613,7 +24613,7 @@
         "Thai Style Fish",
         "Broccoli with Sweet Peas",
         "Garlic Pa Bo Chye",
-        "Luncheon Meat"
+        "Mapo Tofu"
       ],
       "homeTasteTitle": "HOMETASTE DAILY SELECTION",
       "noodleSpecial": [
@@ -24635,7 +24635,7 @@
         "Lemon Fish",
         "Luo Han Vegetables",
         "Fried Cauliflower with Mushrooms",
-        "Fried Fish Ball",
+        "Oyster Potato",
         "4 x Salads (Caesar and Vinaigrette )"
       ],
       "homeTasteTitle": "HOMETASTE DAILY SELECTION",
@@ -24665,7 +24665,7 @@
         "Assorted Cereal w Milk",
         "Fried Instant Noodle",
         "Steamed Siew Mai",
-        "Fried Fish Pattie"
+        "Char Siew Pau"
       ],
       "title": "BREAKFAST MENU"
     },
@@ -24776,7 +24776,7 @@
         "Teriyaki Fish Fillet",
         "Roasted Eggplant",
         "Stir-Fry Kailan",
-        "Sambal Fish Cake"
+        "Hong Siew Tofu"
       ],
       "homeTasteTitle": "HOMETASTE DAILY SELECTION",
       "noodleSpecial": [
@@ -24821,7 +24821,7 @@
         "Teriyaki Fish Fillet",
         "Roasted Eggplant",
         "Stir-Fry Kailan",
-        "Sambal Fish Cake",
+        "Hong Siew Tofu",
         "4 x Salads (Thousand Island and Vinaigrette )"
       ],
       "homeTasteTitle": "HOMETASTE DAILY SELECTION",
@@ -25222,7 +25222,7 @@
         "White/ Wholemeal Bread w Assorted Spreads",
         "Assorted Cereal w Milk",
         "Chee Chong Fan",
-        "Fried Nogh Hiang",
+        "Fried Ngoh Hiang",
         "Carrot Cake"
       ],
       "title": "BREAKFAST MENU"
@@ -25357,7 +25357,7 @@
         "Hainan Style Herbal Chicken",
         "Kai Lan with Garlic in Oyster Sauce",
         "Braised Chinese Cabbage with Mushrooms",
-        "Prawn Paste You Tiao"
+        "Sotong Yu Tiao"
       ],
       "homeTasteTitle": "HOMETASTE DAILY SELECTION",
       "noodleSpecial": [
@@ -25408,7 +25408,7 @@
         "White/ Wholemeal Bread w Assorted Spreads",
         "Assorted Cereal w Milk",
         "Fried Kuey Teow Mee",
-        "Chicken Sausage",
+        "Fried Egg",
         "Cream Cake"
       ],
       "title": "BREAKFAST MENU"
@@ -25427,7 +25427,7 @@
         "Black Pepper Fish",
         "Hairy Gourd with Carrot",
         "Stir-Fry Kailan",
-        "Fried Wanton"
+        "Fu Yong Egg"
       ],
       "homeTasteTitle": "HOMETASTE DAILY SELECTION",
       "noodleSpecial": [
@@ -25472,7 +25472,7 @@
         "Black Pepper Fish",
         "Hairy Gourd with Carrot",
         "Stir-Fry Kailan",
-        "Fried Wanton",
+        "Fu Yong Egg",
         "4 x Salads (Thousand Island and Vinaigrette )"
       ],
       "homeTasteTitle": "HOMETASTE DAILY SELECTION",
@@ -25873,7 +25873,7 @@
         "White/ Wholemeal Bread w Assorted Spreads",
         "Assorted Cereal w Milk",
         "Mee Siam",
-        "Fried Nogh Hiang",
+        "Fried Ngoh Hiang",
         "Yam Cake"
       ],
       "title": "BREAKFAST MENU"
@@ -25892,7 +25892,7 @@
         "Tumeric Dory Fish",
         "Spinach with Garlic and Ginger",
         "Braised Cabbage",
-        "Flat Bee Hiang"
+        "Oyster Sauce Tofu"
       ],
       "homeTasteTitle": "HOMETASTE DAILY SELECTION",
       "noodleSpecial": [
@@ -25915,7 +25915,7 @@
         "Black Pepper Fish",
         "Garlic Long Bean",
         "Fried Cauliflower with Mushrooms",
-        "Thai Fishcake"
+        "Thai Style Beancurd"
       ],
       "homeTasteTitle": "HOMETASTE DAILY SELECTION",
       "noodleSpecial": [
@@ -25937,7 +25937,7 @@
         "Tumeric Dory Fish",
         "Spinach with Garlic and Ginger",
         "Braised Cabbage",
-        "Flat Bee Hiang",
+        "Oyster Sauce Tofu",
         "4 x Salads (Caesar and Vinaigrette )"
       ],
       "homeTasteTitle": "HOMETASTE DAILY SELECTION",
@@ -26438,7 +26438,7 @@
     },
     "lunch": {
       "dailySpecial": [
-        "Lao Gan Ma Luncheon Fried Rice",
+        "Lao Gan Ma Chicken Cube Fried Rice",
         "4 x Salads (Honey Mustard and Vinaigrette )",
         "Carrot Soup",
         "Assorted Fruits"
@@ -26461,7 +26461,7 @@
     },
     "dinner": {
       "dailySpecial": [
-        "Vegetarian Bee Hoon",
+        "Royal Nasi Lemak",
         "4 x Salads (Honey Mustard and Vinaigrette )",
         "Carrot Soup",
         "Assorted Fruits"
@@ -26484,7 +26484,7 @@
     },
     "supper": {
       "dailySpecial": [
-        "Lao Gan Ma Luncheon Fried Rice",
+        "Lao Gan Ma Chicken Cube Fried Rice",
         "Carrot Soup",
         "Assorted Fruits"
       ],
@@ -26566,7 +26566,7 @@
         "Braised Fish",
         "Eggplant in Garlic Sauce",
         "Stir Fry Hair Gourd",
-        "Fried Chicken Wanton"
+        "Steamed Tofu w Light Sauce"
       ],
       "homeTasteTitle": "HOMETASTE DAILY SELECTION",
       "noodleSpecial": [
@@ -26647,7 +26647,7 @@
     },
     "dinner": {
       "dailySpecial": [
-        "Royal Nasi Lemak",
+        "Vegetarian Bee Hoon",
         "4 x Salads (Creamy Garlic Dressingand Vinaigrette )",
         "Old Cucumber Soup",
         "Ice Cream"
@@ -27176,7 +27176,7 @@
         "Assorted Cereal w Milk",
         "Mee Siam",
         "Carrot Cake",
-        "Fried Nogh Hiang"
+        "Fried Ngoh Hiang"
       ],
       "title": "BREAKFAST MENU"
     },
@@ -27194,7 +27194,7 @@
         "Lemon Fish",
         "Luo Han Vegetables",
         "Fried Cauliflower with Mushrooms",
-        "Fried Fish Ball"
+        "Stew Tofu"
       ],
       "homeTasteTitle": "HOMETASTE DAILY SELECTION",
       "noodleSpecial": [
@@ -27217,7 +27217,7 @@
         "Thai Style Fish",
         "Broccoli with Sweet Peas",
         "Garlic Pa Bo Chye",
-        "Luncheon Meat"
+        "Mapo Tofu"
       ],
       "homeTasteTitle": "HOMETASTE DAILY SELECTION",
       "noodleSpecial": [
@@ -27239,7 +27239,7 @@
         "Lemon Fish",
         "Luo Han Vegetables",
         "Fried Cauliflower with Mushrooms",
-        "Fried Fish Ball",
+        "Stew Tofu",
         "4 x Salads (Caesar and Vinaigrette )"
       ],
       "homeTasteTitle": "HOMETASTE DAILY SELECTION",
@@ -27362,7 +27362,7 @@
         "Assorted Cereal w Milk",
         "Fried Kuey Teow Mee",
         "Steamed Soon Kuey",
-        "Chicken Sausage"
+        "Cream Cake"
       ],
       "title": "BREAKFAST MENU"
     },
@@ -27380,7 +27380,7 @@
         "Teriyaki Fish Fillet",
         "Roasted Eggplant",
         "Stir-Fry Kailan",
-        "Sambal Fish Cake"
+        "Sambal Beancurd"
       ],
       "homeTasteTitle": "HOMETASTE DAILY SELECTION",
       "noodleSpecial": [
@@ -27425,7 +27425,7 @@
         "Teriyaki Fish Fillet",
         "Roasted Eggplant",
         "Stir-Fry Kailan",
-        "Sambal Fish Cake",
+        "Sambal Beancurd",
         "4 x Salads (Thousand Island and Vinaigrette )"
       ],
       "homeTasteTitle": "HOMETASTE DAILY SELECTION",
@@ -27826,7 +27826,7 @@
         "White/ Wholemeal Bread w Assorted Spreads",
         "Assorted Cereal w Milk",
         "Chee Chong Fan",
-        "Fried Nogh Hiang",
+        "Spring Roll",
         "Carrot Cake"
       ],
       "title": "BREAKFAST MENU"
@@ -28012,7 +28012,7 @@
         "White/ Wholemeal Bread w Assorted Spreads",
         "Assorted Cereal w Milk",
         "Fried Kuey Teow Mee",
-        "Chicken Sausage",
+        "Fried Egg",
         "Cream Cake"
       ],
       "title": "BREAKFAST MENU"
@@ -28402,8 +28402,8 @@
         "Curry Pork",
         "Teriyaki Baked Fish",
         "Garlic Peh Choy",
-        "Braised Hair Gourd",
-        "Sambal Fish Ball"
+        "Roasted Duck Rice",
+        "Pepper Potato"
       ],
       "homeTasteTitle": "HOMETASTE DAILY SELECTION",
       "noodleSpecial": [
@@ -28448,7 +28448,7 @@
         "Teriyaki Baked Fish",
         "Garlic Peh Choy",
         "Braised Hair Gourd",
-        "Sambal Fish Ball",
+        "Pepper Potato",
         "4 x Salads (Honey Mustard and Vinaigrette )"
       ],
       "homeTasteTitle": "HOMETASTE DAILY SELECTION",
@@ -28519,7 +28519,7 @@
         "Black Pepper Fish",
         "Garlic Long Bean",
         "Fried Cauliflower with Mushrooms",
-        "Thai Fishcake"
+        "Braised Potato"
       ],
       "homeTasteTitle": "HOMETASTE DAILY SELECTION",
       "noodleSpecial": [
