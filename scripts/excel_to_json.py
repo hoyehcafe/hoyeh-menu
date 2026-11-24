@@ -21,6 +21,7 @@ one month and six rows in another month.
 import json
 import os
 import re
+import subprocess
 import sys
 from copy import deepcopy
 from datetime import date, datetime, timedelta
@@ -267,6 +268,13 @@ def find_excel_files_from_github_event() -> list[str]:
                 if is_source_excel_path(path_text):
                     changed_candidates.append(path_text)
 
+    # The push payload GitHub Actions provides usually omits the per-commit
+    # added/modified file lists, so fall back to diffing the pushed range.
+    if not changed_candidates:
+        changed_candidates = git_changed_source_excel_files(
+            event.get("before"), event.get("after")
+        )
+
     # Resolve existing paths and de-duplicate while preserving event order.
     existing_candidates = {}
 
@@ -295,6 +303,47 @@ def find_excel_files_from_github_event() -> list[str]:
         log_warning(f"GitHub event referenced Excel file(s) not found after checkout: {names}")
 
     return []
+
+
+def run_git(args: list[str]) -> str | None:
+    try:
+        result = subprocess.run(
+            ["git", *args],
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            check=True,
+        )
+    except (OSError, subprocess.CalledProcessError) as e:
+        detail = getattr(e, "stderr", "") or str(e)
+        log_warning(f"git {' '.join(args)} failed: {detail.strip()}")
+        return None
+    return result.stdout
+
+
+def git_changed_source_excel_files(before: str | None, after: str | None) -> list[str]:
+    """Return source/*.xlsx files added or modified between two pushed commits."""
+    before = (before or "").strip()
+    after = (after or "").strip() or "HEAD"
+    if not before or set(before) == {"0"}:
+        return []
+
+    output = run_git(
+        ["diff", "--name-only", "--diff-filter=AM", "-z", before, after, "--", "source/"]
+    )
+    if output is None:
+        return []
+
+    return [path for path in output.split("\0") if path and is_source_excel_path(path)]
+
+
+def git_last_commit_time(path: Path) -> int:
+    """Unix time of the last commit touching path, or 0 when unknown."""
+    output = run_git(["log", "-1", "--format=%ct", "--", str(path)])
+    try:
+        return int((output or "").strip() or 0)
+    except ValueError:
+        return 0
 
 
 def read_workbook_date_span(excel_path: Path) -> tuple[date, date] | None:
@@ -334,10 +383,14 @@ def find_latest_source_excel_file(source_candidates: list[Path]) -> str:
         span = read_workbook_date_span(path)
         if span is not None:
             first_date, last_date = span
-            dated_candidates.append((last_date, first_date, path.name.lower(), path))
+            # When two workbooks cover the same dates (e.g. "Dec 26.xlsx" and
+            # "Dec 26 - Update.xlsx"), the most recently committed one wins.
+            dated_candidates.append(
+                (last_date, git_last_commit_time(path), first_date, path.name.lower(), path)
+            )
 
     if dated_candidates:
-        last_date, _, _, latest_file = max(dated_candidates)
+        last_date, _, _, _, latest_file = max(dated_candidates)
         log_info(
             f"Using Excel file from source/ with latest menu date "
             f"{format_date_text(last_date)}: {latest_file}"

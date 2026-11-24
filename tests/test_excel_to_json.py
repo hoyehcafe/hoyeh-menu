@@ -185,6 +185,60 @@ class GithubEventSelectionTests(unittest.TestCase):
             ],
         )
 
+    def test_falls_back_to_git_diff_when_payload_has_no_file_lists(self):
+        # GitHub Actions push payloads typically omit commits[].added/modified.
+        event = {
+            "before": "a" * 40,
+            "after": "b" * 40,
+            "commits": [{"message": "Add files via upload"}],
+        }
+        diff_output = "source/Hoyeh Menu Dec 26 - Update.xlsx\0README.md\0"
+
+        with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False, encoding="utf-8") as event_file:
+            json.dump(event, event_file)
+            event_path = event_file.name
+
+        try:
+            with (
+                patch.dict(os.environ, {"GITHUB_EVENT_PATH": event_path}),
+                patch.object(excel_to_json, "run_git", return_value=diff_output) as run_git,
+                patch.object(
+                    excel_to_json,
+                    "existing_source_excel_path",
+                    side_effect=lambda path: Path(path),
+                ),
+            ):
+                selected = excel_to_json.find_excel_files_from_github_event()
+        finally:
+            os.unlink(event_path)
+
+        self.assertIn("a" * 40, run_git.call_args.args[0])
+        self.assertEqual(
+            [excel_to_json.normalize_repo_path(path) for path in selected],
+            ["source/Hoyeh Menu Dec 26 - Update.xlsx"],
+        )
+
+    def test_no_git_diff_for_new_branch_push(self):
+        with patch.object(excel_to_json, "run_git") as run_git:
+            self.assertEqual(excel_to_json.git_changed_source_excel_files("0" * 40, "b" * 40), [])
+        run_git.assert_not_called()
+
+
+class LatestSourceSelectionTests(unittest.TestCase):
+    def test_same_date_span_prefers_most_recently_committed_workbook(self):
+        old = Path("source/Hoyeh Menu Dec 26.xlsx")
+        updated = Path("source/Hoyeh Menu Dec 26 - Update.xlsx")
+        span = (date(2026, 11, 23), date(2027, 1, 3))
+        commit_times = {old: 1000, updated: 2000}
+
+        with (
+            patch.object(excel_to_json, "read_workbook_date_span", return_value=span),
+            patch.object(excel_to_json, "git_last_commit_time", side_effect=commit_times.get),
+        ):
+            selected = excel_to_json.find_latest_source_excel_file([old, updated])
+
+        self.assertEqual(Path(selected), updated)
+
 
 if __name__ == "__main__":
     unittest.main()

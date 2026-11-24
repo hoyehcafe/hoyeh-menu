@@ -24,6 +24,10 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          # Full history so the converter can diff the pushed range and
+          # compare commit times of workbooks covering the same dates.
+          fetch-depth: 0
 
       - name: Show repository files
         run: |
